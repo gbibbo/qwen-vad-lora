@@ -1,0 +1,46 @@
+#!/bin/bash
+#SBATCH --job-name=stats_rerun
+#SBATCH --partition=a100
+#SBATCH --gpus=0
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=16G
+#SBATCH --time=48:00:00
+#SBATCH --output=/mnt/fast/nobackup/users/gb0048/opro3_final/logs/stats_rerun_%j.out
+#SBATCH --error=/mnt/fast/nobackup/users/gb0048/opro3_final/logs/stats_rerun_%j.err
+
+# =============================================================================
+# Stats regeneration after audit fix (unparseable = errors, not filtered)
+# =============================================================================
+
+set -euo pipefail
+
+REPO="/mnt/fast/nobackup/users/gb0048/opro3_final"
+REPO_PARENT="/mnt/fast/nobackup/users/gb0048"
+CONTAINER="$REPO_PARENT/opro2/pytorch_2.1_cuda12.sif"
+
+cd "$REPO"
+
+echo "[INFO] Stats regeneration START: $(date)"
+echo "[INFO] Using fixed stats.py (unparseable kept as errors)"
+
+apptainer exec \
+    --pwd "$REPO" \
+    "$CONTAINER" python3 scripts/stats.py \
+    --baseline results/BEST_CONSOLIDATED/01_qwen2_base_baseline/evaluation/predictions.csv \
+    --base_opro results/BEST_CONSOLIDATED/02_qwen2_base_opro_llm/evaluation/predictions.csv \
+    --lora results/BEST_CONSOLIDATED/04_qwen2_lora_baseline/evaluation/predictions.csv \
+    --lora_opro results/BEST_CONSOLIDATED/06_qwen2_lora_opro_template/evaluation/predictions.csv \
+    --lora_opro_open results/BEST_CONSOLIDATED/05_qwen2_lora_opro_llm/evaluation/predictions.csv \
+    --qwen3_baseline results/BEST_CONSOLIDATED/07_qwen3_omni_baseline/evaluation/predictions.csv \
+    --qwen3_opro results/BEST_CONSOLIDATED/08_qwen3_omni_opro_llm/evaluation/predictions.csv \
+    --output_dir results/statistical_analysis \
+    --n_bootstrap 10000 \
+    --seed 42
+
+# Copy to BEST_CONSOLIDATED/stats/ (where make_tables.py reads from)
+cp results/statistical_analysis/statistical_analysis.json results/BEST_CONSOLIDATED/stats/statistical_analysis.json
+cp results/statistical_analysis/statistical_report.txt results/BEST_CONSOLIDATED/stats/statistical_report.txt
+
+echo "[INFO] Stats regeneration END: $(date)"
+echo "[INFO] Output: results/statistical_analysis/"
+echo "[INFO] Copied to: results/BEST_CONSOLIDATED/stats/"

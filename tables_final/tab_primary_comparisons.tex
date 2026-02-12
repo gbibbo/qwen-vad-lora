@@ -1,0 +1,23 @@
+\begin{table}[t]
+\centering
+\caption{Primary paired comparisons on the evaluation set. $\Delta$BA $=$ BA(A)$-$BA(B).
+Discordant counts are from McNemar contingency tables: $n_{01}$ counts clips where A is
+correct and B is incorrect; $n_{10}$ counts clips where A is incorrect and B is correct.}
+\label{tab:primary_comparisons}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.12}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lccccccc}
+\toprule
+Comparison (A vs.\ B) & $\Delta$BA & 95\% CI & $p$ (raw) & $p_{\mathrm{Holm}}$ & Disc.\ rate & $n_{01}$ & $n_{10}$ \\
+\midrule
+Baseline vs Base+OPRO & -0.186 & [-0.199, -0.173] & $<$10$^{-10}$ & $<$10$^{-10}$ & 0.268 & 869 & 4840 \\
+Baseline vs LoRA+BasePrompt & -0.224 & [-0.236, -0.212] & $<$10$^{-10}$ & $<$10$^{-10}$ & 0.285 & 650 & 5428 \\
+LoRA+BasePrompt vs LoRA+OPRO & -0.069 & [-0.079, -0.059] & $<$10$^{-10}$ & $<$10$^{-10}$ & 0.104 & 379 & 1850 \\
+LoRA+OPRO_Classic vs LoRA+OPRO_Open & +0.093 & [0.079, 0.106] & $<$10$^{-10}$ & $<$10$^{-10}$ & 0.169 & 2787 & 813 \\
+Qwen3 Baseline vs Qwen3+OPRO & -0.003 & [-0.006, 0.000] & 0.014 & 0.014 & 0.029 & 275 & 337 \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}

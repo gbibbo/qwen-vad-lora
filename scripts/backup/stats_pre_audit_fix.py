@@ -62,7 +62,7 @@ def canonicalize_label(label: str) -> str:
         return 'SPEECH'
     elif canonical == 'NONSPEECH':
         return 'NONSPEECH'
-    elif canonical in ('UNKNOWN', 'ERROR'):
+    elif canonical == 'UNKNOWN':
         return 'UNKNOWN'
     else:
         raise ValueError(
@@ -111,7 +111,7 @@ def load_predictions(csv_path: str) -> pd.DataFrame:
         - correct: boolean, whether prediction matches ground truth
 
     Notes:
-        - Rows where prediction == 'UNKNOWN' are kept and treated as incorrect
+        - Rows where prediction == 'UNKNOWN' are filtered out with a warning
         - UNKNOWN indicates the model abstained from making a prediction
 
     Raises:
@@ -132,13 +132,14 @@ def load_predictions(csv_path: str) -> pd.DataFrame:
     df['prediction'] = df['prediction_canon']
     df.drop(columns=['ground_truth_canon', 'prediction_canon'], inplace=True)
 
-    # Count UNKNOWN predictions (treated as incorrect, NOT filtered)
-    unknown_pred_mask = df['prediction'] == 'UNKNOWN'
-    n_unknown = unknown_pred_mask.sum()
+    # Filter out UNKNOWN predictions (model abstained)
+    unknown_mask = (df['prediction'] == 'UNKNOWN') | (df['ground_truth'] == 'UNKNOWN')
+    n_unknown = unknown_mask.sum()
 
     if n_unknown > 0:
-        print(f"  NOTE: {n_unknown}/{n_total} samples have UNKNOWN predictions "
-              f"({100*n_unknown/n_total:.2f}%) - treated as incorrect (not filtered)")
+        print(f"  ⚠️  WARNING: Filtered {n_unknown}/{n_total} samples with UNKNOWN labels "
+              f"({100*n_unknown/n_total:.2f}%)")
+        df = df[~unknown_mask].copy()
 
     # Add correctness flag using canonical labels
     df['correct'] = (df['ground_truth'] == df['prediction']).astype(int)
@@ -863,15 +864,7 @@ def run_full_analysis(
 
     threshold_results = {}
 
-    # Deduplicate: aliases (e.g. lora_opro -> lora_opro_classic) share the
-    # same DataFrame object.  Skip them to avoid redundant bootstrap runs.
-    seen_df_ids = set()
     for name, df in configs.items():
-        if id(df) in seen_df_ids:
-            print(f"\n{name} [skipped — alias of already-computed config]")
-            continue
-        seen_df_ids.add(id(df))
-
         print(f"\n{name}")
         print("-" * 80)
 

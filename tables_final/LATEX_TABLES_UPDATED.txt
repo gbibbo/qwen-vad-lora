@@ -1,0 +1,186 @@
+================================================================================
+TODAS LAS TABLAS EN LATEX - VALORES ACTUALIZADOS
+Generado desde: /mnt/fast/nobackup/users/gb0048/opro3_final/results/BEST_CONSOLIDATED/stats/statistical_analysis.json
+================================================================================
+
+================================================================================
+TABLE 1: Overall Performance (Tab_R02_OverallPerformance.tex)
+================================================================================
+
+\begin{table*}[t]
+\centering
+\caption{Overall performance on the test set (21,340 samples). BA = Balanced Accuracy with 95\% CI (2,000 bootstrap resamples). Per-class recalls with Wilson score 95\% CI.}
+\label{tab:overall_performance}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{llccc}
+\toprule
+\textbf{Model} & \textbf{Configuration} & \textbf{BA$_{\text{clip}}$ [95\% CI]} & \textbf{Recall$_{\text{SPEECH}}$ [95\% CI]} & \textbf{Recall$_{\text{NON-SPEECH}}$ [95\% CI]} \\
+\midrule
+Qwen2-Audio-7B & Base + Hand & 0.640 [0.626, 0.654] & 0.321 [0.312, 0.330] & 0.959 [0.955, 0.963] \\
+Qwen2-Audio-7B & Base + OPRO & 0.826 [0.814, 0.838] & 0.747 [0.738, 0.755] & 0.906 [0.900, 0.911] \\
+Qwen2-Audio-7B & LoRA + Hand & 0.864 [0.852, 0.875] & 0.824 [0.817, 0.832] & 0.903 [0.898, 0.909] \\
+Qwen2-Audio-7B & LoRA + OPRO & 0.933 [0.925, 0.940] & 0.928 [0.923, 0.933] & 0.938 [0.933, 0.942] \\
+Qwen3-Omni-30B & Frozen + Hand & 0.911 [0.904, 0.918] & 0.874 [0.868, 0.880] & 0.947 [0.943, 0.951] \\
+Qwen3-Omni-30B & Frozen + OPRO & 0.914 [0.906, 0.921] & 0.892 [0.886, 0.898] & 0.935 [0.931, 0.940] \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+================================================================================
+TABLE 2: Dimension Means (Tab_R04_dimension_means.tex)
+================================================================================
+
+\begin{table}[t]
+\centering
+\caption{Mean balanced accuracy (\%) within each degradation axis (macro-average over the conditions in that axis).}
+\label{tab:r04_dimension_means}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Axis} &
+\textbf{Baseline} &
+\textbf{Base+OPRO} &
+\textbf{LoRA} &
+\textbf{LoRA+OPRO} \\
+\midrule
+Duration & 65.85 & 82.50 & 86.42 & \textbf{87.37} \\
+SNR & 62.78 & 85.96 & 90.14 & \textbf{97.37} \\
+Reverb & 64.05 & 81.75 & 83.94 & \textbf{96.06} \\
+Filter & 62.11 & 78.69 & 83.20 & \textbf{96.24} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+================================================================================
+TABLE 3: Error Counts (Tab_R05_ErrorCounts.tex)
+================================================================================
+
+\begin{table*}[t]
+\centering
+\caption{Error profile (confusion matrix counts and derived error rates) for each configuration, aggregated over the full test set.}
+\label{tab:error-counts}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{llcccccc}
+\toprule
+\textbf{Model} & \textbf{Config} & \textbf{TP} & \textbf{TN} & \textbf{FP} & \textbf{FN} & \textbf{FPR} & \textbf{FNR} \\
+\midrule
+Qwen2-Audio-7B & Base + Hand & 3423 & 10236 & 434 & 7247 & 0.041 & 0.679 \\
+Qwen2-Audio-7B & Base + OPRO & 7966 & 9664 & 1006 & 2704 & 0.094 & 0.253 \\
+Qwen2-Audio-7B & LoRA + Hand & 8797 & 9640 & 1030 & 1873 & 0.097 & 0.176 \\
+Qwen2-Audio-7B & LoRA + OPRO & 9904 & 10004 & 666 & 766 & 0.062 & 0.072 \\
+Qwen3-Omni-30B & Frozen + Hand & 9328 & 10109 & 561 & 1342 & 0.053 & 0.126 \\
+Qwen3-Omni-30B & Frozen + OPRO & 9518 & 9981 & 689 & 1152 & 0.065 & 0.108 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+================================================================================
+TABLE 4: Prompt Summary (Tab_PromptSummary.tex)
+================================================================================
+
+\begin{table}[t]
+\centering
+\caption{Summary of prompts used in each configuration. Length in characters (excluding whitespace normalization).}
+\label{tab:prompt_summary}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{llp{0.55\linewidth}c}
+\toprule
+\textbf{Model} & \textbf{Config} & \textbf{Prompt} & \textbf{Length} \\
+\midrule
+Qwen2-Audio-7B & Baseline & \textit{Does this audio contain human speech? Reply with ONLY one word: SPEECH or NON-SPEECH.} & 85 \\
+Qwen2-Audio-7B & Base+OPRO & \textit{Listen carefully, is this very short clip human speech or noise? Respond: SPEECH or NON-SPEECH.} & 97 \\
+Qwen2-Audio-7B & LoRA+Hand & \textit{Does this audio contain human speech? Reply with ONLY one word: SPEECH or NON-SPEECH.} & 85 \\
+Qwen2-Audio-7B & LoRA+OPRO & \textit{Pay attention to this clip, is it human speech? Just answer: SPEECH or NON-SPEECH.} & 89 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+================================================================================
+TABLE 5: Psychometric Thresholds (tab_psychometric_thresholds.tex)
+================================================================================
+
+\begin{table}[ht]
+\centering
+\caption{Psychometric thresholds with 95\% bootstrap confidence intervals. Values are reported as point estimate [CI]. Flags indicate when the true threshold lies outside the tested range (censored).}
+\label{tab:psychometric_thresholds}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Configuration} & \textbf{DT50 (ms)} & \textbf{DT75 (ms)} & \textbf{DT90 (ms)} & \textbf{SNR75 (dB)} \\
+\midrule
+Baseline & $<$20 & $>$1000 & $>$1000 & $>$20 \\
+Base+OPRO & $<$20 & 34 [31, 672] & $>$1000 & $<$-10 \\
+LoRA+Hand & $<$20 & $<$20 & 329 [87, 1000] & $<$-10 \\
+LoRA+OPRO & $<$20 & 27 [22, 32] & 96 [88, 133] & $<$-10 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.4em}
+\begin{flushleft}
+\footnotesize
+\textit{Censoring notation:} $<$20 ms indicates the criterion is already met at the most challenging tested duration (true threshold is better than 20 ms); $>$1000 ms indicates the criterion is not met even at the longest tested duration (true threshold is worse than 1000 ms). Similarly, $<$$-$10 dB and $>$+20 dB indicate censoring below and above the tested SNR range, respectively. Numeric values without inequality symbols indicate successful interpolation within the tested range.
+\end{flushleft}
+\end{table}
+
+================================================================================
+TABLE 6: Primary Comparisons (tab_primary_comparisons.tex)
+================================================================================
+
+\begin{table}[t]
+\centering
+\caption{Primary paired comparisons on the evaluation set. $\Delta$BA $=$ BA(A)$-$BA(B).
+Discordant counts are from McNemar contingency tables: $n_{01}$ counts clips where A is
+correct and B is incorrect; $n_{10}$ counts clips where A is incorrect and B is correct.}
+\label{tab:primary_comparisons}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.12}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lccccccc}
+\toprule
+Comparison (A vs.\ B) & $\Delta$BA & 95\% CI & $p$ (raw) & $p_{\mathrm{Holm}}$ & Disc.\ rate & $n_{01}$ & $n_{10}$ \\
+\midrule
+Baseline vs Base+OPRO & -0.186 & [-0.199, -0.173] & $<$10$^{-10}$ & $<$10$^{-10}$ & 0.268 & 869 & 4840 \\
+Baseline vs LoRA+BasePrompt & -0.224 & [-0.236, -0.212] & $<$10$^{-10}$ & $<$10$^{-10}$ & 0.285 & 650 & 5428 \\
+LoRA+BasePrompt vs LoRA+OPRO & -0.069 & [-0.079, -0.059] & $<$10$^{-10}$ & $<$10$^{-10}$ & 0.104 & 379 & 1850 \\
+LoRA+OPRO_Classic vs LoRA+OPRO_Open & +0.093 & [0.079, 0.106] & $<$10$^{-10}$ & $<$10$^{-10}$ & 0.169 & 2787 & 813 \\
+Qwen3 Baseline vs Qwen3+OPRO & -0.003 & [-0.006, 0.000] & 0.014 & 0.014 & 0.029 & 275 & 337 \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+================================================================================
+TABLE 7: Multi-Model Comparison (tab_prelim_multimodel_comparison.tex)
+================================================================================
+
+\begin{table}[h]
+\centering
+\caption{Cross-model comparison on the full 21,340-sample test set.}
+\label{tab:prelim_multimodel_comparison}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{llll}
+\toprule
+\textbf{Model} & \textbf{Prompt} & \textbf{BA$_{\text{clip}}$} & \textbf{BA$_{\text{conditions}}$} \\
+\midrule
+Qwen2-Audio-7B Base & Baseline & 64.0\% & 63.7\% \\
+Qwen2-Audio-7B Base & OPRO & 82.6\% & 82.2\% \\
+Qwen2-Audio-7B LoRA & Baseline & 86.4\% & 85.9\% \\
+Qwen2-Audio-7B LoRA & OPRO & 93.3\% & 94.3\% \\
+Qwen3-Omni-30B (Frozen) & Baseline & 91.1\% & 93.0\% \\
+Qwen3-Omni-30B (Frozen) & OPRO & 91.4\% & 93.1\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+================================================================================
+FIN
+================================================================================

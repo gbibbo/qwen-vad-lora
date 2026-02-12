@@ -18,22 +18,24 @@ Generates ALL 7 tables:
 import json
 from pathlib import Path
 
-# Paths
-REPO = Path("/mnt/fast/nobackup/users/gb0048/opro2_clean")
-STATS_FILE = REPO / "results/statistical_analysis/statistical_analysis.json"
-RAW_RESULTS_FILE = REPO / "all_experiment_results.json"
-TABLES_DIR = REPO / "tables"
-OUTPUT_CONSOLIDATED = REPO / "LATEX_TABLES_UPDATED.txt"
+# Paths (updated for opro3_final BEST_CONSOLIDATED)
+REPO = Path("/mnt/fast/nobackup/users/gb0048/opro3_final")
+STATS_FILE = REPO / "results/BEST_CONSOLIDATED/stats/statistical_analysis.json"
+RAW_RESULTS_FILE = REPO / "results/BEST_CONSOLIDATED/all_experiment_results.json"
+TABLES_DIR = REPO / "tables_final"
+OUTPUT_CONSOLIDATED = REPO / "tables_final/LATEX_TABLES_UPDATED.txt"
 
-# Paths to metrics.json for dimension means
+# Paths to metrics.json for dimension means (all 9 cells)
 METRICS_PATHS = {
-    'baseline': REPO / "results/complete_pipeline_seed42/01_baseline/metrics.json",
-    'base_opro': REPO / "results/complete_pipeline_seed42/06_eval_base_opro/metrics.json",
-    'lora': REPO / "results/complete_pipeline_seed42/03_eval_lora/metrics.json",
-    'lora_opro': REPO / "results/eval_fixed_qwen2_lora_opro/metrics.json",
-    'lora_opro_classic': REPO / "results/complete_pipeline_seed42/07_eval_lora_opro/metrics.json",
-    'qwen3_baseline': REPO / "results/eval_qwen3_omni_baseline_test/metrics.json",
-    'qwen3_opro': REPO / "results/reeval_qwen3_omni_opro_test/metrics.json",
+    'baseline':            REPO / "results/BEST_CONSOLIDATED/01_qwen2_base_baseline/evaluation/metrics.json",
+    'base_opro':           REPO / "results/BEST_CONSOLIDATED/02_qwen2_base_opro_llm/evaluation/metrics.json",
+    'base_opro_template':  REPO / "results/BEST_CONSOLIDATED/03_qwen2_base_opro_template/evaluation/metrics.json",
+    'lora':                REPO / "results/BEST_CONSOLIDATED/04_qwen2_lora_baseline/evaluation/metrics.json",
+    'lora_opro':           REPO / "results/BEST_CONSOLIDATED/06_qwen2_lora_opro_template/evaluation/metrics.json",
+    'lora_opro_classic':   REPO / "results/BEST_CONSOLIDATED/06_qwen2_lora_opro_template/evaluation/metrics.json",
+    'qwen3_baseline':      REPO / "results/BEST_CONSOLIDATED/07_qwen3_omni_baseline/evaluation/metrics.json",
+    'qwen3_opro':          REPO / "results/BEST_CONSOLIDATED/08_qwen3_omni_opro_llm/evaluation/metrics.json",
+    'qwen3_opro_template': REPO / "results/BEST_CONSOLIDATED/09_qwen3_omni_opro_template/evaluation/metrics.json",
 }
 
 
@@ -42,10 +44,60 @@ def load_data():
     with open(STATS_FILE) as f:
         stats = json.load(f)
 
-    with open(RAW_RESULTS_FILE) as f:
-        raw = json.load(f)
+    if RAW_RESULTS_FILE.exists():
+        with open(RAW_RESULTS_FILE) as f:
+            raw = json.load(f)
+    else:
+        print(f"  Note: {RAW_RESULTS_FILE.name} not found, deriving error counts from config_metrics")
+        raw = _derive_raw_from_stats(stats)
 
     return stats, raw
+
+
+def _derive_raw_from_stats(stats):
+    """Derive TP/TN/FP/FN from config_metrics when all_experiment_results.json is absent."""
+    config_metrics = stats.get('config_metrics', {})
+
+    # Map stats keys -> raw JSON keys
+    qwen2_map = {
+        'baseline': 'Baseline',
+        'base_opro': 'Base+OPRO',
+        'lora': 'LoRA',
+        'lora_opro_classic': 'LoRA+OPRO',
+    }
+    qwen3_map = {
+        'qwen3_baseline': 'Baseline',
+        'qwen3_opro': 'OPRO',
+    }
+
+    def compute_counts(m):
+        n_sp = m.get('n_speech', 0)
+        n_ns = m.get('n_nonspeech', 0)
+        tp = round(m.get('recall_speech', 0) * n_sp)
+        fn = n_sp - tp
+        tn = round(m.get('recall_nonspeech', 0) * n_ns)
+        fp = n_ns - tn
+        return {
+            'ba': m.get('ba_clip', 0),
+            'recall_speech': m.get('recall_speech', 0),
+            'recall_nonspeech': m.get('recall_nonspeech', 0),
+            'TP': tp, 'TN': tn, 'FP': fp, 'FN': fn,
+        }
+
+    qwen2_metrics = {}
+    for stats_key, raw_key in qwen2_map.items():
+        if stats_key in config_metrics:
+            qwen2_metrics[raw_key] = compute_counts(config_metrics[stats_key])
+
+    qwen3_metrics = {}
+    for stats_key, raw_key in qwen3_map.items():
+        if stats_key in config_metrics:
+            qwen3_metrics[raw_key] = compute_counts(config_metrics[stats_key])
+
+    return {
+        'qwen2': {'metrics': qwen2_metrics},
+        'qwen3': {'metrics': qwen3_metrics},
+    }
 
 
 def load_metrics_files():

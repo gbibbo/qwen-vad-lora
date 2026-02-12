@@ -1,0 +1,18 @@
+\begin{table}[t]
+\centering
+\caption{Summary of prompts used in each configuration. Length in characters (excluding whitespace normalization).}
+\label{tab:prompt_summary}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{llp{0.55\linewidth}c}
+\toprule
+\textbf{Model} & \textbf{Config} & \textbf{Prompt} & \textbf{Length} \\
+\midrule
+Qwen2-Audio-7B & Baseline & \textit{Does this audio contain human speech? Reply with ONLY one word: SPEECH or NON-SPEECH.} & 85 \\
+Qwen2-Audio-7B & Base+OPRO & \textit{Listen carefully, is this very short clip human speech or noise? Respond: SPEECH or NON-SPEECH.} & 97 \\
+Qwen2-Audio-7B & LoRA+Hand & \textit{Does this audio contain human speech? Reply with ONLY one word: SPEECH or NON-SPEECH.} & 85 \\
+Qwen2-Audio-7B & LoRA+OPRO & \textit{Pay attention to this clip, is it human speech? Just answer: SPEECH or NON-SPEECH.} & 89 \\
+\bottomrule
+\end{tabular}
+\end{table}

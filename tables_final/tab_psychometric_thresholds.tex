@@ -1,0 +1,21 @@
+\begin{table}[ht]
+\centering
+\caption{Psychometric thresholds with 95\% bootstrap confidence intervals. Values are reported as point estimate [CI]. Flags indicate when the true threshold lies outside the tested range (censored).}
+\label{tab:psychometric_thresholds}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Configuration} & \textbf{DT50 (ms)} & \textbf{DT75 (ms)} & \textbf{DT90 (ms)} & \textbf{SNR75 (dB)} \\
+\midrule
+Baseline & $<$20 & $>$1000 & $>$1000 & $>$20 \\
+Base+OPRO & $<$20 & 34 [31, 672] & $>$1000 & $<$-10 \\
+LoRA+Hand & $<$20 & $<$20 & 329 [87, 1000] & $<$-10 \\
+LoRA+OPRO & $<$20 & 27 [22, 32] & 96 [88, 133] & $<$-10 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.4em}
+\begin{flushleft}
+\footnotesize
+\textit{Censoring notation:} $<$20 ms indicates the criterion is already met at the most challenging tested duration (true threshold is better than 20 ms); $>$1000 ms indicates the criterion is not met even at the longest tested duration (true threshold is worse than 1000 ms). Similarly, $<$$-$10 dB and $>$+20 dB indicate censoring below and above the tested SNR range, respectively. Numeric values without inequality symbols indicate successful interpolation within the tested range.
+\end{flushleft}
+\end{table}

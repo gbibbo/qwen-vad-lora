@@ -1,0 +1,20 @@
+\begin{table}[h]
+\centering
+\caption{Cross-model comparison on the full 21,340-sample test set.}
+\label{tab:prelim_multimodel_comparison}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{llll}
+\toprule
+\textbf{Model} & \textbf{Prompt} & \textbf{BA$_{\text{clip}}$} & \textbf{BA$_{\text{conditions}}$} \\
+\midrule
+Qwen2-Audio-7B Base & Baseline & 64.0\% & 63.7\% \\
+Qwen2-Audio-7B Base & OPRO & 82.6\% & 82.2\% \\
+Qwen2-Audio-7B LoRA & Baseline & 86.4\% & 85.9\% \\
+Qwen2-Audio-7B LoRA & OPRO & 93.3\% & 94.3\% \\
+Qwen3-Omni-30B (Frozen) & Baseline & 91.1\% & 93.0\% \\
+Qwen3-Omni-30B (Frozen) & OPRO & 91.4\% & 93.1\% \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,20 @@
+\begin{table*}[t]
+\centering
+\caption{Error profile (confusion matrix counts and derived error rates) for each configuration, aggregated over the full test set.}
+\label{tab:error-counts}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{llcccccc}
+\toprule
+\textbf{Model} & \textbf{Config} & \textbf{TP} & \textbf{TN} & \textbf{FP} & \textbf{FN} & \textbf{FPR} & \textbf{FNR} \\
+\midrule
+Qwen2-Audio-7B & Base + Hand & 3423 & 10236 & 434 & 7247 & 0.041 & 0.679 \\
+Qwen2-Audio-7B & Base + OPRO & 7966 & 9664 & 1006 & 2704 & 0.094 & 0.253 \\
+Qwen2-Audio-7B & LoRA + Hand & 8797 & 9640 & 1030 & 1873 & 0.097 & 0.176 \\
+Qwen2-Audio-7B & LoRA + OPRO & 9904 & 10004 & 666 & 766 & 0.062 & 0.072 \\
+Qwen3-Omni-30B & Frozen + Hand & 9328 & 10109 & 561 & 1342 & 0.053 & 0.126 \\
+Qwen3-Omni-30B & Frozen + OPRO & 9518 & 9981 & 689 & 1152 & 0.065 & 0.108 \\
+\bottomrule
+\end{tabular}
+\end{table*}
