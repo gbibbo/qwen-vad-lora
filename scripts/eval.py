@@ -96,6 +96,14 @@ def evaluate_samples(model, samples_df, prompt, batch_size=50):
                 # Get model prediction
                 result = model.predict(audio_path, return_scores=True)
                 response = result.get("prediction", "") if isinstance(result, dict) else str(result)
+                p_first_token = float("nan")
+                if isinstance(result, dict):
+                    p_first_token = result.get(
+                        "p_first_token",
+                        (result.get("probs") or {}).get("p_first_token", float("nan"))
+                    )
+                elif isinstance(getattr(result, "probs", None), dict):
+                    p_first_token = result.probs.get("p_first_token", float("nan"))
                 prediction, _ = normalize_to_binary(response)
 
                 # LLM fallback for ambiguous responses
@@ -106,13 +114,15 @@ def evaluate_samples(model, samples_df, prompt, batch_size=50):
             except Exception as e:
                 print(f"  Error processing {audio_path}: {e}")
                 prediction = "ERROR"
+                p_first_token = float("nan")
 
             results.append({
                 "audio_path": audio_path,
                 "ground_truth": ground_truth,
                 "prediction": prediction,
                 "condition": condition_key,
-                "variant_type": row.get("variant_type", "unknown")
+                "variant_type": row.get("variant_type", "unknown"),
+                "p_first_token": p_first_token,
             })
 
         # Clear CUDA cache periodically

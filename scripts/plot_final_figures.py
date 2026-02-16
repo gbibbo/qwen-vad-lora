@@ -40,15 +40,15 @@ plt.rcParams.update({
 # 9-cell configuration map (folder name -> visual style)
 # ---------------------------------------------------------------------------
 CONFIG_MAP = {
-    '01_qwen2_base_baseline':      {'label': 'Qwen2 Base + Hand',      'color': '#7f7f7f', 'style': '--', 'marker': 'o'},
-    '02_qwen2_base_opro_llm':      {'label': 'Qwen2 Base + OPRO-LLM',  'color': '#1f77b4', 'style': '-',  'marker': 'o'},
-    '03_qwen2_base_opro_template': {'label': 'Qwen2 Base + OPRO-Tmpl', 'color': '#aec7e8', 'style': ':',  'marker': 'o'},
-    '04_qwen2_lora_baseline':      {'label': 'Qwen2 LoRA + Hand',      'color': '#ff7f0e', 'style': '--', 'marker': 's'},
-    '05_qwen2_lora_opro_llm':      {'label': 'Qwen2 LoRA + OPRO-LLM',  'color': '#d62728', 'style': '-',  'marker': 's'},
-    '06_qwen2_lora_opro_template': {'label': 'Qwen2 LoRA + OPRO-Tmpl', 'color': '#ff9896', 'style': ':',  'marker': 's'},
-    '07_qwen3_omni_baseline':      {'label': 'Qwen3 Omni + Hand',      'color': '#2ca02c', 'style': '--', 'marker': '^'},
-    '08_qwen3_omni_opro_llm':      {'label': 'Qwen3 Omni + OPRO-LLM',  'color': '#9467bd', 'style': '-',  'marker': '^'},
-    '09_qwen3_omni_opro_template': {'label': 'Qwen3 Omni + OPRO-Tmpl', 'color': '#c5b0d5', 'style': ':',  'marker': '^'},
+    '01_qwen2_base_baseline':      {'label': 'Baseline',           'color': '#7f7f7f', 'style': '--', 'marker': 'o'},
+    '02_qwen2_base_opro_llm':      {'label': 'Base + OPRO',        'color': '#1f77b4', 'style': '-',  'marker': 'o'},
+    '03_qwen2_base_opro_template': {'label': 'Base + OPRO-Tmpl',   'color': '#aec7e8', 'style': ':',  'marker': 'o'},
+    '04_qwen2_lora_baseline':      {'label': 'LoRA',               'color': '#ff7f0e', 'style': '--', 'marker': 's'},
+    '05_qwen2_lora_opro_llm':      {'label': 'LoRA + OPRO-LLM',   'color': '#d62728', 'style': '-',  'marker': 's'},
+    '06_qwen2_lora_opro_template': {'label': 'LoRA + OPRO',        'color': '#ff9896', 'style': ':',  'marker': 's'},
+    '07_qwen3_omni_baseline':      {'label': 'Qwen3 Baseline',     'color': '#2ca02c', 'style': '--', 'marker': '^'},
+    '08_qwen3_omni_opro_llm':      {'label': 'Qwen3 + OPRO',      'color': '#9467bd', 'style': '-',  'marker': '^'},
+    '09_qwen3_omni_opro_template': {'label': 'Qwen3 + OPRO-Tmpl', 'color': '#c5b0d5', 'style': ':',  'marker': '^'},
 }
 
 # Folder name -> key in statistical_analysis.json config_metrics

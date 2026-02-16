@@ -846,6 +846,12 @@ def run_full_analysis(
             ('qwen3_baseline', 'qwen3_opro', 'Qwen3 Baseline vs Qwen3+OPRO')
         )
 
+    # Add cross-model comparison: best Qwen2 adaptation vs Qwen3 zero-shot
+    if 'lora_opro_classic' in configs and 'qwen3_baseline' in configs:
+        primary_comparisons.append(
+            ('lora_opro_classic', 'qwen3_baseline', 'LoRA+OPRO-Tmpl vs Qwen3 Baseline')
+        )
+
     comparison_results = run_primary_comparisons(
         configs,
         primary_comparisons,
@@ -1015,6 +1021,10 @@ def main():
         help='Path to base+OPRO predictions.csv'
     )
     parser.add_argument(
+        '--base_opro_template', type=str, default=None,
+        help='Path to Base+OPRO-Template predictions.csv (optional)'
+    )
+    parser.add_argument(
         '--lora', type=str, required=True,
         help='Path to LoRA+BasePrompt predictions.csv'
     )
@@ -1032,7 +1042,11 @@ def main():
     )
     parser.add_argument(
         '--qwen3_opro', type=str, default=None,
-        help='Path to Qwen3 OPRO predictions.csv (optional)'
+        help='Path to Qwen3 OPRO-LLM predictions.csv (optional)'
+    )
+    parser.add_argument(
+        '--qwen3_opro_template', type=str, default=None,
+        help='Path to Qwen3 OPRO-Template predictions.csv (optional)'
     )
     parser.add_argument(
         '--output_dir', type=str, required=True,
@@ -1057,6 +1071,9 @@ def main():
         'lora_opro_classic': args.lora_opro
     }
 
+    if args.base_opro_template:
+        config_paths['base_opro_template'] = args.base_opro_template
+
     if args.lora_opro_open:
         config_paths['lora_opro_open'] = args.lora_opro_open
 
@@ -1065,6 +1082,9 @@ def main():
 
     if args.qwen3_opro:
         config_paths['qwen3_opro'] = args.qwen3_opro
+
+    if args.qwen3_opro_template:
+        config_paths['qwen3_opro_template'] = args.qwen3_opro_template
 
     # Run analysis
     run_full_analysis(

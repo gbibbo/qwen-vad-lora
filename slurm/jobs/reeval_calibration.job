@@ -1,0 +1,168 @@
+#!/bin/bash
+#SBATCH --job-name=opro3_reeval_calib
+#SBATCH --partition=a100
+#SBATCH --gpus=1
+#SBATCH --cpus-per-task=12
+#SBATCH --mem=64G
+#SBATCH --time=48:00:00
+#SBATCH --output=/mnt/fast/nobackup/users/gb0048/opro3_final/logs/reeval_calib_%j.out
+#SBATCH --error=/mnt/fast/nobackup/users/gb0048/opro3_final/logs/reeval_calib_%j.err
+
+# =============================================================================
+# OPRO3 - Re-evaluate 3 configs with p_first_token logging
+# =============================================================================
+# Re-runs eval.py (which now logs p_first_token) for configs 02, 06, 07.
+# Writes to a new timestamped folder; BEST_CONSOLIDATED is untouched.
+# After evaluation, generates the calibration reliability diagram.
+#
+# Usage:
+#   ./slurm/tools/on_submit.sh sbatch slurm/jobs/reeval_calibration.job
+# =============================================================================
+
+set -euo pipefail
+set -x
+
+REPO="/mnt/fast/nobackup/users/gb0048/opro3_final"
+REPO_PARENT="/mnt/fast/nobackup/users/gb0048"
+
+# Container
+CONTAINER="$REPO_PARENT/opro2/pytorch_2.1_cuda12.sif"
+
+# Timestamped output directory
+TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+OUT_ROOT="$REPO/results/${TIMESTAMP}_REEVAL_SCORES"
+
+echo "[INFO] ========================================================================"
+echo "[INFO] OPRO3 RE-EVALUATION (p_first_token) - START: $(date)"
+echo "[INFO] ========================================================================"
+echo "[INFO] Output root: $OUT_ROOT"
+echo "[INFO] GPU Info:"
+nvidia-smi --query-gpu=name,memory.total --format=csv
+
+cd "$REPO"
+
+# Environment setup
+export HF_HOME="$REPO_PARENT/.cache/huggingface"
+export TRANSFORMERS_CACHE="$HF_HOME/transformers"
+export HF_HUB_CACHE="$HF_HOME/hub"
+export PIP_CACHE_DIR="$REPO_PARENT/.cache/pip"
+export TMPDIR="$REPO_PARENT/tmp"
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+export PYTHONUSERBASE="$REPO_PARENT/.local"
+export USER_SITE="$PYTHONUSERBASE/lib/python3.10/site-packages"
+
+mkdir -p "$HF_HOME" "$TRANSFORMERS_CACHE" "$HF_HUB_CACHE" "$PIP_CACHE_DIR" "$TMPDIR" "$PYTHONUSERBASE"
+mkdir -p logs "$OUT_ROOT"
+
+# Verify container
+if [ ! -f "$CONTAINER" ]; then
+    echo "[ERROR] Container not found: $CONTAINER"
+    exit 1
+fi
+
+# Verify data symlink
+if [ ! -L "$REPO/data" ] && [ ! -d "$REPO/data" ]; then
+    echo "[ERROR] Data directory missing: $REPO/data"
+    exit 1
+fi
+
+MANIFEST="$REPO/data/processed/variants_validated_1000/test_metadata.csv"
+LORA_CKPT="$REPO/results/20260204_201138_COMPARATIVE_RUN/00_lora_training/checkpoints/final"
+PROMPT_FILE_06="$REPO/results/BEST_CONSOLIDATED/06_qwen2_lora_opro_template/optimization/best_prompt.txt"
+
+# Verify paths
+for f in "$MANIFEST" "$LORA_CKPT" "$PROMPT_FILE_06"; do
+    if [ ! -e "$f" ]; then
+        echo "[ERROR] Missing: $f"
+        exit 1
+    fi
+done
+
+APPTAINER_CMD="apptainer exec --nv \
+    --pwd $REPO \
+    --env HF_HOME=$HF_HOME \
+    --env TRANSFORMERS_CACHE=$TRANSFORMERS_CACHE \
+    --env HF_HUB_CACHE=$HF_HUB_CACHE \
+    --env PYTORCH_CUDA_ALLOC_CONF=$PYTORCH_CUDA_ALLOC_CONF \
+    --env PYTHONUSERBASE=$PYTHONUSERBASE \
+    --env PYTHONPATH=$USER_SITE:$REPO \
+    $CONTAINER"
+
+# ============================================================================
+# Config 02: Qwen2-Audio Base + OPRO-LLM prompt
+# ============================================================================
+echo ""
+echo "[INFO] ====== Config 02: qwen2_base_opro_llm ======"
+$APPTAINER_CMD python3 scripts/eval.py \
+    --manifest "$MANIFEST" \
+    --output_dir "$OUT_ROOT/02_qwen2_base_opro_llm/evaluation" \
+    --model_type qwen2 \
+    --prompt "Is this audio human speech? Answer: SPEECH or NON-SPEECH."
+
+echo "[INFO] Config 02 DONE"
+
+# ============================================================================
+# Config 06: Qwen2-Audio LoRA + OPRO-Template prompt
+# ============================================================================
+echo ""
+echo "[INFO] ====== Config 06: qwen2_lora_opro_template ======"
+$APPTAINER_CMD python3 scripts/eval.py \
+    --manifest "$MANIFEST" \
+    --output_dir "$OUT_ROOT/06_qwen2_lora_opro_template/evaluation" \
+    --model_type qwen2 \
+    --checkpoint "$LORA_CKPT" \
+    --prompt_file "$PROMPT_FILE_06"
+
+echo "[INFO] Config 06 DONE"
+
+# ============================================================================
+# Config 07: Qwen3-Omni Baseline
+# ============================================================================
+echo ""
+echo "[INFO] ====== Config 07: qwen3_omni_baseline ======"
+$APPTAINER_CMD python3 scripts/eval.py \
+    --manifest "$MANIFEST" \
+    --output_dir "$OUT_ROOT/07_qwen3_omni_baseline/evaluation" \
+    --model_type qwen3_omni \
+    --prompt "Does this audio contain human speech? Answer SPEECH or NONSPEECH."
+
+echo "[INFO] Config 07 DONE"
+
+# ============================================================================
+# Verify p_first_token column
+# ============================================================================
+echo ""
+echo "[INFO] ====== Verification ======"
+for cfg in 02_qwen2_base_opro_llm 06_qwen2_lora_opro_template 07_qwen3_omni_baseline; do
+    CSV="$OUT_ROOT/$cfg/evaluation/predictions.csv"
+    HEADER=$(head -1 "$CSV")
+    echo "  $cfg: $HEADER"
+    if echo "$HEADER" | grep -q "p_first_token"; then
+        echo "    ✓ p_first_token present"
+    else
+        echo "    ✗ p_first_token MISSING — check eval.py"
+    fi
+done
+
+# ============================================================================
+# Generate calibration figure
+# ============================================================================
+echo ""
+echo "[INFO] ====== Generating calibration figure ======"
+mkdir -p "$REPO/figures/supplementary"
+
+$APPTAINER_CMD python3 scripts/generate_calibration_figure.py \
+    --prediction_csvs \
+        "$OUT_ROOT/06_qwen2_lora_opro_template/evaluation/predictions.csv" \
+        "$OUT_ROOT/07_qwen3_omni_baseline/evaluation/predictions.csv" \
+        "$OUT_ROOT/02_qwen2_base_opro_llm/evaluation/predictions.csv" \
+    --labels "LoRA+OPRO-Tmpl" "Qwen3 Baseline" "Base+OPRO-LLM" \
+    --output "$REPO/figures/supplementary/Fig_Supp_Calibration.pdf"
+
+echo ""
+echo "[INFO] ========================================================================"
+echo "[INFO] RE-EVALUATION COMPLETE - SUCCESS"
+echo "[INFO] Results: $OUT_ROOT"
+echo "[INFO] Figure:  $REPO/figures/supplementary/Fig_Supp_Calibration.pdf"
+echo "[INFO] END: $(date)"
+echo "[INFO] ========================================================================"

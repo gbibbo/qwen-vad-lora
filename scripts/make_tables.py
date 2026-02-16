@@ -22,8 +22,8 @@ from pathlib import Path
 REPO = Path("/mnt/fast/nobackup/users/gb0048/opro3_final")
 STATS_FILE = REPO / "results/BEST_CONSOLIDATED/stats/statistical_analysis.json"
 RAW_RESULTS_FILE = REPO / "results/BEST_CONSOLIDATED/all_experiment_results.json"
-TABLES_DIR = REPO / "tables_final"
-OUTPUT_CONSOLIDATED = REPO / "tables_final/LATEX_TABLES_UPDATED.txt"
+TABLES_DIR = REPO / "tables"
+OUTPUT_CONSOLIDATED = REPO / "tables/LATEX_TABLES_UPDATED.txt"
 
 # Paths to metrics.json for dimension means (all 9 cells)
 METRICS_PATHS = {
@@ -31,6 +31,7 @@ METRICS_PATHS = {
     'base_opro':           REPO / "results/BEST_CONSOLIDATED/02_qwen2_base_opro_llm/evaluation/metrics.json",
     'base_opro_template':  REPO / "results/BEST_CONSOLIDATED/03_qwen2_base_opro_template/evaluation/metrics.json",
     'lora':                REPO / "results/BEST_CONSOLIDATED/04_qwen2_lora_baseline/evaluation/metrics.json",
+    'lora_opro_open':      REPO / "results/BEST_CONSOLIDATED/05_qwen2_lora_opro_llm/evaluation/metrics.json",
     'lora_opro':           REPO / "results/BEST_CONSOLIDATED/06_qwen2_lora_opro_template/evaluation/metrics.json",
     'lora_opro_classic':   REPO / "results/BEST_CONSOLIDATED/06_qwen2_lora_opro_template/evaluation/metrics.json",
     'qwen3_baseline':      REPO / "results/BEST_CONSOLIDATED/07_qwen3_omni_baseline/evaluation/metrics.json",
@@ -133,24 +134,31 @@ def format_pvalue(p):
 # TABLE 1: Overall Performance
 # =============================================================================
 def generate_overall_performance_table(stats):
-    """Generate Tab_R02_OverallPerformance.tex"""
+    """Generate Tab_R02_OverallPerformance.tex — all 9 matrix cells."""
 
-    config_display = {
-        'baseline': ('Qwen2-Audio-7B', 'Base + Hand'),
-        'base_opro': ('Qwen2-Audio-7B', 'Base + OPRO'),
-        'lora': ('Qwen2-Audio-7B', 'LoRA + Hand'),
-        'lora_opro': ('Qwen2-Audio-7B', 'LoRA + OPRO'),
-        'lora_opro_classic': ('Qwen2-Audio-7B', 'LoRA + OPRO'),
-        'qwen3_baseline': ('Qwen3-Omni-30B', 'Frozen + Hand'),
-        'qwen3_opro': ('Qwen3-Omni-30B', 'Frozen + OPRO'),
+    # 9 configs in matrix order, grouped by model block
+    config_rows = [
+        ('baseline',           'Base + Hand',       'qwen2_base'),
+        ('base_opro',          'Base + OPRO-LLM',   'qwen2_base'),
+        ('base_opro_template', 'Base + OPRO-Tmpl',  'qwen2_base'),
+        ('lora',               'LoRA + Hand',       'qwen2_lora'),
+        ('lora_opro_open',     'LoRA + OPRO-LLM',   'qwen2_lora'),
+        ('lora_opro',          'LoRA + OPRO-Tmpl',  'qwen2_lora'),
+        ('qwen3_baseline',     'Frozen + Hand',     'qwen3'),
+        ('qwen3_opro',         'Frozen + OPRO-LLM', 'qwen3'),
+        ('qwen3_opro_template','Frozen + OPRO-Tmpl','qwen3'),
+    ]
+
+    model_display = {
+        'qwen2_base': 'Qwen2-Audio-7B',
+        'qwen2_lora': 'Qwen2-Audio-7B',
+        'qwen3': 'Qwen3-Omni-30B',
     }
-
-    display_order = ['baseline', 'base_opro', 'lora', 'lora_opro_classic', 'qwen3_baseline', 'qwen3_opro']
 
     lines = []
     lines.append(r"\begin{table*}[t]")
     lines.append(r"\centering")
-    lines.append(r"\caption{Overall performance on the test set (21,340 samples). BA = Balanced Accuracy with 95\% CI (2,000 bootstrap resamples). Per-class recalls with Wilson score 95\% CI.}")
+    lines.append(r"\caption{Overall performance on the test set (21,340 samples). BA = Balanced Accuracy with 95\% CI (10,000 cluster-bootstrap resamples). Per-class recalls with Wilson score 95\% CI.}")
     lines.append(r"\label{tab:overall_performance}")
     lines.append(r"\footnotesize")
     lines.append(r"\setlength{\tabcolsep}{3pt}")
@@ -162,12 +170,17 @@ def generate_overall_performance_table(stats):
 
     config_metrics = stats.get('config_metrics', {})
 
-    for cfg_key in display_order:
+    prev_group = None
+    for cfg_key, display_name, group in config_rows:
         if cfg_key not in config_metrics:
             continue
 
+        if prev_group is not None and group != prev_group:
+            lines.append(r"\midrule")
+        prev_group = group
+
+        model = model_display[group]
         m = config_metrics[cfg_key]
-        model, config = config_display.get(cfg_key, ('Unknown', cfg_key))
 
         ba = m.get('ba_clip', 0)
         ba_ci = m.get('ba_clip_ci', [ba, ba])
@@ -181,7 +194,7 @@ def generate_overall_performance_table(stats):
         rn_ci = m.get('recall_nonspeech_ci', [rn, rn])
         rn_str = format_ci(rn, rn_ci[0], rn_ci[1])
 
-        lines.append(f"{model} & {config} & {ba_str} & {rs_str} & {rn_str} \\\\")
+        lines.append(f"{model} & {display_name} & {ba_str} & {rs_str} & {rn_str} \\\\")
 
     lines.append(r"\bottomrule")
     lines.append(r"\end{tabular}")
@@ -194,56 +207,81 @@ def generate_overall_performance_table(stats):
 # TABLE 2: Dimension Means
 # =============================================================================
 def generate_dimension_means_table(metrics_data):
-    """Generate Tab_R04_dimension_means.tex"""
+    """Generate Tab_R04_dimension_means.tex — transposed: configs as rows, axes as columns."""
+
+    axes = ['duration', 'snr', 'reverb', 'filter']
+
+    # 9 configs in matrix order, grouped by model
+    config_rows = [
+        ('baseline',           'Base + Hand',       'qwen2_base'),
+        ('base_opro',          'Base + OPRO-LLM',   'qwen2_base'),
+        ('base_opro_template', 'Base + OPRO-Tmpl',  'qwen2_base'),
+        ('lora',               'LoRA + Hand',       'qwen2_lora'),
+        ('lora_opro_open',     'LoRA + OPRO-LLM',   'qwen2_lora'),
+        ('lora_opro',          'LoRA + OPRO-Tmpl',  'qwen2_lora'),
+        ('qwen3_baseline',     'Frozen + Hand',     'qwen3'),
+        ('qwen3_opro',         'Frozen + OPRO-LLM', 'qwen3'),
+        ('qwen3_opro_template','Frozen + OPRO-Tmpl','qwen3'),
+    ]
+
+    model_display = {
+        'qwen2_base': 'Qwen2-Audio-7B',
+        'qwen2_lora': 'Qwen2-Audio-7B',
+        'qwen3': 'Qwen3-Omni-30B',
+    }
 
     lines = []
     lines.append(r"\begin{table}[t]")
     lines.append(r"\centering")
-    lines.append(r"\caption{Mean balanced accuracy (\%) within each degradation axis (macro-average over the conditions in that axis).}")
+    lines.append(r"\caption{Mean balanced accuracy (\%) within each degradation axis (macro-average over the conditions in that axis). Bold indicates column-wise best.}")
     lines.append(r"\label{tab:r04_dimension_means}")
     lines.append(r"\footnotesize")
-    lines.append(r"\setlength{\tabcolsep}{5pt}")
-    lines.append(r"\begin{tabular}{lcccc}")
+    lines.append(r"\setlength{\tabcolsep}{4pt}")
+    lines.append(r"\renewcommand{\arraystretch}{1.12}")
+    lines.append(r"\begin{tabular}{llcccc}")
     lines.append(r"\toprule")
-    lines.append(r"\textbf{Axis} &")
-    lines.append(r"\textbf{Baseline} &")
-    lines.append(r"\textbf{Base+OPRO} &")
-    lines.append(r"\textbf{LoRA} &")
-    lines.append(r"\textbf{LoRA+OPRO} \\")
+    lines.append(r"\textbf{Model} & \textbf{Configuration} & \textbf{Duration} & \textbf{SNR} & \textbf{Reverb} & \textbf{Filter} \\")
     lines.append(r"\midrule")
 
-    axes = ['duration', 'snr', 'reverb', 'filter']
-    axis_display = {
-        'duration': 'Duration',
-        'snr': 'SNR',
-        'reverb': 'Reverb',
-        'filter': 'Filter'
-    }
-    configs = ['baseline', 'base_opro', 'lora', 'lora_opro']
-
-    for axis in axes:
-        row_values = []
-        for cfg in configs:
-            if cfg in metrics_data:
-                dim_metrics = metrics_data[cfg].get('dimension_metrics', {})
+    # Pre-compute all values to find column maxima
+    all_values = {axis: [] for axis in axes}
+    row_data = []
+    for cfg_key, display_name, group in config_rows:
+        row_vals = {}
+        for axis in axes:
+            if cfg_key in metrics_data:
+                dim_metrics = metrics_data[cfg_key].get('dimension_metrics', {})
                 if axis in dim_metrics:
-                    ba = dim_metrics[axis].get('ba', 0) * 100  # Convert to percentage
-                    row_values.append(f"{ba:.2f}")
+                    val = dim_metrics[axis].get('ba', 0) * 100
+                    row_vals[axis] = val
+                    all_values[axis].append(val)
                 else:
-                    row_values.append("--")
+                    row_vals[axis] = None
             else:
-                row_values.append("--")
+                row_vals[axis] = None
+        row_data.append(row_vals)
 
-        # Bold the maximum value
-        max_val = max([float(v) for v in row_values if v != "--"], default=0)
-        formatted_values = []
-        for v in row_values:
-            if v != "--" and abs(float(v) - max_val) < 0.01:
-                formatted_values.append(r"\textbf{" + v + "}")
+    col_max = {axis: max(all_values[axis]) if all_values[axis] else 0 for axis in axes}
+
+    prev_group = None
+    for i, (cfg_key, display_name, group) in enumerate(config_rows):
+        if prev_group is not None and group != prev_group:
+            lines.append(r"\midrule")
+        prev_group = group
+
+        model = model_display[group]
+        cells = []
+        for axis in axes:
+            val = row_data[i][axis]
+            if val is None:
+                cells.append("--")
             else:
-                formatted_values.append(v)
+                s = f"{val:.1f}"
+                if abs(val - col_max[axis]) < 0.05:
+                    s = r"\textbf{" + s + "}"
+                cells.append(s)
 
-        lines.append(f"{axis_display[axis]} & {' & '.join(formatted_values)} \\\\")
+        lines.append(f"{model} & {display_name} & {' & '.join(cells)} \\\\")
 
     lines.append(r"\bottomrule")
     lines.append(r"\end{tabular}")
@@ -370,9 +408,12 @@ def generate_psychometric_thresholds_table(stats):
         'lora': 'LoRA+Hand',
         'lora_opro': 'LoRA+OPRO',
         'lora_opro_classic': 'LoRA+OPRO',
+        'qwen3_baseline': 'Qwen3 Baseline',
+        'qwen3_opro': 'Qwen3+OPRO-LLM',
+        'qwen3_opro_template': 'Qwen3+OPRO-Tmpl',
     }
 
-    display_order = ['baseline', 'base_opro', 'lora', 'lora_opro_classic']
+    display_order = ['baseline', 'base_opro', 'lora', 'lora_opro_classic', 'qwen3_baseline', 'qwen3_opro', 'qwen3_opro_template']
 
     lines = []
     lines.append(r"\begin{table}[ht]")
@@ -384,9 +425,15 @@ def generate_psychometric_thresholds_table(stats):
     lines.append(r"\textbf{Configuration} & \textbf{DT50 (ms)} & \textbf{DT75 (ms)} & \textbf{DT90 (ms)} & \textbf{SNR75 (dB)} \\")
     lines.append(r"\midrule")
 
+    prev_was_qwen2 = False
     for cfg_key in display_order:
         if cfg_key not in thresholds:
             continue
+
+        # Insert separator between Qwen2 and Qwen3 sections
+        if cfg_key.startswith('qwen3') and prev_was_qwen2:
+            lines.append(r"\midrule")
+        prev_was_qwen2 = not cfg_key.startswith('qwen3')
 
         cfg_thresh = thresholds[cfg_key]
         config_name = config_display.get(cfg_key, cfg_key)

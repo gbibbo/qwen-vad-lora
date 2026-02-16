@@ -1,0 +1,98 @@
+#!/bin/bash
+#SBATCH --job-name=opro3_stats
+#SBATCH --partition=a100
+#SBATCH --gpus=1
+#SBATCH --cpus-per-task=12
+#SBATCH --mem=32G
+#SBATCH --time=48:00:00
+#SBATCH --output=/mnt/fast/nobackup/users/gb0048/opro3_final/logs/stats_%j.out
+#SBATCH --error=/mnt/fast/nobackup/users/gb0048/opro3_final/logs/stats_%j.err
+
+# =============================================================================
+# OPRO3 - Statistical Analysis Re-run
+# =============================================================================
+# Re-runs stats.py with all 9 configs (including qwen3_opro_template)
+# and the new cross-model comparison (LoRA+OPRO-Tmpl vs Qwen3 Baseline).
+#
+# Usage:
+#   ./slurm/tools/on_submit.sh sbatch slurm/jobs/stats_rerun.job
+# =============================================================================
+
+set -euo pipefail
+set -x
+
+REPO="/mnt/fast/nobackup/users/gb0048/opro3_final"
+REPO_PARENT="/mnt/fast/nobackup/users/gb0048"
+
+# Container
+CONTAINER="$REPO_PARENT/opro2/pytorch_2.1_cuda12.sif"
+
+echo "[INFO] ========================================================================"
+echo "[INFO] OPRO3 STATS RE-RUN - START: $(date)"
+echo "[INFO] ========================================================================"
+
+cd "$REPO"
+
+# Environment setup
+export HF_HOME="$REPO_PARENT/.cache/huggingface"
+export PIP_CACHE_DIR="$REPO_PARENT/.cache/pip"
+export TMPDIR="$REPO_PARENT/tmp"
+export PYTHONUSERBASE="$REPO_PARENT/.local"
+export USER_SITE="$PYTHONUSERBASE/lib/python3.10/site-packages"
+
+mkdir -p "$TMPDIR" "$PYTHONUSERBASE"
+mkdir -p logs
+
+# Verify container exists
+if [ ! -f "$CONTAINER" ]; then
+    echo "[ERROR] Container not found: $CONTAINER"
+    exit 1
+fi
+echo "[INFO] Container: $CONTAINER"
+
+# Paths to all 9 prediction CSVs
+BEST="$REPO/results/BEST_CONSOLIDATED"
+
+echo "[INFO] Running stats.py with 9 configs + cross-model comparison..."
+
+apptainer exec --nv \
+    --pwd "$REPO" \
+    --env PYTHONUSERBASE="$PYTHONUSERBASE" \
+    --env PYTHONPATH="$USER_SITE:$REPO${PYTHONPATH:+:$PYTHONPATH}" \
+    "$CONTAINER" python3 scripts/stats.py \
+    --baseline       "$BEST/01_qwen2_base_baseline/evaluation/predictions.csv" \
+    --base_opro      "$BEST/02_qwen2_base_opro_llm/evaluation/predictions.csv" \
+    --base_opro_template "$BEST/03_qwen2_base_opro_template/evaluation/predictions.csv" \
+    --lora           "$BEST/04_qwen2_lora_baseline/evaluation/predictions.csv" \
+    --lora_opro      "$BEST/06_qwen2_lora_opro_template/evaluation/predictions.csv" \
+    --lora_opro_open "$BEST/05_qwen2_lora_opro_llm/evaluation/predictions.csv" \
+    --qwen3_baseline "$BEST/07_qwen3_omni_baseline/evaluation/predictions.csv" \
+    --qwen3_opro     "$BEST/08_qwen3_omni_opro_llm/evaluation/predictions.csv" \
+    --qwen3_opro_template "$BEST/09_qwen3_omni_opro_template/evaluation/predictions.csv" \
+    --output_dir     "$BEST/stats" \
+    --n_bootstrap    10000 \
+    --seed           42
+
+EXIT_CODE=$?
+
+# If stats succeeded, regenerate tables
+if [ $EXIT_CODE -eq 0 ]; then
+    echo "[INFO] Stats complete. Regenerating LaTeX tables..."
+    apptainer exec --nv \
+        --pwd "$REPO" \
+        --env PYTHONUSERBASE="$PYTHONUSERBASE" \
+        --env PYTHONPATH="$USER_SITE:$REPO${PYTHONPATH:+:$PYTHONPATH}" \
+        "$CONTAINER" python3 scripts/make_tables.py
+fi
+
+echo "[INFO] ========================================================================"
+if [ $EXIT_CODE -eq 0 ]; then
+    echo "[INFO] STATS RE-RUN COMPLETE - SUCCESS"
+    echo "[INFO] Updated tables in: $REPO/tables/"
+else
+    echo "[ERROR] STATS RE-RUN FAILED (Exit code: $EXIT_CODE)"
+fi
+echo "[INFO] END: $(date)"
+echo "[INFO] ========================================================================"
+
+exit $EXIT_CODE

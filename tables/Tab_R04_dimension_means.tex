@@ -1,0 +1,25 @@
+\begin{table}[t]
+\centering
+\caption{Mean balanced accuracy (\%) within each degradation axis (macro-average over the conditions in that axis). Bold indicates column-wise best.}
+\label{tab:r04_dimension_means}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{llcccc}
+\toprule
+\textbf{Model} & \textbf{Configuration} & \textbf{Duration} & \textbf{SNR} & \textbf{Reverb} & \textbf{Filter} \\
+\midrule
+Qwen2-Audio-7B & Base + Hand & 65.9 & 62.8 & 64.0 & 62.1 \\
+Qwen2-Audio-7B & Base + OPRO-LLM & 82.5 & 86.0 & 81.8 & 78.7 \\
+Qwen2-Audio-7B & Base + OPRO-Tmpl & 75.1 & 74.8 & 76.0 & 74.7 \\
+\midrule
+Qwen2-Audio-7B & LoRA + Hand & 86.4 & 90.1 & 83.9 & 83.2 \\
+Qwen2-Audio-7B & LoRA + OPRO-LLM & 81.5 & 82.2 & 87.9 & 88.0 \\
+Qwen2-Audio-7B & LoRA + OPRO-Tmpl & \textbf{87.4} & 97.4 & 96.1 & 96.2 \\
+\midrule
+Qwen3-Omni-30B & Frozen + Hand & 79.8 & \textbf{98.5} & \textbf{97.0} & 96.7 \\
+Qwen3-Omni-30B & Frozen + OPRO-LLM & 81.1 & 97.8 & 96.9 & \textbf{96.8} \\
+Qwen3-Omni-30B & Frozen + OPRO-Tmpl & 77.7 & 95.3 & 92.4 & 92.2 \\
+\bottomrule
+\end{tabular}
+\end{table}
