@@ -1,0 +1,9 @@
+n_clips,prompt_type,label,status,ba_clip,ba_conditions,speech_acc,nonspeech_acc,n_test_samples,ba_duration,ba_snr,ba_reverb,ba_filter
+256,hand,LoRA+Hand,missing,,,,,,,,,
+512,hand,LoRA+Hand,missing,,,,,,,,,
+1024,hand,LoRA+Hand,missing,,,,,,,,,
+3072,hand,LoRA+Hand,,0.8639643861293347,0.8592353951890035,0.8244611059044049,0.9034676663542643,21340.0,0.8641752577319588,0.9013745704467354,0.8394329896907217,0.831958762886598
+256,opro_tmpl,LoRA+OPRO-Tmpl,missing,,,,,,,,,
+512,opro_tmpl,LoRA+OPRO-Tmpl,missing,,,,,,,,,
+1024,opro_tmpl,LoRA+OPRO-Tmpl,missing,,,,,,,,,
+3072,opro_tmpl,LoRA+OPRO-Tmpl,,0.9328959700093721,0.9425902061855671,0.9282099343955014,0.9375820056232428,21340.0,0.8737113402061857,0.9737113402061857,0.9605670103092784,0.9623711340206185

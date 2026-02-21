@@ -1,0 +1,5 @@
+Binary classification task.
+Q: Does this contain human speech?
+If confident YES → SPEECH
+If confident NO → NONSPEECH
+Answer:

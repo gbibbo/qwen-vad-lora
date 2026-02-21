@@ -183,6 +183,100 @@ def normalize_to_binary(
     return None, 0.0
 
 
+def normalize_to_binary_with_level(
+    text: str,
+    probs: Optional[Dict[str, float]] = None,
+    mode: str = "auto",
+    mapping: Optional[Dict[str, str]] = None,
+    verbalizers: Optional[List[str]] = None,
+) -> Tuple[Optional[str], float, str]:
+    """
+    Same as normalize_to_binary, but additionally returns the normalization level.
+
+    Returns:
+        (label, confidence, level) where level is one of:
+        'L1_NONSPEECH', 'L2_SPEECH', 'L3_LETTER', 'L4_YESNO',
+        'L5_KEYWORDS', 'L6_UNKNOWN'
+    """
+    if not text:
+        return None, 0.0, "L6_UNKNOWN"
+
+    text_clean = text.strip().upper()
+    text_lower = text.strip().lower()
+
+    if verbalizers is None:
+        verbalizers = ["SPEECH", "NONSPEECH"]
+
+    confidence = 1.0
+    if probs:
+        if "p_first_token" in probs:
+            confidence = probs["p_first_token"]
+
+    # Priority 1: NONSPEECH/NON-SPEECH
+    if (
+        "NONSPEECH" in text_clean
+        or "NON-SPEECH" in text_clean
+        or "NON SPEECH" in text_clean
+        or "NO SPEECH" in text_clean
+    ):
+        if "NOT NONSPEECH" not in text_clean and "NOT NON-SPEECH" not in text_clean:
+            return "NONSPEECH", confidence, "L1_NONSPEECH"
+
+    # Priority 2: SPEECH
+    if "SPEECH" in text_clean:
+        if "NOT SPEECH" not in text_clean:
+            return "SPEECH", confidence, "L2_SPEECH"
+
+    # Priority 3: Letter mapping
+    if mapping:
+        letter_match = re.match(r"^([A-D])", text_clean)
+        if letter_match:
+            letter = letter_match.group(1)
+            if letter in mapping:
+                label = mapping[letter]
+                if probs and letter in probs:
+                    confidence = probs[letter]
+                return label, confidence, "L3_LETTER"
+
+    # Priority 4: Yes/No
+    yes_patterns = ["YES", "SÍ", "SI", "AFFIRMATIVE", "TRUE", "CORRECT", "PRESENT"]
+    no_patterns = ["NO", "NEGATIVE", "FALSE", "INCORRECT", "ABSENT", "NOT PRESENT"]
+
+    for pattern in yes_patterns:
+        if re.search(r'\b' + re.escape(pattern) + r'\b', text_clean):
+            return "SPEECH", confidence * 0.95, "L4_YESNO"
+
+    for pattern in no_patterns:
+        if re.search(r'\b' + re.escape(pattern) + r'\b', text_clean):
+            return "NONSPEECH", confidence * 0.95, "L4_YESNO"
+
+    # Priority 5: Synonyms
+    speech_synonyms = [
+        "voice", "voices", "talking", "spoken", "speaking", "speaker",
+        "conversation", "conversational", "words", "utterance", "vocal",
+        "human voice", "person talking", "dialogue", "speech", "syllables",
+        "phonemes", "formants",
+    ]
+    nonspeech_synonyms = [
+        "music", "musical", "song", "melody", "instrumental", "beep", "beeps",
+        "tone", "tones", "pitch", "sine wave", "noise", "noisy", "static",
+        "hiss", "white noise", "silence", "silent", "quiet", "nothing", "empty",
+        "ambient", "environmental", "background", "click", "clicks", "clock",
+        "tick", "ticking",
+    ]
+
+    speech_score = sum(1 for syn in speech_synonyms if syn in text_lower)
+    nonspeech_score = sum(1 for syn in nonspeech_synonyms if syn in text_lower)
+
+    if speech_score > nonspeech_score:
+        return "SPEECH", confidence * 0.8, "L5_KEYWORDS"
+    elif nonspeech_score > speech_score:
+        return "NONSPEECH", confidence * 0.8, "L5_KEYWORDS"
+
+    # Priority 6: Unknown
+    return None, 0.0, "L6_UNKNOWN"
+
+
 def detect_format(text: str) -> str:
     """
     Auto-detect prompt format from text.

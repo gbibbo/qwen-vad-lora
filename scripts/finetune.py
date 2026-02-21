@@ -492,6 +492,9 @@ def main():
     parser.add_argument("--per_device_train_batch_size", type=int, default=2, help="Training batch size per device")
     parser.add_argument("--gradient_accumulation_steps", type=int, default=8, help="Gradient accumulation steps")
     parser.add_argument("--learning_rate", type=float, default=5e-5, help="Learning rate (paper: 5e-5)")
+    parser.add_argument("--warmup_steps", type=int, default=None,
+                        help="Warmup steps (default: TrainingConfig default of 100). "
+                             "For small datasets, set proportionally: round(total_steps * 0.1736)")
     parser.add_argument("--data_root", type=str, default=None, help="Root directory for audio files (if paths in CSV are relative)")
 
     # VAD filtering (Silero)
@@ -522,6 +525,8 @@ def main():
     config.batch_size = args.per_device_train_batch_size
     config.gradient_accumulation_steps = args.gradient_accumulation_steps
     config.learning_rate = args.learning_rate
+    if args.warmup_steps is not None:
+        config.warmup_steps = args.warmup_steps
 
     # Set seeds for reproducibility
     torch.manual_seed(config.seed)
@@ -546,6 +551,7 @@ def main():
     print(f"  Epochs: {config.num_epochs}")
     print(f"  Batch size: {config.batch_size}")
     print(f"  Learning rate: {config.learning_rate}")
+    print(f"  Warmup steps: {config.warmup_steps}")
     print(f"  Random seed: {config.seed}")
 
     # Load processor

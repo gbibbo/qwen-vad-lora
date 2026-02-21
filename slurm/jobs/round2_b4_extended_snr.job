@@ -1,0 +1,123 @@
+#!/bin/bash
+#SBATCH --job-name=opro3_r2_b4
+#SBATCH --partition=a100
+#SBATCH --gpus=1
+#SBATCH --cpus-per-task=12
+#SBATCH --mem=64G
+#SBATCH --time=24:00:00
+#SBATCH --output=/mnt/fast/nobackup/users/gb0048/opro3_final/logs/r2_b4_%j.out
+#SBATCH --error=/mnt/fast/nobackup/users/gb0048/opro3_final/logs/r2_b4_%j.err
+
+# =============================================================================
+# B.4 Part 3 — Extended SNR Evaluation (-15 and -20 dB)
+# =============================================================================
+# Phase A: Generate audio variants (CPU, ~5 min)
+# Phase B: Evaluate top 3 systems (GPU, ~4-5h)
+#
+# Usage:
+#   ./slurm/tools/on_submit.sh sbatch slurm/jobs/round2_b4_extended_snr.job
+# =============================================================================
+
+set -euo pipefail
+set -x
+
+REPO="/mnt/fast/nobackup/users/gb0048/opro3_final"
+REPO_PARENT="/mnt/fast/nobackup/users/gb0048"
+CONTAINER="$REPO_PARENT/opro2/pytorch_2.1_cuda12.sif"
+
+echo "[INFO] ========================================================================"
+echo "[INFO] B.4 — Extended SNR Evaluation (-15, -20 dB)"
+echo "[INFO] START: $(date)"
+echo "[INFO] ========================================================================"
+nvidia-smi --query-gpu=name,memory.total --format=csv
+
+cd "$REPO"
+
+# Environment setup
+export HF_HOME="$REPO_PARENT/.cache/huggingface"
+export TRANSFORMERS_CACHE="$HF_HOME/transformers"
+export HF_HUB_CACHE="$HF_HOME/hub"
+export PIP_CACHE_DIR="$REPO_PARENT/.cache/pip"
+export TMPDIR="$REPO_PARENT/tmp"
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+export PYTHONUSERBASE="$REPO_PARENT/.local"
+export USER_SITE="$PYTHONUSERBASE/lib/python3.10/site-packages"
+
+mkdir -p "$HF_HOME" "$TRANSFORMERS_CACHE" "$HF_HUB_CACHE" "$PIP_CACHE_DIR" "$TMPDIR" "$PYTHONUSERBASE"
+mkdir -p logs audits/round2/b4_extended_snr
+
+# Install torchaudio if needed
+apptainer exec --nv \
+    --env PIP_CACHE_DIR="$PIP_CACHE_DIR" \
+    --env TMPDIR="$TMPDIR" \
+    --env PYTHONUSERBASE="$PYTHONUSERBASE" \
+    "$CONTAINER" pip install --user --no-cache-dir \
+    torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
+
+BEST="$REPO/results/BEST_CONSOLIDATED"
+OUT="$REPO/audits/round2/b4_extended_snr"
+MANIFEST="$OUT/extended_snr_metadata.csv"
+LORA_CKPT="$REPO/results/20260204_201138_COMPARATIVE_RUN/00_lora_training/checkpoints/final"
+
+RUN_CMD="apptainer exec --nv --pwd $REPO \
+    --env HF_HOME=$HF_HOME \
+    --env TRANSFORMERS_CACHE=$TRANSFORMERS_CACHE \
+    --env HF_HUB_CACHE=$HF_HUB_CACHE \
+    --env PYTORCH_CUDA_ALLOC_CONF=$PYTORCH_CUDA_ALLOC_CONF \
+    --env PYTHONUSERBASE=$PYTHONUSERBASE \
+    --env PYTHONPATH=$USER_SITE:$REPO \
+    $CONTAINER"
+
+# ---- Phase A: Generate audio (CPU, with sanity check) ----
+echo ""
+echo "[PHASE A] Generating extended SNR audio variants..."
+$RUN_CMD python3 scripts/generate_extended_snr.py \
+    --output_dir "$OUT" \
+    --snr_levels -15.0 -20.0 \
+    --sanity_check_n 5
+
+echo "[PHASE A] Audio generation complete: $(date)"
+echo "[PHASE A] Manifest: $MANIFEST"
+wc -l "$MANIFEST"
+
+# ---- Phase B: Evaluate top 3 systems ----
+
+# Config 06: LoRA+OPRO-Tmpl (best Qwen2)
+echo ""
+echo "[PHASE B] Config 06: LoRA+OPRO-Tmpl"
+$RUN_CMD python3 scripts/eval.py \
+    --manifest "$MANIFEST" \
+    --prompt_file "$BEST/06_qwen2_lora_opro_template/optimization/best_prompt.txt" \
+    --output_dir "$OUT/06_lora_opro_template" \
+    --model_type qwen2 \
+    --checkpoint "$LORA_CKPT"
+
+echo "[DONE] Config 06: $(date)"
+
+# Config 07: Qwen3+Hand (best Qwen3 zero-shot)
+echo ""
+echo "[PHASE B] Config 07: Qwen3+Hand"
+$RUN_CMD python3 scripts/eval.py \
+    --manifest "$MANIFEST" \
+    --prompt "Does this audio contain human speech? Answer SPEECH or NONSPEECH." \
+    --output_dir "$OUT/07_qwen3_baseline" \
+    --model_type qwen3_omni
+
+echo "[DONE] Config 07: $(date)"
+
+# Config 08: Qwen3+OPRO-LLM (best Qwen3 OPRO)
+echo ""
+echo "[PHASE B] Config 08: Qwen3+OPRO-LLM"
+$RUN_CMD python3 scripts/eval.py \
+    --manifest "$MANIFEST" \
+    --prompt_file "$BEST/08_qwen3_omni_opro_llm/optimization/best_prompt.txt" \
+    --output_dir "$OUT/08_qwen3_opro_llm" \
+    --model_type qwen3_omni
+
+echo "[DONE] Config 08: $(date)"
+
+echo ""
+echo "[INFO] ========================================================================"
+echo "[INFO] B.4 EXTENDED SNR EVALUATION COMPLETE"
+echo "[INFO] END: $(date)"
+echo "[INFO] ========================================================================"

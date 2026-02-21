@@ -6,20 +6,23 @@
 \toprule
 \textbf{Configuration} & \textbf{DT50 (ms)} & \textbf{DT75 (ms)} & \textbf{DT90 (ms)} & \textbf{SNR75 (dB)} \\
 \midrule
-Baseline & \textit{$<$20\,$^\dagger$} & \textit{$>$1000\,$^\dagger$} & \textit{$>$1000\,$^\dagger$} & \textit{$>$20\,$^\dagger$} \\
-Base+OPRO & \textit{$<$20\,$^\dagger$} & 34 [31, 672] & \textit{$>$1000\,$^\dagger$} & \textit{$<$$-$10\,$^\dagger$} \\
+Base+Hand & \textit{$<$20\,$^\dagger$} & \textit{$>$1000\,$^\dagger$} & \textit{$>$1000\,$^\dagger$} & \textit{$>$20\,$^\dagger$} \\
+Base+OPRO-LLM & \textit{$<$20\,$^\dagger$} & 34 [31, 672] & \textit{$>$1000\,$^\dagger$} & \textit{$<$$-$10\,$^\dagger$} \\
 LoRA+Hand & \textit{$<$20\,$^\dagger$} & \textit{$<$20\,$^\dagger$} & 329 [87, 1000] & \textit{$<$$-$10\,$^\dagger$} \\
-LoRA+OPRO & \textit{$<$20\,$^\dagger$} & 27 [22, 32] & 96 [88, 133] & \textit{$<$$-$10\,$^\dagger$} \\
+LoRA+OPRO-Tmpl & \textit{$<$20\,$^\dagger$} & 27 [22, 32] & 96 [88, 133] & $-$16\textsuperscript{$\star$} \\
 \midrule
-Qwen3 Baseline & 20 [20, 25] & 62 [57, 69] & 175 [146, 222] & \textit{$<$$-$10\,$^\dagger$} \\
-Qwen3+OPRO-LLM & \textit{$<$20\,$^\dagger$} & 56 [47, 68] & 179 [155, 221] & \textit{$<$$-$10\,$^\dagger$} \\
+Qwen3+Hand & 20 [20, 25] & 62 [57, 69] & 175 [146, 222] & $-$13\textsuperscript{$\star$} \\
+Qwen3+OPRO-LLM & \textit{$<$20\,$^\dagger$} & 56 [47, 68] & 179 [155, 221] & $-$12\textsuperscript{$\star$} \\
 Qwen3+OPRO-Tmpl & \textit{$<$20\,$^\dagger$} & 69 [59, 80] & 371 [211, 757] & \textit{$<$$-$10\,$^\dagger$} \\
+\midrule
+Silero VAD v5\textsuperscript{$\ddagger$} & \textit{$<$20\,$^\dagger$} & 81 & 196 & $-$7 \\
 \bottomrule
 \end{tabular}
 
 \vspace{0.4em}
 \begin{flushleft}
 \footnotesize
-$^\dagger$\,\textit{Censored:} the true threshold lies outside the tested range. $<$20\,ms means the criterion is already met at the shortest tested duration; $>$1000\,ms means it is never met. $<$$-$10\,dB and $>$+20\,dB indicate censoring below and above the tested SNR range. Non-censored values (upright) are interpolated within the tested range.
+$^\dagger$\,\textit{Censored:} the true threshold lies outside the tested range. $<$20\,ms means the criterion is already met at the shortest tested duration; $>$1000\,ms means it is never met. $<$$-$10\,dB and $>$+20\,dB indicate censoring below and above the tested SNR range. Non-censored values (upright) are interpolated within the tested range.\\[0.3em]
+$^\star$\,Interpolated from extended SNR evaluation ($-20$ to $+20$\,dB) on the three top-performing configurations. Point estimates only (no bootstrap CI).
 \end{flushleft}
 \end{table}

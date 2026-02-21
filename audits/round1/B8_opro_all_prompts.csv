@@ -1,0 +1,910 @@
+cell,model,method,prompt,reward,ba_clip,ba_conditions,iteration,prompt_length,category
+02_qwen2_base_opro_llm,Base,OPRO-LLM,"Does this audio contain human speech?
+Reply with ONLY one word: SPEECH or NON-SPEECH.",1.0589275152844233,0.843939393939394,0.8599524853801169,0,85,Binary directive
+02_qwen2_base_opro_llm,Base,OPRO-LLM,Classify this audio. Reply with SPEECH or NON-SPEECH.,0.6711772328548644,0.5363636363636364,0.5392543859649123,1,53,Binary directive
+02_qwen2_base_opro_llm,Base,OPRO-LLM,What do you hear? Respond with SPEECH or NON-SPEECH.,0.6291066919191919,0.503030303030303,0.5043055555555556,1,52,Open-ended question
+02_qwen2_base_opro_llm,Base,OPRO-LLM,Determine if this contains human speech. Answer with SPEECH or NON-SPEECH.,0.6557446172248804,0.5242424242424243,0.5260087719298245,1,74,Binary directive
+02_qwen2_base_opro_llm,Base,OPRO-LLM,Classify this audio. Reply with SPEECH or NON-SPEECH.,0.6711772328548644,0.5363636363636364,0.5392543859649123,2,53,Binary directive
+02_qwen2_base_opro_llm,Base,OPRO-LLM,What type of sound is heard here? Answer: SPEECH or NON-SPEECH.,0.649827634901648,0.5196969696969697,0.5205226608187133,2,63,Open-ended question
+02_qwen2_base_opro_llm,Base,OPRO-LLM,Determine if this contains spoken words. Respond with SPEECH or NON-SPEECH.,0.6482922149122807,0.5166666666666667,0.526502192982456,2,75,Binary directive
+02_qwen2_base_opro_llm,Base,OPRO-LLM,Classify this audio. Reply with SPEECH or NON-SPEECH.,0.6711772328548644,0.5363636363636364,0.5392543859649123,3,53,Binary directive
+02_qwen2_base_opro_llm,Base,OPRO-LLM,What do you hear in this audio? Answer: SPEECH or NON-SPEECH.,0.924669889686337,0.7393939393939394,0.7411038011695906,3,61,Open-ended question
+02_qwen2_base_opro_llm,Base,OPRO-LLM,Determine if this contains human speech. Respond with SPEECH or NON-SPEECH.,0.6440166467304624,0.5151515151515151,0.5154605263157894,3,75,Binary directive
+02_qwen2_base_opro_llm,Base,OPRO-LLM,Is this audio human speech? Answer: SPEECH or NON-SPEECH.,1.110246129053695,0.8863636363636364,0.8955299707602339,4,57,Binary directive
+02_qwen2_base_opro_llm,Base,OPRO-LLM,Classify this audio as SPEECH or NON-SPEECH.,0.9607861509835195,0.7696969696969698,0.7643567251461988,4,44,Binary directive
+02_qwen2_base_opro_llm,Base,OPRO-LLM,What kind of sound is this? Answer: SPEECH or NON-SPEECH.,0.6689009336788942,0.5348484848484849,0.5362097953216374,4,57,Open-ended question
+02_qwen2_base_opro_llm,Base,OPRO-LLM,Classify this audio as SPEECH or NON-SPEECH. Be brief.,0.9345089879053696,0.7469696969696971,0.75015716374269,5,54,Binary directive
+02_qwen2_base_opro_llm,Base,OPRO-LLM,What type of sound is this? Answer: SPEECH or NON-SPEECH.,0.6441628455608719,0.5151515151515151,0.5160453216374269,5,57,Open-ended question
+02_qwen2_base_opro_llm,Base,OPRO-LLM,"Determine if this contains human speech. Use ""SPEECH"" or ""NONSPEECH"".",0.625,0.5,0.5,5,69,Direct question
+02_qwen2_base_opro_llm,Base,OPRO-LLM,Classify this audio as SPEECH or NON-SPEECH. Focus on clarity.,0.9059526182881446,0.7212121212121212,0.7389619883040934,6,62,Acoustic focus
+02_qwen2_base_opro_llm,Base,OPRO-LLM,What do you hear in this audio? Respond: SPEECH or NON-SPEECH.,0.6713983585858586,0.5363636363636364,0.540138888888889,6,62,Open-ended question
+02_qwen2_base_opro_llm,Base,OPRO-LLM,"Determine if this contains human speech. Use ""SPEECH"" or ""NON-SPEECH"" only.",0.7628171517809677,0.6090909090909091,0.6149049707602339,6,75,Direct question
+02_qwen2_base_opro_llm,Base,OPRO-LLM,Classify this audio as SPEECH or NON-SPEECH. Focus on detecting any human voice clearly.,0.6347166566985646,0.5075757575757576,0.5085635964912281,7,88,Acoustic focus
+02_qwen2_base_opro_llm,Base,OPRO-LLM,What do you hear in this audio? Answer with SPEECH or NON-SPEECH based on the presence of human speech.,0.8933496145667198,0.7151515151515151,0.7127923976608187,7,103,Open-ended question
+02_qwen2_base_opro_llm,Base,OPRO-LLM,"Determine if this audio contains human speech. Use ""SPEECH"" or ""NON-SPEECH"" only, focusing on clarity and short durations.",0.6440166467304624,0.5151515151515151,0.5154605263157894,7,122,Acoustic focus
+02_qwen2_base_opro_llm,Base,OPRO-LLM,"Classify this audio as SPEECH or NON-SPEECH, focusing on clarity and brevity.",1.0176697900053164,0.8151515151515152,0.8100730994152047,8,77,Acoustic focus
+02_qwen2_base_opro_llm,Base,OPRO-LLM,What do you hear in this clip? Respond with SPEECH or NON-SPEECH.,0.6367352804359383,0.509090909090909,0.510577485380117,8,65,Open-ended question
+02_qwen2_base_opro_llm,Base,OPRO-LLM,"Determine if this audio contains human speech. Use ""SPEECH"" or ""NON-SPEECH"" only.",1.0877130681818181,0.8681818181818182,0.8781249999999999,8,81,Direct question
+02_qwen2_base_opro_llm,Base,OPRO-LLM,"Classify this audio as SPEECH or NON-SPEECH, focusing on clarity and brevity.",1.0176697900053164,0.8151515151515152,0.8100730994152047,9,77,Acoustic focus
+02_qwen2_base_opro_llm,Base,OPRO-LLM,What type of sound is heard here? Answer: SPEECH or NON-SPEECH.,0.649827634901648,0.5196969696969697,0.5205226608187133,9,63,Open-ended question
+02_qwen2_base_opro_llm,Base,OPRO-LLM,"Determine if this audio contains human speech. Use ""SPEECH"" or ""NON-SPEECH"" only, emphasizing short and noisy clips.",0.625,0.5,0.5,9,116,Robustness focus
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,"Does this audio contain human speech?
+Reply with ONLY one word: SPEECH or NON-SPEECH.",1.1620837486709197,0.9287878787878787,0.9331834795321639,0,85,Binary directive
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,Classify this audio. Reply with SPEECH or NON-SPEECH.,0.704922913343966,0.5636363636363636,0.5651461988304094,1,53,Binary directive
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,What do you hear? Respond with SPEECH or NON-SPEECH.,0.6499391115098352,0.5196969696969697,0.520968567251462,1,52,Open-ended question
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,Determine if this contains human speech. Answer with SPEECH or NON-SPEECH.,0.7756536582934609,0.6196969696969696,0.6238267543859649,1,74,Binary directive
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,Determine if this contains human speech. Answer with SPEECH or NON-SPEECH.,0.7756536582934609,0.6196969696969696,0.6238267543859649,2,74,Binary directive
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,Classify this audio as SPEECH or NON-SPEECH.,1.1284568547315257,0.9015151515151515,0.9077668128654971,2,44,Binary directive
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,What type of sound is heard here? Respond with SPEECH or NON-SPEECH.,0.6666520467836257,0.5333333333333333,0.5332748538011696,2,68,Open-ended question
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,"Classify this audio as SPEECH or NON-SPEECH, focusing on short and noisy clips.",1.170544922913344,0.9363636363636363,0.9367251461988305,3,79,Acoustic focus
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,"What type of sound is this? Answer with SPEECH or NON-SPEECH, even in low SNR conditions.",0.625,0.5,0.5,3,89,Open-ended question
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,"Determine if this contains human speech; reply with SPEECH or NON-SPEECH, especially for brief clips.",0.625,0.5,0.5,3,101,Binary directive
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,"Classify this audio as SPEECH or NON-SPEECH, focusing on short, noisy clips.",0.7430823032961191,0.593939393939394,0.5965716374269006,4,76,Acoustic focus
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,What do you hear in this clip? Answer with SPEECH or NON-SPEECH.,0.6749622873471558,0.5393939393939394,0.5422733918128655,4,64,Open-ended question
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,"Determine if this contains human speech; use ""SPEECH"" or ""NON-SPEECH"" as your answer.",0.8285055322966507,0.6621212121212121,0.6655372807017544,4,85,Binary directive
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,"Classify this audio as SPEECH or NON-SPEECH, focusing on detecting short, noisy clips clearly.",1.02000091374269,0.8166666666666667,0.8133369883040935,5,94,Acoustic focus
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,"What do you hear in this short, noisy audio clip? Answer with SPEECH or NON-SPEECH.",0.7155131080542264,0.5712121212121212,0.5772039473684211,5,83,Robustness focus
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,"Determine if this audio contains human speech, especially in short, low-quality clips.",0.625,0.5,0.5,5,86,Direct question
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,"Classify this audio as SPEECH or NON-SPEECH, focusing on short and noisy clips.",1.170544922913344,0.9363636363636363,0.9367251461988305,6,79,Acoustic focus
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,What do you hear in this clip? Answer with SPEECH or NON-SPEECH.,0.6749622873471558,0.5393939393939394,0.5422733918128655,6,64,Open-ended question
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,"Determine if this contains human speech. Focus on short, noisy audio.",0.6279835360180754,0.5015151515151515,0.5058735380116959,6,69,Acoustic focus
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,"Classify this short, noisy audio clip as SPEECH or NON-SPEECH, focusing on detecting clear voice patterns.",1.1189485313662946,0.8939393939393939,0.9000365497076024,7,106,Acoustic focus
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,"What do you hear in this brief, noisy clip? Answer with SPEECH or NON-SPEECH.",0.6847063563264222,0.546969696969697,0.5509466374269006,7,77,Open-ended question
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,"Determine if this contains human speech, especially in short, noisy segments; reply with SPEECH or NON-SPEECH.",0.625,0.5,0.5,7,110,Robustness focus
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,"Classify this audio as SPEECH or NON-SPEECH, focusing on detecting clear voice patterns in short, noisy clips.",0.8596883306751728,0.6909090909090909,0.6751169590643274,8,110,Acoustic focus
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,Does this audio contain clear human speech? Reply with SPEECH or NON-SPEECH.,0.865308595826688,0.6893939393939394,0.7036586257309942,8,76,Binary directive
+05_qwen2_lora_opro_llm,LoRA,OPRO-LLM,"Determine if this short, noisy clip contains human speech; respond with SPEECH or NON-SPEECH.",0.9744731858054226,0.7787878787878788,0.7827412280701754,8,93,Robustness focus
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,"Does this audio contain human speech?
+Reply with ONLY one word: SPEECH or NON-SPEECH.",1.1375061469962786,0.906060606060606,0.9257821637426901,0,85,Binary directive
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,Classify this audio. Reply with SPEECH or NON-SPEECH.,1.1109332635566187,0.8863636363636364,0.8982785087719297,1,53,Binary directive
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,What do you hear? Respond with SPEECH or NON-SPEECH.,1.0607944577352473,0.8454545454545455,0.8613596491228069,1,52,Open-ended question
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,Determine if this contains human speech. Answer with SPEECH or NON-SPEECH.,1.137964845826688,0.906060606060606,0.9276169590643275,1,74,Binary directive
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,Determine if this contains spoken words. Answer: SPEECH or NON-SPEECH.,1.154184360047847,0.9196969696969697,0.9379495614035087,2,70,Binary directive
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,Classify this audio as having human speech or not. Reply: SPEECH or NON-SPEECH.,1.157825043195109,0.9227272727272727,0.940391081871345,2,79,Binary directive
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,What type of sound is this? Respond: SPEECH or NON-SPEECH.,1.194107605661882,0.9530303030303031,0.9643092105263158,2,58,Open-ended question
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,Determine if this audio has human speech. Reply: SPEECH or NON-SPEECH.,1.1310032894736843,0.9,0.9240131578947368,3,70,Binary directive
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,Classify this audio: SPEECH or NON-SPEECH.,1.0591329412546517,0.8424242424242424,0.8668347953216374,3,42,Binary directive
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,What type of sound is this? Respond: SPEECH or NON-SPEECH.,1.194107605661882,0.9530303030303031,0.9643092105263158,3,58,Open-ended question
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,Determine if this audio has spoken words. Reply: SPEECH or NON-SPEECH.,1.1310032894736843,0.9,0.9240131578947368,4,70,Binary directive
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,What do you hear in this clip? Respond: SPEECH or NON-SPEECH.,1.1794333964646464,0.9409090909090909,0.9540972222222223,4,61,Open-ended question
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,Classify this audio as having human speech or not. Answer: SPEECH or NON-SPEECH.,1.1481431087187666,0.9151515151515152,0.9319663742690059,4,80,Binary directive
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,Determine if this audio contains spoken words. Answer: SPEECH or NON-SPEECH.,1.1544420354864433,0.9196969696969697,0.9389802631578947,5,76,Binary directive
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,Classify this audio as having human speech or not. Reply: SPEECH or NON-SPEECH.,1.157825043195109,0.9227272727272727,0.940391081871345,5,79,Binary directive
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,What type of sound is this? Respond: SPEECH or NON-SPEECH.,1.194107605661882,0.9530303030303031,0.9643092105263158,5,58,Open-ended question
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,"Classify this audio: SPEECH or NON-SPEECH, focusing on short durations and low SNR.",0.8253820275119617,0.6590909090909091,0.6651644736842105,6,83,Acoustic focus
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,"What do you hear in this clip? Respond: SPEECH or NON-SPEECH, considering noise and short sounds.",1.1787736742424242,0.9409090909090909,0.9514583333333333,6,97,Open-ended question
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,"Determine if this contains spoken words: SPEECH or NON-SPEECH, especially in noisy and brief audio.",0.9351621477937268,0.7454545454545455,0.7588304093567252,6,99,Direct question
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,"Classify this audio as having human speech or not. Respond: SPEECH or NON-SPEECH, focusing on clarity even in noisy conditions.",1.1396318447634237,0.9090909090909092,0.9221637426900585,7,127,Acoustic focus
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,"What type of sound is heard here? Respond: SPEECH or NON-SPEECH, even if it's brief and low in volume.",1.1661034688995215,0.9303030303030303,0.943201754385965,7,102,Open-ended question
+08_qwen3_omni_opro_llm,Qwen3,OPRO-LLM,"Determine if this audio contains spoken words. Reply: SPEECH or NON-SPEECH, considering any level of background noise.",1.1454271331738437,0.9121212121212121,0.9332236842105264,7,118,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.65,0.65,,1,84,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Binary decision. Output exactly one token: SPEECH or NONSPEECH.,0.7,0.7,,1,63,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.5,0.5,,1,212,Contrastive/definitions
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.75,0.75,,1,159,Contrastive/definitions
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Example:
+Audio→ crowd noise, music → Output: NONSPEECH
+Now classify the new audio. Output exactly ONE token: SPEECH or NONSPEECH.",0.5,0.5,,1,129,One-shot example
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.85,0.85,,1,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,1,108,Conservative bias
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,1,119,Liberal bias
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.6,0.6,,2,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.55,0.55,,2,118,Acoustic focus
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.
+Answer:",0.5,0.5,,2,73,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,2,119,Liberal bias
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,2,108,Conservative bias
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.55,0.55,,2,50,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.6,0.6,,2,54,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.6,0.6,,2,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.75,0.75,,3,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.55,0.55,,3,212,Contrastive/definitions
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.55,0.55,,3,54,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"TASK: Speech detection. Is human voice/speech present in this audio?
+Answer: SPEECH or NONSPEECH.",0.65,0.65,,3,97,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,3,119,Liberal bias
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Example:
+Audio→ crowd noise, music → Output: NONSPEECH
+Now classify the new audio. Output exactly ONE token: SPEECH or NONSPEECH.",0.5,0.5,,3,129,One-shot example
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,3,108,Conservative bias
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.75,0.75,,3,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.8,0.8,,4,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,4,119,Liberal bias
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.7,0.7,,4,118,Acoustic focus
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.75,0.75,,4,159,Contrastive/definitions
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",0.65,0.65,,4,137,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Binary classification task.
+Q: Does this contain human speech?
+If confident YES → SPEECH
+If confident NO → NONSPEECH
+Answer:",0.85,0.85,,4,124,One-shot example
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.85,0.85,,4,50,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Binary decision. Output exactly one token: SPEECH or NONSPEECH.,0.75,0.75,,4,63,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.75,0.75,,5,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.65,0.65,,5,54,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.7,0.7,,5,118,Acoustic focus
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,5,108,Conservative bias
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.55,0.55,,5,212,Contrastive/definitions
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Binary classification task.
+Q: Does this contain human speech?
+If confident YES → SPEECH
+If confident NO → NONSPEECH
+Answer:",0.75,0.75,,5,124,One-shot example
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",0.7,0.7,,5,137,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.7,0.7,,5,159,Contrastive/definitions
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.85,0.85,,6,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.85,0.85,,6,118,Acoustic focus
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.55,0.55,,6,212,Contrastive/definitions
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.85,0.85,,6,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.8,0.8,,6,50,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Binary classification task.
+Q: Does this contain human speech?
+If confident YES → SPEECH
+If confident NO → NONSPEECH
+Answer:",0.75,0.75,,6,124,One-shot example
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,6,119,Liberal bias
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,6,108,Conservative bias
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.8,0.8,,7,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.75,0.75,,7,118,Acoustic focus
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,7,119,Liberal bias
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",0.75,0.75,,7,137,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Binary decision. Output exactly one token: SPEECH or NONSPEECH.,0.6,0.6,,7,63,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.6,0.6,,7,84,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,7,108,Conservative bias
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"TASK: Speech detection. Is human voice/speech present in this audio?
+Answer: SPEECH or NONSPEECH.",0.55,0.55,,7,97,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.85,0.85,,8,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"TASK: Speech detection. Is human voice/speech present in this audio?
+Answer: SPEECH or NONSPEECH.",0.55,0.55,,8,97,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.6,0.6,,8,50,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",0.65,0.65,,8,137,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.
+Answer:",0.5,0.5,,8,73,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Binary decision. Output exactly one token: SPEECH or NONSPEECH.,0.65,0.65,,8,63,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.7,0.7,,8,84,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.55,0.55,,8,54,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.6,0.6,,9,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.65,0.65,,9,50,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.75,0.75,,9,118,Acoustic focus
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.7,0.7,,9,84,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.5,0.5,,9,212,Contrastive/definitions
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.
+Answer:",0.5,0.5,,9,73,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",0.65,0.65,,9,137,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Binary classification task.
+Q: Does this contain human speech?
+If confident YES → SPEECH
+If confident NO → NONSPEECH
+Answer:",0.7,0.7,,9,124,One-shot example
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.8,0.8,,10,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,10,119,Liberal bias
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.5,0.5,,10,212,Contrastive/definitions
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.65,0.65,,10,84,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.65,0.65,,10,159,Contrastive/definitions
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.8,0.8,,10,50,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.65,0.65,,10,54,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Binary decision. Output exactly one token: SPEECH or NONSPEECH.,0.75,0.75,,10,63,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.75,0.75,,11,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.7,0.7,,11,118,Acoustic focus
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.6,0.6,,11,84,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.75,0.75,,11,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",0.6,0.6,,11,137,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,11,119,Liberal bias
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Example:
+Audio→ crowd noise, music → Output: NONSPEECH
+Now classify the new audio. Output exactly ONE token: SPEECH or NONSPEECH.",0.5,0.5,,11,129,One-shot example
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.65,0.65,,11,159,Contrastive/definitions
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.7,0.7,,12,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,12,108,Conservative bias
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"TASK: Speech detection. Is human voice/speech present in this audio?
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,12,97,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.6,0.6,,12,84,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.
+Answer:",0.5,0.5,,12,73,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,12,119,Liberal bias
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.65,0.65,,12,159,Contrastive/definitions
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.55,0.55,,12,212,Contrastive/definitions
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.7,0.7,,13,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,13,119,Liberal bias
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"TASK: Speech detection. Is human voice/speech present in this audio?
+Answer: SPEECH or NONSPEECH.",0.65,0.65,,13,97,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.7,0.7,,13,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.75,0.75,,13,84,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,13,108,Conservative bias
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.
+Answer:",0.5,0.5,,13,73,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Binary classification task.
+Q: Does this contain human speech?
+If confident YES → SPEECH
+If confident NO → NONSPEECH
+Answer:",0.8,0.8,,13,124,One-shot example
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.8,0.8,,14,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.65,0.65,,14,54,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.55,0.55,,14,212,Contrastive/definitions
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,14,108,Conservative bias
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.8,0.8,,14,50,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",0.65,0.65,,14,137,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.85,0.85,,14,118,Acoustic focus
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Binary classification task.
+Q: Does this contain human speech?
+If confident YES → SPEECH
+If confident NO → NONSPEECH
+Answer:",0.75,0.75,,14,124,One-shot example
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.8,0.8,,15,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.75,0.75,,15,84,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.75,0.75,,15,159,Contrastive/definitions
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.8,0.8,,15,85,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.
+Answer:",0.5,0.5,,15,73,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.7,0.7,,15,54,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,"TASK: Speech detection. Is human voice/speech present in this audio?
+Answer: SPEECH or NONSPEECH.",0.55,0.55,,15,97,Binary directive
+03_qwen2_base_opro_template,Base,OPRO-Tmpl,Binary decision. Output exactly one token: SPEECH or NONSPEECH.,0.6,0.6,,15,63,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.85,0.85,,1,84,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Binary decision. Output exactly one token: SPEECH or NONSPEECH.,0.65,0.65,,1,63,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.9,0.9,,1,212,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",1.0,1.0,,1,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Example:
+Audio→ crowd noise, music → Output: NONSPEECH
+Now classify the new audio. Output exactly ONE token: SPEECH or NONSPEECH.",0.55,0.55,,1,129,One-shot example
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.7,0.7,,1,85,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.55,0.55,,1,108,Conservative bias
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,1,119,Liberal bias
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.75,0.75,,2,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.7,0.7,,2,118,Acoustic focus
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.
+Answer:",0.5,0.5,,2,73,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,2,119,Liberal bias
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.6,0.6,,2,108,Conservative bias
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.85,0.85,,2,50,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.6,0.6,,2,54,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.65,0.65,,2,85,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",1.0,1.0,,3,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.95,0.95,,3,212,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.6,0.6,,3,54,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"TASK: Speech detection. Is human voice/speech present in this audio?
+Answer: SPEECH or NONSPEECH.",0.55,0.55,,3,97,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,3,119,Liberal bias
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Example:
+Audio→ crowd noise, music → Output: NONSPEECH
+Now classify the new audio. Output exactly ONE token: SPEECH or NONSPEECH.",0.5,0.5,,3,129,One-shot example
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.55,0.55,,3,108,Conservative bias
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.75,0.75,,3,85,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",1.0,1.0,,4,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,4,119,Liberal bias
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.7,0.7,,4,118,Acoustic focus
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",1.0,1.0,,4,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",1.0,1.0,,4,137,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Binary classification task.
+Q: Does this contain human speech?
+If confident YES → SPEECH
+If confident NO → NONSPEECH
+Answer:",1.0,1.0,,4,124,One-shot example
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.95,0.95,,4,50,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Binary decision. Output exactly one token: SPEECH or NONSPEECH.,0.7,0.7,,4,63,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.9,0.9,,5,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.6,0.6,,5,54,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.75,0.75,,5,118,Acoustic focus
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.7,0.7,,5,108,Conservative bias
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.85,0.85,,5,212,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Binary classification task.
+Q: Does this contain human speech?
+If confident YES → SPEECH
+If confident NO → NONSPEECH
+Answer:",0.9,0.9,,5,124,One-shot example
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",0.95,0.95,,5,137,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.9,0.9,,5,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",1.0,1.0,,6,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.85,0.85,,6,118,Acoustic focus
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",1.0,1.0,,6,212,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.75,0.75,,6,85,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.95,0.95,,6,50,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Binary classification task.
+Q: Does this contain human speech?
+If confident YES → SPEECH
+If confident NO → NONSPEECH
+Answer:",1.0,1.0,,6,124,One-shot example
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,6,119,Liberal bias
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.7,0.7,,6,108,Conservative bias
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.95,0.95,,7,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.65,0.65,,7,118,Acoustic focus
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,7,119,Liberal bias
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",0.95,0.95,,7,137,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Binary decision. Output exactly one token: SPEECH or NONSPEECH.,0.6,0.6,,7,63,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.9,0.9,,7,84,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.7,0.7,,7,108,Conservative bias
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"TASK: Speech detection. Is human voice/speech present in this audio?
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,7,97,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.95,0.95,,8,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"TASK: Speech detection. Is human voice/speech present in this audio?
+Answer: SPEECH or NONSPEECH.",0.55,0.55,,8,97,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.9,0.9,,8,50,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",1.0,1.0,,8,137,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.
+Answer:",0.55,0.55,,8,73,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Binary decision. Output exactly one token: SPEECH or NONSPEECH.,0.6,0.6,,8,63,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.95,0.95,,8,84,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.55,0.55,,8,54,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.95,0.95,,9,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.8,0.8,,9,50,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.7,0.7,,9,118,Acoustic focus
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.95,0.95,,9,84,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.75,0.75,,9,212,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.
+Answer:",0.55,0.55,,9,73,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",0.95,0.95,,9,137,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Binary classification task.
+Q: Does this contain human speech?
+If confident YES → SPEECH
+If confident NO → NONSPEECH
+Answer:",0.95,0.95,,9,124,One-shot example
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.95,0.95,,10,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,10,119,Liberal bias
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.9,0.9,,10,212,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.9,0.9,,10,84,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.95,0.95,,10,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.95,0.95,,10,50,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.65,0.65,,10,54,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Binary decision. Output exactly one token: SPEECH or NONSPEECH.,0.7,0.7,,10,63,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.9,0.9,,11,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.6,0.6,,11,118,Acoustic focus
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.85,0.85,,11,84,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.6,0.6,,11,85,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",0.95,0.95,,11,137,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,11,119,Liberal bias
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Example:
+Audio→ crowd noise, music → Output: NONSPEECH
+Now classify the new audio. Output exactly ONE token: SPEECH or NONSPEECH.",0.55,0.55,,11,129,One-shot example
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.9,0.9,,11,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.95,0.95,,12,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.6,0.6,,12,108,Conservative bias
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"TASK: Speech detection. Is human voice/speech present in this audio?
+Answer: SPEECH or NONSPEECH.",0.55,0.55,,12,97,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.95,0.95,,12,84,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.
+Answer:",0.6,0.6,,12,73,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,12,119,Liberal bias
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.95,0.95,,12,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.8,0.8,,12,212,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.8,0.8,,13,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,13,119,Liberal bias
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"TASK: Speech detection. Is human voice/speech present in this audio?
+Answer: SPEECH or NONSPEECH.",0.65,0.65,,13,97,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.75,0.75,,13,85,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.95,0.95,,13,84,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.75,0.75,,13,108,Conservative bias
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.
+Answer:",0.55,0.55,,13,73,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Binary classification task.
+Q: Does this contain human speech?
+If confident YES → SPEECH
+If confident NO → NONSPEECH
+Answer:",0.8,0.8,,13,124,One-shot example
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.95,0.95,,14,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.7,0.7,,14,54,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.85,0.85,,14,212,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.7,0.7,,14,108,Conservative bias
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.95,0.95,,14,50,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",0.9,0.9,,14,137,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.75,0.75,,14,118,Acoustic focus
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Binary classification task.
+Q: Does this contain human speech?
+If confident YES → SPEECH
+If confident NO → NONSPEECH
+Answer:",0.9,0.9,,14,124,One-shot example
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.9,0.9,,15,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.9,0.9,,15,84,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.9,0.9,,15,159,Contrastive/definitions
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.6,0.6,,15,85,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.
+Answer:",0.55,0.55,,15,73,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.65,0.65,,15,54,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,"TASK: Speech detection. Is human voice/speech present in this audio?
+Answer: SPEECH or NONSPEECH.",0.55,0.55,,15,97,Binary directive
+06_qwen2_lora_opro_template,LoRA,OPRO-Tmpl,Binary decision. Output exactly one token: SPEECH or NONSPEECH.,0.6,0.6,,15,63,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.9,0.9,,1,84,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Binary decision. Output exactly one token: SPEECH or NONSPEECH.,0.8,0.8,,1,63,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.95,0.95,,1,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.95,0.95,,1,159,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Example:
+Audio→ crowd noise, music → Output: NONSPEECH
+Now classify the new audio. Output exactly ONE token: SPEECH or NONSPEECH.",0.85,0.85,,1,129,One-shot example
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.9,0.9,,1,85,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.75,0.75,,1,108,Conservative bias
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.55,0.55,,1,119,Liberal bias
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.8,0.8,,2,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.65,0.65,,2,118,Acoustic focus
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.
+Answer:",0.8,0.8,,2,73,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,2,119,Liberal bias
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.6,0.6,,2,108,Conservative bias
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.5,0.5,,2,50,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.75,0.75,,2,54,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.75,0.75,,2,85,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",1.0,1.0,,3,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",1.0,1.0,,3,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.95,0.95,,3,54,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"TASK: Speech detection. Is human voice/speech present in this audio?
+Answer: SPEECH or NONSPEECH.",0.9,0.9,,3,97,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,3,119,Liberal bias
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Example:
+Audio→ crowd noise, music → Output: NONSPEECH
+Now classify the new audio. Output exactly ONE token: SPEECH or NONSPEECH.",0.85,0.85,,3,129,One-shot example
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.8,0.8,,3,108,Conservative bias
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.9,0.9,,3,85,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.95,0.95,,4,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.6,0.6,,4,119,Liberal bias
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.8,0.8,,4,118,Acoustic focus
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.85,0.85,,4,159,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",0.85,0.85,,4,137,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Binary classification task.
+Q: Does this contain human speech?
+If confident YES → SPEECH
+If confident NO → NONSPEECH
+Answer:",0.65,0.65,,4,124,One-shot example
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.8,0.8,,4,50,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Binary decision. Output exactly one token: SPEECH or NONSPEECH.,0.75,0.75,,4,63,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.95,0.95,,5,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.9,0.9,,5,54,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.75,0.75,,5,118,Acoustic focus
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.65,0.65,,5,108,Conservative bias
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.95,0.95,,5,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Binary classification task.
+Q: Does this contain human speech?
+If confident YES → SPEECH
+If confident NO → NONSPEECH
+Answer:",0.6,0.6,,5,124,One-shot example
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",0.85,0.85,,5,137,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.7,0.7,,5,159,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.95,0.95,,6,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.9,0.9,,6,118,Acoustic focus
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.95,0.95,,6,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.9,0.9,,6,85,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.85,0.85,,6,50,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Binary classification task.
+Q: Does this contain human speech?
+If confident YES → SPEECH
+If confident NO → NONSPEECH
+Answer:",0.75,0.75,,6,124,One-shot example
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.7,0.7,,6,119,Liberal bias
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.8,0.8,,6,108,Conservative bias
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.95,0.95,,7,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.75,0.75,,7,118,Acoustic focus
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,7,119,Liberal bias
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",0.9,0.9,,7,137,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Binary decision. Output exactly one token: SPEECH or NONSPEECH.,0.8,0.8,,7,63,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.95,0.95,,7,84,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.75,0.75,,7,108,Conservative bias
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"TASK: Speech detection. Is human voice/speech present in this audio?
+Answer: SPEECH or NONSPEECH.",0.9,0.9,,7,97,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",1.0,1.0,,8,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"TASK: Speech detection. Is human voice/speech present in this audio?
+Answer: SPEECH or NONSPEECH.",0.8,0.8,,8,97,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.7,0.7,,8,50,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",0.95,0.95,,8,137,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.
+Answer:",0.95,0.95,,8,73,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Binary decision. Output exactly one token: SPEECH or NONSPEECH.,0.8,0.8,,8,63,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.95,0.95,,8,84,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.9,0.9,,8,54,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.9,0.9,,9,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.65,0.65,,9,50,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.65,0.65,,9,118,Acoustic focus
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.9,0.9,,9,84,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.9,0.9,,9,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.
+Answer:",0.8,0.8,,9,73,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",0.85,0.85,,9,137,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Binary classification task.
+Q: Does this contain human speech?
+If confident YES → SPEECH
+If confident NO → NONSPEECH
+Answer:",0.55,0.55,,9,124,One-shot example
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.9,0.9,,10,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.65,0.65,,10,119,Liberal bias
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.9,0.9,,10,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.9,0.9,,10,84,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.95,0.95,,10,159,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.7,0.7,,10,50,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.85,0.85,,10,54,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Binary decision. Output exactly one token: SPEECH or NONSPEECH.,0.75,0.75,,10,63,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.85,0.85,,11,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.7,0.7,,11,118,Acoustic focus
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.85,0.85,,11,84,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.7,0.7,,11,85,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",0.8,0.8,,11,137,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.55,0.55,,11,119,Liberal bias
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Example:
+Audio→ crowd noise, music → Output: NONSPEECH
+Now classify the new audio. Output exactly ONE token: SPEECH or NONSPEECH.",0.7,0.7,,11,129,One-shot example
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.7,0.7,,11,159,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.8,0.8,,12,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.65,0.65,,12,108,Conservative bias
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"TASK: Speech detection. Is human voice/speech present in this audio?
+Answer: SPEECH or NONSPEECH.",0.85,0.85,,12,97,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.8,0.8,,12,84,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.
+Answer:",0.95,0.95,,12,73,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.5,0.5,,12,119,Liberal bias
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.85,0.85,,12,159,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.8,0.8,,12,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.85,0.85,,13,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.65,0.65,,13,119,Liberal bias
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"TASK: Speech detection. Is human voice/speech present in this audio?
+Answer: SPEECH or NONSPEECH.",0.75,0.75,,13,97,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.85,0.85,,13,85,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.9,0.9,,13,84,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.75,0.75,,13,108,Conservative bias
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.
+Answer:",0.9,0.9,,13,73,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Binary classification task.
+Q: Does this contain human speech?
+If confident YES → SPEECH
+If confident NO → NONSPEECH
+Answer:",0.6,0.6,,13,124,One-shot example
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.95,0.95,,14,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.9,0.9,,14,54,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.95,0.95,,14,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.
+Answer: SPEECH or NONSPEECH.",0.7,0.7,,14,108,Conservative bias
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Human speech present? Answer: SPEECH or NONSPEECH.,0.75,0.75,,14,50,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",0.9,0.9,,14,137,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).
+Answer exactly: SPEECH or NONSPEECH.",0.85,0.85,,14,118,Acoustic focus
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Binary classification task.
+Q: Does this contain human speech?
+If confident YES → SPEECH
+If confident NO → NONSPEECH
+Answer:",0.65,0.65,,14,124,One-shot example
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",0.95,0.95,,15,212,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,0.95,0.95,,15,84,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",0.8,0.8,,15,159,Contrastive/definitions
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",0.75,0.75,,15,85,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.
+Answer:",0.85,0.85,,15,73,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Classify this audio. Output only: SPEECH or NONSPEECH.,0.8,0.8,,15,54,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,"TASK: Speech detection. Is human voice/speech present in this audio?
+Answer: SPEECH or NONSPEECH.",0.75,0.75,,15,97,Binary directive
+09_qwen3_omni_opro_template,Qwen3,OPRO-Tmpl,Binary decision. Output exactly one token: SPEECH or NONSPEECH.,0.7,0.7,,15,63,Binary directive

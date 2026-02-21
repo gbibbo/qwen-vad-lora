@@ -1,0 +1,82 @@
+{
+  "seed": 42,
+  "source": "data/processed/experimental_variants/train_metadata.csv",
+  "subsets": {
+    "256": {
+      "file": "train_n0256.csv",
+      "total": 256,
+      "speech": 128,
+      "nonspeech": 128,
+      "unique_clip_ids": 64,
+      "unique_durations": [
+        20,
+        40,
+        60,
+        80,
+        100,
+        200,
+        500,
+        1000
+      ],
+      "unique_snrs": [
+        -10,
+        -5,
+        0,
+        5,
+        10,
+        20
+      ]
+    },
+    "512": {
+      "file": "train_n0512.csv",
+      "total": 512,
+      "speech": 256,
+      "nonspeech": 256,
+      "unique_clip_ids": 64,
+      "unique_durations": [
+        20,
+        40,
+        60,
+        80,
+        100,
+        200,
+        500,
+        1000
+      ],
+      "unique_snrs": [
+        -10,
+        -5,
+        0,
+        5,
+        10,
+        20
+      ]
+    },
+    "1024": {
+      "file": "train_n1024.csv",
+      "total": 1024,
+      "speech": 512,
+      "nonspeech": 512,
+      "unique_clip_ids": 64,
+      "unique_durations": [
+        20,
+        40,
+        60,
+        80,
+        100,
+        200,
+        500,
+        1000
+      ],
+      "unique_snrs": [
+        -10,
+        -5,
+        0,
+        5,
+        10,
+        20
+      ]
+    }
+  },
+  "prompt_file": "audits/round3/data_curve/splits/prompt_opro_tmpl.txt"
+}

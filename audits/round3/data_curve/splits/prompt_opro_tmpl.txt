@@ -1,0 +1,2 @@
+Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.

@@ -1,0 +1,221 @@
+#!/bin/bash
+#SBATCH --partition=a100
+#SBATCH --gpus=1
+#SBATCH --cpus-per-task=12
+#SBATCH --mem=64G
+#SBATCH --time=24:00:00
+
+# =============================================================================
+# Data Curve Ablation — Train or Evaluate LoRA with subset sizes
+# =============================================================================
+# Runs ONE phase (train or eval) for a single subset size.
+# Use launch_data_curve.sh to submit all 9 jobs with dependency chaining.
+#
+# Arguments:
+#   $1  PHASE:       train | eval
+#   $2  N_CLIPS:     256 | 512 | 1024
+#   $3  PROMPT_TYPE: hand | opro_tmpl  (only required for eval phase)
+#
+# Usage:
+#   ./slurm/tools/on_submit.sh sbatch \
+#       --job-name=dc_train_n256 \
+#       --output=logs/dc_train_n256_%j.out \
+#       --error=logs/dc_train_n256_%j.err \
+#       slurm/jobs/round3_b1/b1_data_curve.job train 256
+#
+#   ./slurm/tools/on_submit.sh sbatch \
+#       --dependency=afterok:12345 \
+#       --job-name=dc_eval_hand_n256 \
+#       slurm/jobs/round3_b1/b1_data_curve.job eval 256 hand
+# =============================================================================
+
+set -euo pipefail
+set -x
+
+# ---- Parse arguments ----
+PHASE="${1:?ERROR: PHASE required (train|eval)}"
+N_CLIPS="${2:?ERROR: N_CLIPS required (256|512|1024)}"
+PROMPT_TYPE="${3:-}"
+
+# ---- Validate ----
+case "$PHASE" in
+    train|eval) ;;
+    *) echo "ERROR: Invalid PHASE '$PHASE'. Must be: train, eval"; exit 1 ;;
+esac
+case "$N_CLIPS" in
+    256|512|1024) ;;
+    *) echo "ERROR: Invalid N_CLIPS '$N_CLIPS'. Must be: 256, 512, 1024"; exit 1 ;;
+esac
+if [ "$PHASE" = "eval" ]; then
+    case "$PROMPT_TYPE" in
+        hand|opro_tmpl) ;;
+        *) echo "ERROR: Invalid PROMPT_TYPE '$PROMPT_TYPE'. Must be: hand, opro_tmpl"; exit 1 ;;
+    esac
+fi
+
+# ---- Paths ----
+REPO="/mnt/fast/nobackup/users/gb0048/opro3_final"
+REPO_PARENT="/mnt/fast/nobackup/users/gb0048"
+CONTAINER="$REPO_PARENT/opro2/pytorch_2.1_cuda12.sif"
+
+OUT_ROOT="$REPO/audits/round3/data_curve"
+SPLIT_DIR="$OUT_ROOT/splits"
+
+echo "[INFO] ========================================================================"
+echo "[INFO] Data Curve Ablation"
+echo "[INFO] Phase: $PHASE | N=$N_CLIPS | Prompt: ${PROMPT_TYPE:-N/A}"
+echo "[INFO] Output root: $OUT_ROOT"
+echo "[INFO] START: $(date)"
+echo "[INFO] ========================================================================"
+nvidia-smi --query-gpu=name,memory.total --format=csv
+
+cd "$REPO"
+
+# ---- Environment (matches b1_opro_multiseed.job) ----
+export HF_HOME="$REPO_PARENT/.cache/huggingface"
+export TRANSFORMERS_CACHE="$HF_HOME/transformers"
+export HF_HUB_CACHE="$HF_HOME/hub"
+export PIP_CACHE_DIR="$REPO_PARENT/.cache/pip"
+export TMPDIR="$REPO_PARENT/tmp"
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+export PYTHONUSERBASE="$REPO_PARENT/.local"
+export USER_SITE="$PYTHONUSERBASE/lib/python3.10/site-packages"
+
+mkdir -p "$HF_HOME" "$TRANSFORMERS_CACHE" "$HF_HUB_CACHE" "$PIP_CACHE_DIR" "$TMPDIR" "$PYTHONUSERBASE"
+mkdir -p logs "$OUT_ROOT"
+
+# ---- Pre-flight checks ----
+if [ ! -L "$REPO/data" ] && [ ! -d "$REPO/data" ]; then
+    echo "ERROR: data/ symlink missing"; exit 1
+fi
+if [ ! -f "$CONTAINER" ]; then
+    echo "ERROR: Container not found: $CONTAINER"; exit 1
+fi
+
+# ---- Install torchaudio ----
+apptainer exec --nv \
+    --env PIP_CACHE_DIR="$PIP_CACHE_DIR" \
+    --env TMPDIR="$TMPDIR" \
+    --env PYTHONUSERBASE="$PYTHONUSERBASE" \
+    "$CONTAINER" pip install --user --no-cache-dir \
+    torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
+
+# ---- Build Apptainer run command ----
+RUN_CMD="apptainer exec --nv --pwd $REPO \
+    --env HF_HOME=$HF_HOME \
+    --env TRANSFORMERS_CACHE=$TRANSFORMERS_CACHE \
+    --env HF_HUB_CACHE=$HF_HUB_CACHE \
+    --env PYTORCH_CUDA_ALLOC_CONF=$PYTORCH_CUDA_ALLOC_CONF \
+    --env PYTHONUSERBASE=$PYTHONUSERBASE \
+    --env PYTHONPATH=$USER_SITE:$REPO \
+    $CONTAINER"
+
+# ====================================================================
+# PHASE: TRAIN
+# ====================================================================
+if [ "$PHASE" = "train" ]; then
+    TRAIN_CSV="$SPLIT_DIR/train_n$(printf '%04d' "$N_CLIPS").csv"
+    VAL_CSV="$REPO/data/processed/experimental_variants/dev_metadata.csv"
+    TRAIN_OUT="$OUT_ROOT/n${N_CLIPS}/train/checkpoints"
+
+    if [ ! -f "$TRAIN_CSV" ]; then
+        echo "ERROR: Split CSV not found: $TRAIN_CSV"
+        echo "       Run first: python3 scripts/create_data_curve_splits.py"
+        exit 1
+    fi
+    if [ ! -f "$VAL_CSV" ]; then
+        echo "ERROR: Val CSV not found: $VAL_CSV"; exit 1
+    fi
+
+    # Compute proportional warmup (17.4% ratio, matching original 100/576)
+    TOTAL_STEPS=$(python3 -c "import math; print(math.ceil($N_CLIPS / 16) * 3)")
+    WARMUP=$(python3 -c "print(max(1, round($TOTAL_STEPS * 100 / 576)))")
+    echo "[TRAIN] N=$N_CLIPS, total_steps=$TOTAL_STEPS, warmup=$WARMUP"
+
+    mkdir -p "$TRAIN_OUT"
+
+    $RUN_CMD python3 scripts/finetune.py \
+        --train_csv "$TRAIN_CSV" \
+        --val_csv "$VAL_CSV" \
+        --output_dir "$TRAIN_OUT" \
+        --seed 42 \
+        --num_epochs 3 \
+        --per_device_train_batch_size 2 \
+        --gradient_accumulation_steps 8 \
+        --warmup_steps "$WARMUP" \
+        --skip_vad_filter
+
+    # Verify checkpoint was saved
+    if [ ! -d "$TRAIN_OUT/final" ]; then
+        echo "ERROR: Final checkpoint not found at $TRAIN_OUT/final"
+        exit 1
+    fi
+    echo "[TRAIN] Checkpoint saved: $TRAIN_OUT/final"
+
+# ====================================================================
+# PHASE: EVAL
+# ====================================================================
+elif [ "$PHASE" = "eval" ]; then
+    CHECKPOINT="$OUT_ROOT/n${N_CLIPS}/train/checkpoints/final"
+    EVAL_OUT="$OUT_ROOT/n${N_CLIPS}/eval_${PROMPT_TYPE}"
+    TEST_CSV="$REPO/data/processed/variants_validated_1000/test_metadata.csv"
+
+    if [ ! -d "$CHECKPOINT" ]; then
+        echo "ERROR: Checkpoint not found: $CHECKPOINT"
+        echo "       Training must complete first."
+        exit 1
+    fi
+    if [ ! -f "$TEST_CSV" ]; then
+        echo "ERROR: Test CSV not found: $TEST_CSV"; exit 1
+    fi
+
+    mkdir -p "$EVAL_OUT"
+
+    # Build prompt arguments
+    case "$PROMPT_TYPE" in
+        hand)
+            PROMPT_ARGS="--prompt 'Does this audio contain human speech? Answer SPEECH or NONSPEECH.'"
+            ;;
+        opro_tmpl)
+            PROMPT_FILE="$SPLIT_DIR/prompt_opro_tmpl.txt"
+            if [ ! -f "$PROMPT_FILE" ]; then
+                echo "ERROR: Prompt file not found: $PROMPT_FILE"; exit 1
+            fi
+            PROMPT_ARGS="--prompt_file $PROMPT_FILE"
+            ;;
+    esac
+
+    echo "[EVAL] Checkpoint: $CHECKPOINT"
+    echo "[EVAL] Prompt type: $PROMPT_TYPE"
+    echo "[EVAL] Output: $EVAL_OUT"
+
+    eval $RUN_CMD python3 scripts/eval.py \
+        --manifest "$TEST_CSV" \
+        $PROMPT_ARGS \
+        --output_dir "$EVAL_OUT" \
+        --model_type qwen2 \
+        --checkpoint "$CHECKPOINT"
+
+    # Verify metrics
+    if [ ! -f "$EVAL_OUT/metrics.json" ]; then
+        echo "ERROR: metrics.json not generated at $EVAL_OUT/metrics.json"
+        exit 1
+    fi
+
+    echo "[EVAL] Results:"
+    python3 -c "
+import json
+with open('$EVAL_OUT/metrics.json') as f:
+    m = json.load(f)
+print(f'  BA_clip:       {m[\"ba_clip\"]:.4f}')
+print(f'  BA_conditions: {m[\"ba_conditions\"]:.4f}')
+print(f'  Speech Acc:    {m[\"speech_acc\"]:.4f}')
+print(f'  NonSpeech Acc: {m[\"nonspeech_acc\"]:.4f}')
+"
+fi
+
+echo ""
+echo "[INFO] ========================================================================"
+echo "[INFO] DONE: PHASE=$PHASE, N=$N_CLIPS, PROMPT=${PROMPT_TYPE:-N/A}"
+echo "[INFO] END: $(date)"
+echo "[INFO] ========================================================================"

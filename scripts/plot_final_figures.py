@@ -40,15 +40,15 @@ plt.rcParams.update({
 # 9-cell configuration map (folder name -> visual style)
 # ---------------------------------------------------------------------------
 CONFIG_MAP = {
-    '01_qwen2_base_baseline':      {'label': 'Baseline',           'color': '#7f7f7f', 'style': '--', 'marker': 'o'},
-    '02_qwen2_base_opro_llm':      {'label': 'Base + OPRO',        'color': '#1f77b4', 'style': '-',  'marker': 'o'},
-    '03_qwen2_base_opro_template': {'label': 'Base + OPRO-Tmpl',   'color': '#aec7e8', 'style': ':',  'marker': 'o'},
-    '04_qwen2_lora_baseline':      {'label': 'LoRA',               'color': '#ff7f0e', 'style': '--', 'marker': 's'},
-    '05_qwen2_lora_opro_llm':      {'label': 'LoRA + OPRO-LLM',   'color': '#d62728', 'style': '-',  'marker': 's'},
-    '06_qwen2_lora_opro_template': {'label': 'LoRA + OPRO',        'color': '#ff9896', 'style': ':',  'marker': 's'},
-    '07_qwen3_omni_baseline':      {'label': 'Qwen3 Baseline',     'color': '#2ca02c', 'style': '--', 'marker': '^'},
-    '08_qwen3_omni_opro_llm':      {'label': 'Qwen3 + OPRO',      'color': '#9467bd', 'style': '-',  'marker': '^'},
-    '09_qwen3_omni_opro_template': {'label': 'Qwen3 + OPRO-Tmpl', 'color': '#c5b0d5', 'style': ':',  'marker': '^'},
+    '01_qwen2_base_baseline':      {'label': 'Base+Hand',          'color': '#7f7f7f', 'style': '--', 'marker': 'o'},
+    '02_qwen2_base_opro_llm':      {'label': 'Base+OPRO-LLM',     'color': '#1f77b4', 'style': '-',  'marker': 'o'},
+    '03_qwen2_base_opro_template': {'label': 'Base+OPRO-Tmpl',    'color': '#aec7e8', 'style': ':',  'marker': 'o'},
+    '04_qwen2_lora_baseline':      {'label': 'LoRA+Hand',          'color': '#ff7f0e', 'style': '--', 'marker': 's'},
+    '05_qwen2_lora_opro_llm':      {'label': 'LoRA+OPRO-LLM',     'color': '#d62728', 'style': '-',  'marker': 's'},
+    '06_qwen2_lora_opro_template': {'label': 'LoRA+OPRO-Tmpl',    'color': '#ff9896', 'style': ':',  'marker': 's'},
+    '07_qwen3_omni_baseline':      {'label': 'Qwen3+Hand',         'color': '#2ca02c', 'style': '--', 'marker': '^'},
+    '08_qwen3_omni_opro_llm':      {'label': 'Qwen3+OPRO-LLM',    'color': '#9467bd', 'style': '-',  'marker': '^'},
+    '09_qwen3_omni_opro_template': {'label': 'Qwen3+OPRO-Tmpl',   'color': '#c5b0d5', 'style': ':',  'marker': '^'},
 }
 
 # Folder name -> key in statistical_analysis.json config_metrics
@@ -106,6 +106,42 @@ def load_stats(results_dir):
             return json.load(f)
     print("  Warning: statistical_analysis.json not found; bar chart CIs will use normal approximation")
     return None
+
+
+# Mapping from extended SNR subdirectory names to main config folder names
+EXTENDED_SNR_MAP = {
+    '06_lora_opro_template': '06_qwen2_lora_opro_template',
+    '07_qwen3_baseline':     '07_qwen3_omni_baseline',
+    '08_qwen3_opro_llm':     '08_qwen3_omni_opro_llm',
+}
+
+
+def load_extended_snr(extended_dir):
+    """Load extended SNR metrics (-15, -20 dB) and return as {config_folder: metrics}."""
+    ext_path = Path(extended_dir)
+    extended = {}
+    if not ext_path.exists():
+        return extended
+    for subdir in sorted(ext_path.iterdir()):
+        if not subdir.is_dir() or subdir.name not in EXTENDED_SNR_MAP:
+            continue
+        metrics_file = subdir / 'metrics.json'
+        if metrics_file.exists():
+            with open(metrics_file) as f:
+                extended[EXTENDED_SNR_MAP[subdir.name]] = json.load(f)
+    return extended
+
+
+def merge_extended_snr(data, extended):
+    """Merge extended SNR condition_metrics into main data dict (in-place)."""
+    for folder, ext_metrics in extended.items():
+        if folder not in data:
+            continue
+        ext_conds = ext_metrics.get('condition_metrics', {})
+        for key, val in ext_conds.items():
+            if key.startswith('snr_') and key not in data[folder].get('condition_metrics', {}):
+                data[folder]['condition_metrics'][key] = val
+    return data
 
 # ---------------------------------------------------------------------------
 # Psychometric curves (with CI bands)
@@ -282,6 +318,8 @@ def main():
     parser = argparse.ArgumentParser(description='Generate OPRO3 publication figures (PDF)')
     parser.add_argument('--results_dir', required=True, help='Path to BEST_CONSOLIDATED')
     parser.add_argument('--output_dir', required=True, help='Output directory for figures')
+    parser.add_argument('--extended_snr_dir', default=None,
+                        help='Path to extended SNR evaluation (audits/round2/b4_extended_snr)')
     args = parser.parse_args()
 
     out = Path(args.output_dir)
@@ -290,6 +328,13 @@ def main():
     data = load_metrics(args.results_dir)
     stats = load_stats(args.results_dir)
     print(f"Loaded metrics for {len(data)} / 9 configurations\n")
+
+    # Merge extended SNR data if provided
+    if args.extended_snr_dir:
+        extended = load_extended_snr(args.extended_snr_dir)
+        if extended:
+            merge_extended_snr(data, extended)
+            print(f"Merged extended SNR data for {len(extended)} configurations")
 
     # Psychometric curves with CI bands
     plot_psychometric_curve(data, 'duration', out / 'Fig_Duration.pdf')

@@ -1,0 +1,239 @@
+{
+  "ba_clip": 0.9241330834114339,
+  "ba_conditions": 0.9316473367697595,
+  "speech_acc": 0.9317713214620431,
+  "nonspeech_acc": 0.9164948453608247,
+  "n_samples": 21340,
+  "n_speech": 10670,
+  "n_nonspeech": 10670,
+  "dimension_metrics": {
+    "duration": {
+      "ba": 0.87409793814433,
+      "n_conditions": 8,
+      "conditions": [
+        "dur_20ms",
+        "dur_40ms",
+        "dur_60ms",
+        "dur_80ms",
+        "dur_100ms",
+        "dur_200ms",
+        "dur_500ms",
+        "dur_1000ms"
+      ]
+    },
+    "snr": {
+      "ba": 0.9640893470790379,
+      "n_conditions": 6,
+      "conditions": [
+        "snr_-10dB",
+        "snr_-5dB",
+        "snr_0dB",
+        "snr_5dB",
+        "snr_10dB",
+        "snr_20dB"
+      ]
+    },
+    "reverb": {
+      "ba": 0.9440721649484536,
+      "n_conditions": 4,
+      "conditions": [
+        "reverb_none",
+        "reverb_0.3s",
+        "reverb_1.0s",
+        "reverb_2.5s"
+      ]
+    },
+    "filter": {
+      "ba": 0.9443298969072165,
+      "n_conditions": 4,
+      "conditions": [
+        "filter_none",
+        "filter_bandpass",
+        "filter_lowpass",
+        "filter_highpass"
+      ]
+    }
+  },
+  "condition_metrics": {
+    "dur_20ms": {
+      "ba": 0.7123711340206186,
+      "speech_acc": 0.44948453608247424,
+      "nonspeech_acc": 0.9752577319587629,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_40ms": {
+      "ba": 0.8164948453608247,
+      "speech_acc": 0.6907216494845361,
+      "nonspeech_acc": 0.9422680412371134,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_60ms": {
+      "ba": 0.8463917525773196,
+      "speech_acc": 0.7546391752577319,
+      "nonspeech_acc": 0.9381443298969072,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_80ms": {
+      "ba": 0.8711340206185567,
+      "speech_acc": 0.8103092783505155,
+      "nonspeech_acc": 0.931958762886598,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_100ms": {
+      "ba": 0.9103092783505154,
+      "speech_acc": 0.8845360824742268,
+      "nonspeech_acc": 0.9360824742268041,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_200ms": {
+      "ba": 0.9329896907216495,
+      "speech_acc": 0.9505154639175257,
+      "nonspeech_acc": 0.9154639175257732,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_500ms": {
+      "ba": 0.9649484536082474,
+      "speech_acc": 0.9979381443298969,
+      "nonspeech_acc": 0.931958762886598,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_1000ms": {
+      "ba": 0.9381443298969072,
+      "speech_acc": 0.9958762886597938,
+      "nonspeech_acc": 0.8804123711340206,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "snr_-10dB": {
+      "ba": 0.945360824742268,
+      "speech_acc": 0.9958762886597938,
+      "nonspeech_acc": 0.8948453608247423,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "snr_-5dB": {
+      "ba": 0.9494845360824742,
+      "speech_acc": 1.0,
+      "nonspeech_acc": 0.8989690721649485,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "snr_0dB": {
+      "ba": 0.9618556701030928,
+      "speech_acc": 0.9979381443298969,
+      "nonspeech_acc": 0.9257731958762887,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "snr_5dB": {
+      "ba": 0.9711340206185567,
+      "speech_acc": 1.0,
+      "nonspeech_acc": 0.9422680412371134,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "snr_10dB": {
+      "ba": 0.9773195876288661,
+      "speech_acc": 0.9979381443298969,
+      "nonspeech_acc": 0.9567010309278351,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "snr_20dB": {
+      "ba": 0.9793814432989691,
+      "speech_acc": 1.0,
+      "nonspeech_acc": 0.9587628865979382,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "reverb_none": {
+      "ba": 0.9402061855670103,
+      "speech_acc": 0.9958762886597938,
+      "nonspeech_acc": 0.8845360824742268,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "reverb_0.3s": {
+      "ba": 0.9422680412371134,
+      "speech_acc": 0.9958762886597938,
+      "nonspeech_acc": 0.8886597938144329,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "reverb_1.0s": {
+      "ba": 0.9474226804123711,
+      "speech_acc": 0.9979381443298969,
+      "nonspeech_acc": 0.8969072164948454,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "reverb_2.5s": {
+      "ba": 0.9463917525773196,
+      "speech_acc": 0.9958762886597938,
+      "nonspeech_acc": 0.8969072164948454,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "filter_none": {
+      "ba": 0.9402061855670103,
+      "speech_acc": 0.9958762886597938,
+      "nonspeech_acc": 0.8845360824742268,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "filter_bandpass": {
+      "ba": 0.9463917525773196,
+      "speech_acc": 0.9938144329896907,
+      "nonspeech_acc": 0.8989690721649485,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "filter_lowpass": {
+      "ba": 0.9484536082474226,
+      "speech_acc": 1.0,
+      "nonspeech_acc": 0.8969072164948454,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "filter_highpass": {
+      "ba": 0.9422680412371134,
+      "speech_acc": 0.9979381443298969,
+      "nonspeech_acc": 0.8865979381443299,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    }
+  },
+  "prompt": null,
+  "checkpoint": "/mnt/fast/nobackup/users/gb0048/opro3_final/audits/round3/data_curve/n1024/train/checkpoints/final",
+  "manifest": "/mnt/fast/nobackup/users/gb0048/opro3_final/data/processed/variants_validated_1000/test_metadata.csv",
+  "quantization": "4bit"
+}

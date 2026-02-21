@@ -1,0 +1,144 @@
+#!/bin/bash
+#SBATCH --partition=a100
+#SBATCH --gpus=1
+#SBATCH --cpus-per-task=12
+#SBATCH --mem=64G
+#SBATCH --time=48:00:00
+
+# =============================================================================
+# Quantization Ablation — Qwen2-Audio Base (No LoRA)
+# =============================================================================
+# Evaluates Qwen2-Audio-7B-Instruct under different quantization regimes
+# on the full test set (21,340 samples).
+#
+# Arguments:
+#   $1  QUANT:       4bit | 8bit | none
+#   $2  PROMPT_TYPE: baseline | opro_llm
+#
+# Usage:
+#   ./slurm/tools/on_submit.sh sbatch \
+#       --job-name=ablq_baseline_8bit \
+#       --output=logs/ablq_baseline_8bit_%j.out \
+#       --error=logs/ablq_baseline_8bit_%j.err \
+#       slurm/jobs/ablation_quantization.job 8bit baseline
+# =============================================================================
+
+set -euo pipefail
+set -x
+
+# ---- Parse arguments ----
+QUANT="${1:?ERROR: QUANT required (4bit|8bit|none)}"
+PROMPT_TYPE="${2:?ERROR: PROMPT_TYPE required (baseline|opro_llm)}"
+
+# ---- Validate ----
+case "$QUANT" in
+    4bit|8bit|none) ;;
+    *) echo "ERROR: Invalid QUANT '$QUANT'. Must be: 4bit, 8bit, none"; exit 1 ;;
+esac
+case "$PROMPT_TYPE" in
+    baseline|opro_llm) ;;
+    *) echo "ERROR: Invalid PROMPT_TYPE '$PROMPT_TYPE'. Must be: baseline, opro_llm"; exit 1 ;;
+esac
+
+# ---- Paths ----
+REPO="/mnt/fast/nobackup/users/gb0048/opro3_final"
+REPO_PARENT="/mnt/fast/nobackup/users/gb0048"
+CONTAINER="$REPO_PARENT/opro2/pytorch_2.1_cuda12.sif"
+
+TEST_CSV="$REPO/data/processed/variants_validated_1000/test_metadata.csv"
+OUT_DIR="$REPO/results/ablation_quantization/${PROMPT_TYPE}_${QUANT}"
+
+# ---- Prompt selection ----
+# These must match the prompts used in the existing 4-bit baselines exactly.
+if [ "$PROMPT_TYPE" = "baseline" ]; then
+    PROMPT="Does this audio contain human speech? Answer SPEECH or NONSPEECH."
+else
+    PROMPT="Is this audio human speech? Answer: SPEECH or NON-SPEECH."
+fi
+
+echo "[INFO] ========================================================================"
+echo "[INFO] Quantization Ablation"
+echo "[INFO] Quantization: $QUANT | Prompt: $PROMPT_TYPE"
+echo "[INFO] Output: $OUT_DIR"
+echo "[INFO] START: $(date)"
+echo "[INFO] ========================================================================"
+nvidia-smi --query-gpu=name,memory.total --format=csv
+
+cd "$REPO"
+
+# ---- Environment ----
+export HF_HOME="$REPO_PARENT/.cache/huggingface"
+export TRANSFORMERS_CACHE="$HF_HOME/transformers"
+export HF_HUB_CACHE="$HF_HOME/hub"
+export PIP_CACHE_DIR="$REPO_PARENT/.cache/pip"
+export TMPDIR="$REPO_PARENT/tmp"
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+export PYTHONUSERBASE="$REPO_PARENT/.local"
+export USER_SITE="$PYTHONUSERBASE/lib/python3.10/site-packages"
+
+mkdir -p "$HF_HOME" "$TRANSFORMERS_CACHE" "$HF_HUB_CACHE" \
+         "$PIP_CACHE_DIR" "$TMPDIR" "$PYTHONUSERBASE"
+mkdir -p logs "$OUT_DIR"
+
+# ---- Pre-flight checks ----
+if [ ! -L "$REPO/data" ] && [ ! -d "$REPO/data" ]; then
+    echo "ERROR: data/ symlink missing"; exit 1
+fi
+if [ ! -f "$TEST_CSV" ]; then
+    echo "ERROR: Test CSV not found: $TEST_CSV"; exit 1
+fi
+if [ ! -f "$CONTAINER" ]; then
+    echo "ERROR: Container not found: $CONTAINER"; exit 1
+fi
+
+# Install torchaudio if needed
+apptainer exec --nv \
+    --env PIP_CACHE_DIR="$PIP_CACHE_DIR" \
+    --env TMPDIR="$TMPDIR" \
+    --env PYTHONUSERBASE="$PYTHONUSERBASE" \
+    "$CONTAINER" pip install --user --no-cache-dir \
+    torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
+
+# ---- Build Apptainer run command ----
+RUN_CMD="apptainer exec --nv --pwd $REPO \
+    --env HF_HOME=$HF_HOME \
+    --env TRANSFORMERS_CACHE=$TRANSFORMERS_CACHE \
+    --env HF_HUB_CACHE=$HF_HUB_CACHE \
+    --env PYTORCH_CUDA_ALLOC_CONF=$PYTORCH_CUDA_ALLOC_CONF \
+    --env PYTHONUSERBASE=$PYTHONUSERBASE \
+    --env PYTHONPATH=$USER_SITE:$REPO \
+    $CONTAINER"
+
+# ---- Run evaluation ----
+echo "[INFO] Running eval.py with --quantization=$QUANT"
+echo "[INFO] Prompt: $PROMPT"
+echo "[INFO] Test samples: $(wc -l < "$TEST_CSV") lines"
+
+$RUN_CMD python3 scripts/eval.py \
+    --manifest "$TEST_CSV" \
+    --prompt "$PROMPT" \
+    --output_dir "$OUT_DIR" \
+    --model_type qwen2 \
+    --quantization "$QUANT" \
+    --log_raw_text
+
+# ---- Print summary ----
+echo ""
+echo "[INFO] ========================================================================"
+echo "[INFO] COMPLETE: ${PROMPT_TYPE}_${QUANT}"
+echo "[INFO] Output: $OUT_DIR"
+if [ -f "$OUT_DIR/metrics.json" ]; then
+    echo "[INFO] Metrics:"
+    python3 -c "
+import json
+with open('$OUT_DIR/metrics.json') as f:
+    m = json.load(f)
+print(f'  BA_clip:       {m[\"ba_clip\"]:.4f} ({m[\"ba_clip\"]*100:.2f}%)')
+print(f'  Speech acc:    {m.get(\"speech_acc\", \"N/A\")}')
+print(f'  Nonspeech acc: {m.get(\"nonspeech_acc\", \"N/A\")}')
+print(f'  Quantization:  {m.get(\"quantization\", \"N/A\")}')
+print(f'  n_samples:     {m[\"n_samples\"]}')
+"
+fi
+echo "[INFO] END: $(date)"
+echo "[INFO] ========================================================================"

@@ -1,0 +1,2 @@
+Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.

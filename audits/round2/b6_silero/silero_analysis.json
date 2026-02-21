@@ -1,0 +1,92 @@
+{
+  "max_frame": {
+    "ba_clip": 0.889456419868791,
+    "ba_clip_ci": [
+      0.8837320564213341,
+      0.8947826466955191
+    ],
+    "recalls": {
+      "recall_speech": 0.7878163074039363,
+      "recall_speech_ci": [
+        0.7799557035765322,
+        0.795469744112158
+      ],
+      "n_speech": 10670,
+      "recall_nonspeech": 0.9910965323336457,
+      "recall_nonspeech_ci": [
+        0.9891289740335667,
+        0.9927106045690828
+      ],
+      "n_nonspeech": 10670
+    },
+    "dimension_metrics": {
+      "duration": 0.7753865979381444,
+      "snr": 0.9042955326460481,
+      "reverb": 0.9958762886597938,
+      "filter": 0.9889175257731959
+    },
+    "thresholds": {
+      "DT50": {
+        "point": 20,
+        "censoring": "below_range"
+      },
+      "DT75": {
+        "point": 81.18421052631578,
+        "censoring": "ok"
+      },
+      "DT90": {
+        "point": 196.0526315789474,
+        "censoring": "ok"
+      },
+      "SNR75": {
+        "point": -7.24763406940063,
+        "censoring": "ok"
+      }
+    }
+  },
+  "speech_ratio": {
+    "ba_clip": 0.5491565135895032,
+    "ba_clip_ci": [
+      0.5441970293388151,
+      0.5542411326453472
+    ],
+    "recalls": {
+      "recall_speech": 0.09831302717900656,
+      "recall_speech_ci": [
+        0.09280739833744747,
+        0.10410778603450752
+      ],
+      "n_speech": 10670,
+      "recall_nonspeech": 1.0,
+      "recall_nonspeech_ci": [
+        0.9996401053139572,
+        1.0
+      ],
+      "n_nonspeech": 10670
+    },
+    "dimension_metrics": {
+      "duration": 0.5010309278350515,
+      "snr": 0.6398625429553265,
+      "reverb": 0.5219072164948453,
+      "filter": 0.5365979381443299
+    },
+    "thresholds": {
+      "DT50": {
+        "point": 20,
+        "censoring": "below_range"
+      },
+      "DT75": {
+        "point": 1000,
+        "censoring": "above_range"
+      },
+      "DT90": {
+        "point": 1000,
+        "censoring": "above_range"
+      },
+      "SNR75": {
+        "point": 20.0,
+        "censoring": "above_range"
+      }
+    }
+  }
+}

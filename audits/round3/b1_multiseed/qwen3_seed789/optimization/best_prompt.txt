@@ -1,0 +1,1 @@
+Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.

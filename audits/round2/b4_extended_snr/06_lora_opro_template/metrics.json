@@ -1,0 +1,40 @@
+{
+  "ba_clip": 0.6726804123711341,
+  "ba_conditions": 0.672680412371134,
+  "speech_acc": 0.36082474226804123,
+  "nonspeech_acc": 0.9845360824742269,
+  "n_samples": 1940,
+  "n_speech": 970,
+  "n_nonspeech": 970,
+  "dimension_metrics": {
+    "snr": {
+      "ba": 0.672680412371134,
+      "n_conditions": 2,
+      "conditions": [
+        "snr_-15dB",
+        "snr_-20dB"
+      ]
+    }
+  },
+  "condition_metrics": {
+    "snr_-15dB": {
+      "ba": 0.8329896907216494,
+      "speech_acc": 0.6948453608247422,
+      "nonspeech_acc": 0.9711340206185567,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "snr_-20dB": {
+      "ba": 0.5123711340206185,
+      "speech_acc": 0.026804123711340205,
+      "nonspeech_acc": 0.9979381443298969,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    }
+  },
+  "prompt": null,
+  "checkpoint": "/mnt/fast/nobackup/users/gb0048/opro3_final/results/20260204_201138_COMPARATIVE_RUN/00_lora_training/checkpoints/final",
+  "manifest": "/mnt/fast/nobackup/users/gb0048/opro3_final/audits/round2/b4_extended_snr/extended_snr_metadata.csv"
+}

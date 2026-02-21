@@ -1,0 +1,5 @@
+Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.

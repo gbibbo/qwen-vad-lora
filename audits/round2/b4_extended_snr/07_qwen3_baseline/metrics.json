@@ -1,0 +1,40 @@
+{
+  "ba_clip": 0.5082474226804123,
+  "ba_conditions": 0.5082474226804123,
+  "speech_acc": 0.016494845360824743,
+  "nonspeech_acc": 1.0,
+  "n_samples": 1940,
+  "n_speech": 970,
+  "n_nonspeech": 970,
+  "dimension_metrics": {
+    "snr": {
+      "ba": 0.5082474226804123,
+      "n_conditions": 2,
+      "conditions": [
+        "snr_-15dB",
+        "snr_-20dB"
+      ]
+    }
+  },
+  "condition_metrics": {
+    "snr_-15dB": {
+      "ba": 0.5164948453608248,
+      "speech_acc": 0.032989690721649485,
+      "nonspeech_acc": 1.0,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "snr_-20dB": {
+      "ba": 0.5,
+      "speech_acc": 0.0,
+      "nonspeech_acc": 1.0,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    }
+  },
+  "prompt": "Does this audio contain human speech? Answer SPEECH or NONSPEECH.",
+  "checkpoint": null,
+  "manifest": "/mnt/fast/nobackup/users/gb0048/opro3_final/audits/round2/b4_extended_snr/extended_snr_metadata.csv"
+}

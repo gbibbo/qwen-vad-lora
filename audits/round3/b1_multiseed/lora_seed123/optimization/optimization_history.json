@@ -1,0 +1,494 @@
+{
+  "best_accuracy": 1.0,
+  "best_prompt": "You will answer with one token only.\n<question>Does this audio contain human speech?</question>\n<answer>SPEECH or NONSPEECH only</answer>",
+  "history": [
+    [
+      "Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.",
+      0.9
+    ],
+    [
+      "Binary decision. Output exactly one token: SPEECH or NONSPEECH.",
+      0.75
+    ],
+    [
+      "Decide the dominant content.\nDefinitions:\n- SPEECH = human voice, spoken words, syllables, conversational cues.\n- NONSPEECH = music, tones/beeps, environmental noise, silence.\nOutput exactly: SPEECH or NONSPEECH.",
+      0.95
+    ],
+    [
+      "Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.\nAnswer: SPEECH or NONSPEECH.",
+      0.85
+    ],
+    [
+      "Example:\nAudio\u2192 crowd noise, music \u2192 Output: NONSPEECH\nNow classify the new audio. Output exactly ONE token: SPEECH or NONSPEECH.",
+      0.55
+    ],
+    [
+      "Make a definite decision for the clip.\nOutput exactly one token: SPEECH or NONSPEECH.",
+      0.8
+    ],
+    [
+      "Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.\nAnswer: SPEECH or NONSPEECH.",
+      0.75
+    ],
+    [
+      "If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.\nAnswer: SPEECH or NONSPEECH.",
+      0.5
+    ],
+    [
+      "Decide the dominant content.\nDefinitions:\n- SPEECH = human voice, spoken words, syllables, conversational cues.\n- NONSPEECH = music, tones/beeps, environmental noise, silence.\nOutput exactly: SPEECH or NONSPEECH.",
+      0.95
+    ],
+    [
+      "TASK: Speech detection. Is human voice/speech present in this audio?\nAnswer: SPEECH or NONSPEECH.",
+      0.65
+    ],
+    [
+      "Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.\nAnswer: SPEECH or NONSPEECH.",
+      0.95
+    ],
+    [
+      "Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).\nAnswer exactly: SPEECH or NONSPEECH.",
+      0.8
+    ],
+    [
+      "Make a definite decision for the clip.\nOutput exactly one token: SPEECH or NONSPEECH.",
+      0.75
+    ],
+    [
+      "Decide the dominant content.\nDefinitions:\n- SPEECH = human voice, spoken words, syllables, conversational cues.\n- NONSPEECH = music, tones/beeps, environmental noise, silence.\nOutput exactly: SPEECH or NONSPEECH.",
+      0.95
+    ],
+    [
+      "If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.\nAnswer: SPEECH or NONSPEECH.",
+      0.5
+    ],
+    [
+      "Binary classification task.\nQ: Does this contain human speech?\nIf confident YES \u2192 SPEECH\nIf confident NO \u2192 NONSPEECH\nAnswer:",
+      0.9
+    ],
+    [
+      "Decide the dominant content.\nDefinitions:\n- SPEECH = human voice, spoken words, syllables, conversational cues.\n- NONSPEECH = music, tones/beeps, environmental noise, silence.\nOutput exactly: SPEECH or NONSPEECH.",
+      0.9
+    ],
+    [
+      "Binary decision. Output exactly one token: SPEECH or NONSPEECH.",
+      0.8
+    ],
+    [
+      "TASK: Speech detection. Is human voice/speech present in this audio?\nAnswer: SPEECH or NONSPEECH.",
+      0.65
+    ],
+    [
+      "You will answer with one token only.\n<question>Does this audio contain human speech?</question>\n<answer>SPEECH or NONSPEECH only</answer>",
+      1.0
+    ],
+    [
+      "Binary classification task.\nQ: Does this contain human speech?\nIf confident YES \u2192 SPEECH\nIf confident NO \u2192 NONSPEECH\nAnswer:",
+      0.95
+    ],
+    [
+      "Example:\nAudio\u2192 crowd noise, music \u2192 Output: NONSPEECH\nNow classify the new audio. Output exactly ONE token: SPEECH or NONSPEECH.",
+      0.65
+    ],
+    [
+      "Classify this audio. Output only: SPEECH or NONSPEECH.",
+      0.65
+    ],
+    [
+      "If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.\nAnswer: SPEECH or NONSPEECH.",
+      0.5
+    ],
+    [
+      "You will answer with one token only.\n<question>Does this audio contain human speech?</question>\n<answer>SPEECH or NONSPEECH only</answer>",
+      0.95
+    ],
+    [
+      "Human speech present? Answer: SPEECH or NONSPEECH.",
+      0.85
+    ],
+    [
+      "TASK: Speech detection. Is human voice/speech present in this audio?\nAnswer: SPEECH or NONSPEECH.",
+      0.6
+    ],
+    [
+      "Example:\nAudio\u2192 crowd noise, music \u2192 Output: NONSPEECH\nNow classify the new audio. Output exactly ONE token: SPEECH or NONSPEECH.",
+      0.5
+    ],
+    [
+      "Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.\nAnswer: SPEECH or NONSPEECH.",
+      0.95
+    ],
+    [
+      "Classify this audio. Output only: SPEECH or NONSPEECH.",
+      0.65
+    ],
+    [
+      "Binary classification task.\nQ: Does this contain human speech?\nIf confident YES \u2192 SPEECH\nIf confident NO \u2192 NONSPEECH\nAnswer:",
+      0.95
+    ],
+    [
+      "Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.\nAnswer: SPEECH or NONSPEECH.",
+      0.6
+    ],
+    [
+      "You will answer with one token only.\n<question>Does this audio contain human speech?</question>\n<answer>SPEECH or NONSPEECH only</answer>",
+      1.0
+    ],
+    [
+      "TASK: Speech detection. Is human voice/speech present in this audio?\nAnswer: SPEECH or NONSPEECH.",
+      0.55
+    ],
+    [
+      "Binary decision. Output exactly one token: SPEECH or NONSPEECH.",
+      0.7
+    ],
+    [
+      "Classify this audio. Output only: SPEECH or NONSPEECH.",
+      0.6
+    ],
+    [
+      "Decide the dominant content.\nDefinitions:\n- SPEECH = human voice, spoken words, syllables, conversational cues.\n- NONSPEECH = music, tones/beeps, environmental noise, silence.\nOutput exactly: SPEECH or NONSPEECH.",
+      0.95
+    ],
+    [
+      "Binary classification task.\nQ: Does this contain human speech?\nIf confident YES \u2192 SPEECH\nIf confident NO \u2192 NONSPEECH\nAnswer:",
+      1.0
+    ],
+    [
+      "You will answer with one token only.\n<question>Does this audio contain human speech?</question>\n<answer>SPEECH or NONSPEECH only</answer>",
+      1.0
+    ],
+    [
+      "Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.\nAnswer: SPEECH or NONSPEECH.",
+      0.55
+    ],
+    [
+      "You will answer with one token only.\n<question>Does this audio contain human speech?</question>\n<answer>SPEECH or NONSPEECH only</answer>",
+      0.95
+    ],
+    [
+      "Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.\nAnswer: SPEECH or NONSPEECH.",
+      1.0
+    ],
+    [
+      "Make a definite decision for the clip.\nOutput exactly one token: SPEECH or NONSPEECH.",
+      0.65
+    ],
+    [
+      "TASK: Speech detection. Is human voice/speech present in this audio?\nAnswer: SPEECH or NONSPEECH.",
+      0.6
+    ],
+    [
+      "Binary decision. Output exactly one token: SPEECH or NONSPEECH.",
+      0.65
+    ],
+    [
+      "Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.",
+      0.95
+    ],
+    [
+      "Example:\nAudio\u2192 crowd noise, music \u2192 Output: NONSPEECH\nNow classify the new audio. Output exactly ONE token: SPEECH or NONSPEECH.",
+      0.5
+    ],
+    [
+      "Decide the dominant content.\nDefinitions:\n- SPEECH = human voice, spoken words, syllables, conversational cues.\n- NONSPEECH = music, tones/beeps, environmental noise, silence.\nOutput exactly: SPEECH or NONSPEECH.",
+      0.95
+    ],
+    [
+      "You will answer with one token only.\n<question>Does this audio contain human speech?</question>\n<answer>SPEECH or NONSPEECH only</answer>",
+      0.9
+    ],
+    [
+      "Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.\nAnswer:",
+      0.5
+    ],
+    [
+      "Binary decision. Output exactly one token: SPEECH or NONSPEECH.",
+      0.65
+    ],
+    [
+      "Classify this audio. Output only: SPEECH or NONSPEECH.",
+      0.6
+    ],
+    [
+      "You will answer with one token only.\n<question>Does this audio contain human speech?</question>\n<answer>SPEECH or NONSPEECH only</answer>",
+      0.9
+    ],
+    [
+      "Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.\nAnswer: SPEECH or NONSPEECH.",
+      0.9
+    ],
+    [
+      "Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).\nAnswer exactly: SPEECH or NONSPEECH.",
+      0.65
+    ],
+    [
+      "Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.",
+      0.75
+    ],
+    [
+      "You will answer with one token only.\n<question>Does this audio contain human speech?</question>\n<answer>SPEECH or NONSPEECH only</answer>",
+      0.9
+    ],
+    [
+      "If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.\nAnswer: SPEECH or NONSPEECH.",
+      0.5
+    ],
+    [
+      "Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.\nAnswer: SPEECH or NONSPEECH.",
+      0.65
+    ],
+    [
+      "Decide the dominant content.\nDefinitions:\n- SPEECH = human voice, spoken words, syllables, conversational cues.\n- NONSPEECH = music, tones/beeps, environmental noise, silence.\nOutput exactly: SPEECH or NONSPEECH.",
+      0.9
+    ],
+    [
+      "Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).\nAnswer exactly: SPEECH or NONSPEECH.",
+      0.7
+    ],
+    [
+      "Example:\nAudio\u2192 crowd noise, music \u2192 Output: NONSPEECH\nNow classify the new audio. Output exactly ONE token: SPEECH or NONSPEECH.",
+      0.5
+    ],
+    [
+      "Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.\nAnswer:",
+      0.5
+    ],
+    [
+      "You will answer with one token only.\n<question>Does this audio contain human speech?</question>\n<answer>SPEECH or NONSPEECH only</answer>",
+      0.9
+    ],
+    [
+      "You will answer with one token only.\n<question>Does this audio contain human speech?</question>\n<answer>SPEECH or NONSPEECH only</answer>",
+      1.0
+    ],
+    [
+      "TASK: Speech detection. Is human voice/speech present in this audio?\nAnswer: SPEECH or NONSPEECH.",
+      0.6
+    ],
+    [
+      "Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.",
+      1.0
+    ],
+    [
+      "Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.\nAnswer: SPEECH or NONSPEECH.",
+      0.8
+    ],
+    [
+      "Make a definite decision for the clip.\nOutput exactly one token: SPEECH or NONSPEECH.",
+      0.8
+    ],
+    [
+      "Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.\nAnswer:",
+      0.5
+    ],
+    [
+      "Example:\nAudio\u2192 crowd noise, music \u2192 Output: NONSPEECH\nNow classify the new audio. Output exactly ONE token: SPEECH or NONSPEECH.",
+      0.55
+    ],
+    [
+      "Binary decision. Output exactly one token: SPEECH or NONSPEECH.",
+      0.8
+    ],
+    [
+      "You will answer with one token only.\n<question>Does this audio contain human speech?</question>\n<answer>SPEECH or NONSPEECH only</answer>",
+      0.95
+    ],
+    [
+      "Binary decision. Output exactly one token: SPEECH or NONSPEECH.",
+      0.7
+    ],
+    [
+      "Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.\nAnswer:",
+      0.55
+    ],
+    [
+      "Classify this audio. Output only: SPEECH or NONSPEECH.",
+      0.65
+    ],
+    [
+      "Binary classification task.\nQ: Does this contain human speech?\nIf confident YES \u2192 SPEECH\nIf confident NO \u2192 NONSPEECH\nAnswer:",
+      0.95
+    ],
+    [
+      "Label SPEECH only if human voice is clearly present; otherwise label NONSPEECH.\nAnswer: SPEECH or NONSPEECH.",
+      0.65
+    ],
+    [
+      "Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).\nAnswer exactly: SPEECH or NONSPEECH.",
+      0.6
+    ],
+    [
+      "You will answer with one token only.\n<question>Does this audio contain human speech?</question>\n<answer>SPEECH or NONSPEECH only</answer>",
+      0.95
+    ],
+    [
+      "You will answer with one token only.\n<question>Does this audio contain human speech?</question>\n<answer>SPEECH or NONSPEECH only</answer>",
+      1.0
+    ],
+    [
+      "Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.\nAnswer:",
+      0.5
+    ],
+    [
+      "Decide the dominant content.\nDefinitions:\n- SPEECH = human voice, spoken words, syllables, conversational cues.\n- NONSPEECH = music, tones/beeps, environmental noise, silence.\nOutput exactly: SPEECH or NONSPEECH.",
+      1.0
+    ],
+    [
+      "Binary classification task.\nQ: Does this contain human speech?\nIf confident YES \u2192 SPEECH\nIf confident NO \u2192 NONSPEECH\nAnswer:",
+      0.95
+    ],
+    [
+      "If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.\nAnswer: SPEECH or NONSPEECH.",
+      0.5
+    ],
+    [
+      "Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.\nAnswer: SPEECH or NONSPEECH.",
+      0.95
+    ],
+    [
+      "Example:\nAudio\u2192 crowd noise, music \u2192 Output: NONSPEECH\nNow classify the new audio. Output exactly ONE token: SPEECH or NONSPEECH.",
+      0.5
+    ],
+    [
+      "Human speech present? Answer: SPEECH or NONSPEECH.",
+      0.95
+    ],
+    [
+      "You will answer with one token only.\n<question>Does this audio contain human speech?</question>\n<answer>SPEECH or NONSPEECH only</answer>",
+      0.95
+    ],
+    [
+      "Example:\nAudio\u2192 crowd noise, music \u2192 Output: NONSPEECH\nNow classify the new audio. Output exactly ONE token: SPEECH or NONSPEECH.",
+      0.5
+    ],
+    [
+      "Decide the dominant content.\nDefinitions:\n- SPEECH = human voice, spoken words, syllables, conversational cues.\n- NONSPEECH = music, tones/beeps, environmental noise, silence.\nOutput exactly: SPEECH or NONSPEECH.",
+      0.75
+    ],
+    [
+      "Human speech present? Answer: SPEECH or NONSPEECH.",
+      0.8
+    ],
+    [
+      "Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.\nAnswer: SPEECH or NONSPEECH.",
+      0.9
+    ],
+    [
+      "Binary decision. Output exactly one token: SPEECH or NONSPEECH.",
+      0.55
+    ],
+    [
+      "TASK: Speech detection. Is human voice/speech present in this audio?\nAnswer: SPEECH or NONSPEECH.",
+      0.5
+    ],
+    [
+      "You will answer with one token only.\n<question>Does this audio contain human speech?</question>\n<answer>SPEECH or NONSPEECH only</answer>",
+      0.95
+    ],
+    [
+      "You will answer with one token only.\n<question>Does this audio contain human speech?</question>\n<answer>SPEECH or NONSPEECH only</answer>",
+      0.8
+    ],
+    [
+      "TASK: Speech detection. Is human voice/speech present in this audio?\nAnswer: SPEECH or NONSPEECH.",
+      0.55
+    ],
+    [
+      "Classify this audio. Output only: SPEECH or NONSPEECH.",
+      0.5
+    ],
+    [
+      "If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.\nAnswer: SPEECH or NONSPEECH.",
+      0.5
+    ],
+    [
+      "Human speech present? Answer: SPEECH or NONSPEECH.",
+      0.85
+    ],
+    [
+      "Listen for human voice. If present: SPEECH. Otherwise: NONSPEECH.\nAnswer:",
+      0.55
+    ],
+    [
+      "Decide the dominant content.\nDefinitions:\n- SPEECH = human voice, spoken words, syllables, conversational cues.\n- NONSPEECH = music, tones/beeps, environmental noise, silence.\nOutput exactly: SPEECH or NONSPEECH.",
+      0.9
+    ],
+    [
+      "Example:\nAudio\u2192 crowd noise, music \u2192 Output: NONSPEECH\nNow classify the new audio. Output exactly ONE token: SPEECH or NONSPEECH.",
+      0.5
+    ],
+    [
+      "You will answer with one token only.\n<question>Does this audio contain human speech?</question>\n<answer>SPEECH or NONSPEECH only</answer>",
+      0.9
+    ],
+    [
+      "Example:\nAudio\u2192 crowd noise, music \u2192 Output: NONSPEECH\nNow classify the new audio. Output exactly ONE token: SPEECH or NONSPEECH.",
+      0.5
+    ],
+    [
+      "If there is any hint of human voice (even faint/short), label SPEECH; otherwise NONSPEECH.\nAnswer: SPEECH or NONSPEECH.",
+      0.5
+    ],
+    [
+      "TASK: Speech detection. Is human voice/speech present in this audio?\nAnswer: SPEECH or NONSPEECH.",
+      0.6
+    ],
+    [
+      "Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.\nAnswer: SPEECH or NONSPEECH.",
+      0.9
+    ],
+    [
+      "Binary classification task.\nQ: Does this contain human speech?\nIf confident YES \u2192 SPEECH\nIf confident NO \u2192 NONSPEECH\nAnswer:",
+      0.9
+    ],
+    [
+      "Classify this audio. Output only: SPEECH or NONSPEECH.",
+      0.55
+    ],
+    [
+      "Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.",
+      1.0
+    ],
+    [
+      "You will answer with one token only.\n<question>Does this audio contain human speech?</question>\n<answer>SPEECH or NONSPEECH only</answer>",
+      1.0
+    ],
+    [
+      "Focus on cues of human vocal tract (formants, syllabic rhythm, consonant onsets).\nAnswer exactly: SPEECH or NONSPEECH.",
+      0.7
+    ],
+    [
+      "Human speech present? Answer: SPEECH or NONSPEECH.",
+      0.9
+    ],
+    [
+      "Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.\nAnswer: SPEECH or NONSPEECH.",
+      0.95
+    ],
+    [
+      "Decide the dominant content.\nDefinitions:\n- SPEECH = human voice, spoken words, syllables, conversational cues.\n- NONSPEECH = music, tones/beeps, environmental noise, silence.\nOutput exactly: SPEECH or NONSPEECH.",
+      0.8
+    ],
+    [
+      "Binary decision. Output exactly one token: SPEECH or NONSPEECH.",
+      0.7
+    ],
+    [
+      "Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.",
+      0.85
+    ],
+    [
+      "TASK: Speech detection. Is human voice/speech present in this audio?\nAnswer: SPEECH or NONSPEECH.",
+      0.7
+    ]
+  ],
+  "config": {
+    "checkpoint": "/mnt/fast/nobackup/users/gb0048/opro3_final/results/20260204_201138_COMPARATIVE_RUN/00_lora_training/checkpoints/final",
+    "num_iterations": 15,
+    "samples_per_iter": 20,
+    "num_candidates": 8,
+    "seed": 123,
+    "timestamp": "2026-02-19T05:50:40.490174"
+  }
+}

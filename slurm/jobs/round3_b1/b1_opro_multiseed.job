@@ -1,0 +1,188 @@
+#!/bin/bash
+#SBATCH --partition=a100
+#SBATCH --gpus=1
+#SBATCH --cpus-per-task=12
+#SBATCH --mem=64G
+#SBATCH --time=48:00:00
+
+# =============================================================================
+# B.1 — Multi-seed OPRO-Template (Parameterized)
+# =============================================================================
+# Runs OPRO-Template search + test evaluation for ONE model×seed combination.
+# Submit 15 times (3 models × 5 seeds) for full multi-seed experiment.
+#
+# Arguments:
+#   $1  MODEL_CONFIG: base | lora | qwen3
+#   $2  SEED: integer (e.g., 42, 123, 456, 789, 1024)
+#
+# Usage (via launch_all.sh or manually):
+#   ./slurm/tools/on_submit.sh sbatch \
+#       --job-name=b1_base_s42 \
+#       --output=logs/b1_base_s42_%j.out \
+#       --error=logs/b1_base_s42_%j.err \
+#       slurm/jobs/round3_b1/b1_opro_multiseed.job base 42
+# =============================================================================
+
+set -euo pipefail
+set -x
+
+# ---- Parse arguments ----
+MODEL_CONFIG="${1:?ERROR: MODEL_CONFIG required (base|lora|qwen3)}"
+SEED="${2:?ERROR: SEED required (integer)}"
+
+# ---- Validate ----
+case "$MODEL_CONFIG" in
+    base|lora|qwen3) ;;
+    *) echo "ERROR: Invalid MODEL_CONFIG '$MODEL_CONFIG'. Must be: base, lora, qwen3"; exit 1 ;;
+esac
+
+# ---- Paths ----
+REPO="/mnt/fast/nobackup/users/gb0048/opro3_final"
+REPO_PARENT="/mnt/fast/nobackup/users/gb0048"
+CONTAINER="$REPO_PARENT/opro2/pytorch_2.1_cuda12.sif"
+
+DEV_CSV="$REPO/data/processed/variants_validated_1000/dev_metadata.csv"
+TEST_CSV="$REPO/data/processed/variants_validated_1000/test_metadata.csv"
+LORA_CKPT="$REPO/results/20260204_201138_COMPARATIVE_RUN/00_lora_training/checkpoints/final"
+
+OUT_ROOT="$REPO/audits/round3/b1_multiseed"
+OUT_DIR="$OUT_ROOT/${MODEL_CONFIG}_seed${SEED}"
+
+echo "[INFO] ========================================================================"
+echo "[INFO] B.1 Multi-seed OPRO-Template"
+echo "[INFO] Model: $MODEL_CONFIG | Seed: $SEED"
+echo "[INFO] Output: $OUT_DIR"
+echo "[INFO] START: $(date)"
+echo "[INFO] ========================================================================"
+nvidia-smi --query-gpu=name,memory.total --format=csv
+
+cd "$REPO"
+
+# ---- Environment ----
+export HF_HOME="$REPO_PARENT/.cache/huggingface"
+export TRANSFORMERS_CACHE="$HF_HOME/transformers"
+export HF_HUB_CACHE="$HF_HOME/hub"
+export PIP_CACHE_DIR="$REPO_PARENT/.cache/pip"
+export TMPDIR="$REPO_PARENT/tmp"
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+export PYTHONUSERBASE="$REPO_PARENT/.local"
+export USER_SITE="$PYTHONUSERBASE/lib/python3.10/site-packages"
+
+mkdir -p "$HF_HOME" "$TRANSFORMERS_CACHE" "$HF_HUB_CACHE" "$PIP_CACHE_DIR" "$TMPDIR" "$PYTHONUSERBASE"
+mkdir -p logs "$OUT_DIR"
+
+# ---- Pre-flight checks ----
+if [ ! -L "$REPO/data" ] && [ ! -d "$REPO/data" ]; then
+    echo "ERROR: data/ symlink missing"; exit 1
+fi
+if [ ! -f "$DEV_CSV" ]; then
+    echo "ERROR: Dev CSV not found: $DEV_CSV"; exit 1
+fi
+if [ ! -f "$TEST_CSV" ]; then
+    echo "ERROR: Test CSV not found: $TEST_CSV"; exit 1
+fi
+if [ ! -f "$CONTAINER" ]; then
+    echo "ERROR: Container not found: $CONTAINER"; exit 1
+fi
+
+# Install torchaudio if needed (for Silero dependency in some imports)
+apptainer exec --nv \
+    --env PIP_CACHE_DIR="$PIP_CACHE_DIR" \
+    --env TMPDIR="$TMPDIR" \
+    --env PYTHONUSERBASE="$PYTHONUSERBASE" \
+    "$CONTAINER" pip install --user --no-cache-dir \
+    torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
+
+# ---- Build Apptainer run command ----
+RUN_CMD="apptainer exec --nv --pwd $REPO \
+    --env HF_HOME=$HF_HOME \
+    --env TRANSFORMERS_CACHE=$TRANSFORMERS_CACHE \
+    --env HF_HUB_CACHE=$HF_HUB_CACHE \
+    --env PYTORCH_CUDA_ALLOC_CONF=$PYTORCH_CUDA_ALLOC_CONF \
+    --env PYTHONUSERBASE=$PYTHONUSERBASE \
+    --env PYTHONPATH=$USER_SITE:$REPO \
+    $CONTAINER"
+
+# ---- Build model-specific flags ----
+case "$MODEL_CONFIG" in
+    base)
+        MODEL_TYPE="qwen2"
+        OPRO_MODEL_FLAGS="--no_lora --model_type qwen2"
+        EVAL_MODEL_FLAGS="--model_type qwen2"
+        ;;
+    lora)
+        MODEL_TYPE="qwen2"
+        if [ ! -d "$LORA_CKPT" ]; then
+            echo "ERROR: LoRA checkpoint not found: $LORA_CKPT"; exit 1
+        fi
+        OPRO_MODEL_FLAGS="--checkpoint $LORA_CKPT --model_type qwen2"
+        EVAL_MODEL_FLAGS="--model_type qwen2 --checkpoint $LORA_CKPT"
+        ;;
+    qwen3)
+        MODEL_TYPE="qwen3_omni"
+        OPRO_MODEL_FLAGS="--no_lora --model_type qwen3_omni"
+        EVAL_MODEL_FLAGS="--model_type qwen3_omni"
+        ;;
+esac
+
+# ==========================================================
+# PHASE 1: OPRO-Template Search
+# ==========================================================
+echo ""
+echo "[PHASE 1] OPRO-Template optimization (model=$MODEL_CONFIG, seed=$SEED)"
+echo "[PHASE 1] Dev samples: $(wc -l < "$DEV_CSV") lines"
+
+$RUN_CMD python3 scripts/opro_template.py \
+    --train_csv "$DEV_CSV" \
+    --output_dir "$OUT_DIR/optimization" \
+    --num_iterations 15 \
+    --samples_per_iter 20 \
+    --num_candidates 8 \
+    --seed "$SEED" \
+    $OPRO_MODEL_FLAGS
+
+echo "[PHASE 1] OPRO-Template complete: $(date)"
+
+# Verify best_prompt.txt was created
+BEST_PROMPT="$OUT_DIR/optimization/best_prompt.txt"
+if [ ! -f "$BEST_PROMPT" ]; then
+    echo "ERROR: best_prompt.txt not generated at $BEST_PROMPT"; exit 1
+fi
+echo "[PHASE 1] Winning prompt:"
+cat "$BEST_PROMPT"
+
+# ==========================================================
+# PHASE 2: Test Set Evaluation (21,340 samples)
+# ==========================================================
+echo ""
+echo "[PHASE 2] Evaluating winning prompt on full test set"
+echo "[PHASE 2] Test samples: $(wc -l < "$TEST_CSV") lines"
+
+$RUN_CMD python3 scripts/eval.py \
+    --manifest "$TEST_CSV" \
+    --prompt_file "$BEST_PROMPT" \
+    --output_dir "$OUT_DIR/evaluation" \
+    $EVAL_MODEL_FLAGS
+
+echo "[PHASE 2] Test evaluation complete: $(date)"
+
+# ---- Print summary ----
+echo ""
+echo "[INFO] ========================================================================"
+echo "[INFO] B.1 COMPLETE: ${MODEL_CONFIG}_seed${SEED}"
+echo "[INFO] Optimization: $OUT_DIR/optimization/"
+echo "[INFO] Evaluation:   $OUT_DIR/evaluation/"
+if [ -f "$OUT_DIR/evaluation/metrics.json" ]; then
+    echo "[INFO] Metrics:"
+    python3 -c "
+import json
+with open('$OUT_DIR/evaluation/metrics.json') as f:
+    m = json.load(f)
+print(f'  BA_clip:     {m[\"ba_clip\"]:.4f} ({m[\"ba_clip\"]*100:.2f}%)')
+print(f'  n_samples:   {m[\"n_samples\"]}')
+print(f'  speech_acc:  {m.get(\"speech_acc\", \"N/A\")}')
+print(f'  nonspeech_acc: {m.get(\"nonspeech_acc\", \"N/A\")}')
+"
+fi
+echo "[INFO] END: $(date)"
+echo "[INFO] ========================================================================"

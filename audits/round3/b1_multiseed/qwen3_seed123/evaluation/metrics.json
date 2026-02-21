@@ -1,0 +1,238 @@
+{
+  "ba_clip": 0.8634020618556701,
+  "ba_conditions": 0.8762671821305842,
+  "speech_acc": 0.9192127460168698,
+  "nonspeech_acc": 0.8075913776944704,
+  "n_samples": 21340,
+  "n_speech": 10670,
+  "n_nonspeech": 10670,
+  "dimension_metrics": {
+    "duration": {
+      "ba": 0.7731958762886597,
+      "n_conditions": 8,
+      "conditions": [
+        "dur_20ms",
+        "dur_40ms",
+        "dur_60ms",
+        "dur_80ms",
+        "dur_100ms",
+        "dur_200ms",
+        "dur_500ms",
+        "dur_1000ms"
+      ]
+    },
+    "snr": {
+      "ba": 0.9408934707903781,
+      "n_conditions": 6,
+      "conditions": [
+        "snr_-10dB",
+        "snr_-5dB",
+        "snr_0dB",
+        "snr_5dB",
+        "snr_10dB",
+        "snr_20dB"
+      ]
+    },
+    "reverb": {
+      "ba": 0.8940721649484535,
+      "n_conditions": 4,
+      "conditions": [
+        "reverb_none",
+        "reverb_0.3s",
+        "reverb_1.0s",
+        "reverb_2.5s"
+      ]
+    },
+    "filter": {
+      "ba": 0.8969072164948453,
+      "n_conditions": 4,
+      "conditions": [
+        "filter_none",
+        "filter_bandpass",
+        "filter_lowpass",
+        "filter_highpass"
+      ]
+    }
+  },
+  "condition_metrics": {
+    "dur_20ms": {
+      "ba": 0.6113402061855671,
+      "speech_acc": 0.2639175257731959,
+      "nonspeech_acc": 0.9587628865979382,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_40ms": {
+      "ba": 0.6948453608247422,
+      "speech_acc": 0.5422680412371134,
+      "nonspeech_acc": 0.8474226804123711,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_60ms": {
+      "ba": 0.7360824742268042,
+      "speech_acc": 0.7175257731958763,
+      "nonspeech_acc": 0.7546391752577319,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_80ms": {
+      "ba": 0.7381443298969073,
+      "speech_acc": 0.8206185567010309,
+      "nonspeech_acc": 0.6556701030927835,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_100ms": {
+      "ba": 0.7783505154639175,
+      "speech_acc": 0.9051546391752577,
+      "nonspeech_acc": 0.6515463917525773,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_200ms": {
+      "ba": 0.8443298969072165,
+      "speech_acc": 0.9731958762886598,
+      "nonspeech_acc": 0.7154639175257732,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_500ms": {
+      "ba": 0.8855670103092783,
+      "speech_acc": 1.0,
+      "nonspeech_acc": 0.7711340206185567,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_1000ms": {
+      "ba": 0.8969072164948453,
+      "speech_acc": 1.0,
+      "nonspeech_acc": 0.7938144329896907,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "snr_-10dB": {
+      "ba": 0.956701030927835,
+      "speech_acc": 1.0,
+      "nonspeech_acc": 0.9134020618556701,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "snr_-5dB": {
+      "ba": 0.945360824742268,
+      "speech_acc": 1.0,
+      "nonspeech_acc": 0.8907216494845361,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "snr_0dB": {
+      "ba": 0.9371134020618557,
+      "speech_acc": 1.0,
+      "nonspeech_acc": 0.8742268041237113,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "snr_5dB": {
+      "ba": 0.9391752577319588,
+      "speech_acc": 1.0,
+      "nonspeech_acc": 0.8783505154639175,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "snr_10dB": {
+      "ba": 0.9371134020618557,
+      "speech_acc": 1.0,
+      "nonspeech_acc": 0.8742268041237113,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "snr_20dB": {
+      "ba": 0.9298969072164949,
+      "speech_acc": 1.0,
+      "nonspeech_acc": 0.8597938144329897,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "reverb_none": {
+      "ba": 0.8958762886597937,
+      "speech_acc": 1.0,
+      "nonspeech_acc": 0.7917525773195876,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "reverb_0.3s": {
+      "ba": 0.8948453608247422,
+      "speech_acc": 1.0,
+      "nonspeech_acc": 0.7896907216494845,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "reverb_1.0s": {
+      "ba": 0.8876288659793814,
+      "speech_acc": 1.0,
+      "nonspeech_acc": 0.7752577319587629,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "reverb_2.5s": {
+      "ba": 0.8979381443298968,
+      "speech_acc": 1.0,
+      "nonspeech_acc": 0.7958762886597938,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "filter_none": {
+      "ba": 0.8969072164948453,
+      "speech_acc": 1.0,
+      "nonspeech_acc": 0.7938144329896907,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "filter_bandpass": {
+      "ba": 0.8855670103092783,
+      "speech_acc": 1.0,
+      "nonspeech_acc": 0.7711340206185567,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "filter_lowpass": {
+      "ba": 0.8979381443298968,
+      "speech_acc": 1.0,
+      "nonspeech_acc": 0.7958762886597938,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "filter_highpass": {
+      "ba": 0.9072164948453608,
+      "speech_acc": 1.0,
+      "nonspeech_acc": 0.8144329896907216,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    }
+  },
+  "prompt": null,
+  "checkpoint": null,
+  "manifest": "/mnt/fast/nobackup/users/gb0048/opro3_final/data/processed/variants_validated_1000/test_metadata.csv"
+}

@@ -1,0 +1,89 @@
+#!/bin/bash
+#SBATCH --job-name=opro3_r2_silero
+#SBATCH --partition=a100
+#SBATCH --gpus=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=16G
+#SBATCH --time=4:00:00
+#SBATCH --output=/mnt/fast/nobackup/users/gb0048/opro3_final/logs/r2_silero_%j.out
+#SBATCH --error=/mnt/fast/nobackup/users/gb0048/opro3_final/logs/r2_silero_%j.err
+
+# =============================================================================
+# B.6 — Silero VAD Evaluation Under Psychometric Bank
+# =============================================================================
+# Runs Silero VAD on all 21,340 test clips with two operating points:
+#   1. Max-frame: any frame >= 0.5 → SPEECH
+#   2. Speech-ratio: proportion of speech frames >= 0.5 → SPEECH
+# Then computes metrics with bootstrap CIs.
+#
+# Note: Silero runs on CPU; GPU allocated because a100 partition requires it.
+#
+# Usage:
+#   ./slurm/tools/on_submit.sh sbatch slurm/jobs/round2_b6_silero.job
+# =============================================================================
+
+set -euo pipefail
+set -x
+
+REPO="/mnt/fast/nobackup/users/gb0048/opro3_final"
+REPO_PARENT="/mnt/fast/nobackup/users/gb0048"
+CONTAINER="$REPO_PARENT/opro2/pytorch_2.1_cuda12.sif"
+
+echo "[INFO] ========================================================================"
+echo "[INFO] B.6 — Silero VAD Evaluation"
+echo "[INFO] START: $(date)"
+echo "[INFO] ========================================================================"
+
+cd "$REPO"
+
+# Environment setup
+export HF_HOME="$REPO_PARENT/.cache/huggingface"
+export PIP_CACHE_DIR="$REPO_PARENT/.cache/pip"
+export TMPDIR="$REPO_PARENT/tmp"
+export PYTHONUSERBASE="$REPO_PARENT/.local"
+export USER_SITE="$PYTHONUSERBASE/lib/python3.10/site-packages"
+
+mkdir -p "$HF_HOME" "$PIP_CACHE_DIR" "$TMPDIR" "$PYTHONUSERBASE"
+mkdir -p logs audits/round2/b6_silero
+
+# Verify data symlink
+if [ ! -L "$REPO/data" ] && [ ! -d "$REPO/data" ]; then
+    ln -s ../opro2_clean/data "$REPO/data"
+fi
+
+# Install torchaudio for Silero VAD
+echo "[SETUP] Installing torchaudio 2.5.1..."
+apptainer exec --nv \
+    --env PIP_CACHE_DIR="$PIP_CACHE_DIR" \
+    --env TMPDIR="$TMPDIR" \
+    --env PYTHONUSERBASE="$PYTHONUSERBASE" \
+    "$CONTAINER" pip install --user --no-cache-dir \
+    torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
+
+RUN_CMD="apptainer exec --nv --pwd $REPO \
+    --env PYTHONUSERBASE=$PYTHONUSERBASE \
+    --env PYTHONPATH=$USER_SITE:$REPO \
+    --env HF_HOME=$HF_HOME \
+    $CONTAINER"
+
+# ---- Step 1: Run Silero VAD on all 21,340 clips ----
+echo ""
+echo "[RUN] Evaluating Silero VAD (21,340 clips, CPU)..."
+$RUN_CMD python3 scripts/eval_silero.py \
+    --manifest "$REPO/data/processed/variants_validated_1000/test_metadata.csv" \
+    --output_dir "$REPO/audits/round2/b6_silero" \
+    --threshold 0.5 \
+    --device cpu
+
+echo "[DONE] Silero evaluation complete: $(date)"
+
+# ---- Step 2: Compute metrics with bootstrap CIs ----
+echo ""
+echo "[POST] Computing Silero metrics with bootstrap CIs..."
+$RUN_CMD python3 scripts/analyze_silero.py
+
+echo ""
+echo "[INFO] ========================================================================"
+echo "[INFO] B.6 SILERO EVALUATION COMPLETE"
+echo "[INFO] END: $(date)"
+echo "[INFO] ========================================================================"

@@ -1,0 +1,43 @@
+model,seed,status,ba_clip,ba_clip_pct,n_samples,speech_acc,nonspeech_acc,winning_prompt,template_id,opro_best_dev_acc
+base,42,complete,0.7508434864104967,75.08,21340,0.7174320524835989,0.7842549203373945,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",T06_forced,0.85
+base,123,complete,0.7508434864104967,75.08,21340,0.7174320524835989,0.7842549203373945,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",T06_forced,0.95
+base,456,complete,0.7508434864104967,75.08,21340,0.7174320524835989,0.7842549203373945,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",T06_forced,0.95
+base,789,complete,0.6136363636363635,61.36,21340,0.6243673851921274,0.6029053420805998,Human speech present? Answer: SPEECH or NONSPEECH.,T15_simplified,0.95
+base,1024,complete,0.7508434864104967,75.08,21340,0.7174320524835989,0.7842549203373945,"Make a definite decision for the clip.
+Output exactly one token: SPEECH or NONSPEECH.",T06_forced,0.95
+lora,42,complete,0.9328959700093721,93.29,21340,0.9282099343955014,0.9375820056232428,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",T04_contrastive,1.0
+lora,123,complete,0.9148078725398313,91.48,21340,0.9072164948453608,0.9223992502343018,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",T12_delimiters,1.0
+lora,456,complete,0.8765698219306466,87.66,21340,0.8227741330834114,0.9303655107778819,"Binary classification task.
+Q: Does this contain human speech?
+If confident YES → SPEECH
+If confident NO → NONSPEECH
+Answer:",T11_calibration,1.0
+lora,789,complete,0.9328959700093721,93.29,21340,0.9282099343955014,0.9375820056232428,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",T04_contrastive,1.0
+lora,1024,complete,0.9328959700093721,93.29,21340,0.9282099343955014,0.9375820056232428,"Detect human speech. Treat the following as NONSPEECH: pure tones/beeps, clicks, clock ticks, music, environmental noise, silence.
+Answer: SPEECH or NONSPEECH.",T04_contrastive,1.0
+qwen3,42,complete,0.8780224929709466,87.8,21340,0.9021555763823805,0.8538894095595126,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",T03_verbalizer,1.0
+qwen3,123,complete,0.8634020618556701,86.34,21340,0.9192127460168698,0.8075913776944704,"You will answer with one token only.
+<question>Does this audio contain human speech?</question>
+<answer>SPEECH or NONSPEECH only</answer>",T12_delimiters,1.0
+qwen3,456,complete,0.8780224929709466,87.8,21340,0.9021555763823805,0.8538894095595126,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",T03_verbalizer,1.0
+qwen3,789,complete,0.8954076850984067,89.54,21340,0.8387066541705717,0.9521087160262418,Does this audio contain human speech? Answer exactly one token: SPEECH or NONSPEECH.,T01_minimal,1.0
+qwen3,1024,complete,0.8780224929709466,87.8,21340,0.9021555763823805,0.8538894095595126,"Decide the dominant content.
+Definitions:
+- SPEECH = human voice, spoken words, syllables, conversational cues.
+- NONSPEECH = music, tones/beeps, environmental noise, silence.
+Output exactly: SPEECH or NONSPEECH.",T03_verbalizer,1.0

@@ -21,7 +21,7 @@ from peft import PeftModel
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from src.qsm.models.qwen_audio import Qwen2AudioClassifier
-from src.qsm.utils.normalize import normalize_to_binary, llm_fallback_interpret
+from src.qsm.utils.normalize import normalize_to_binary, normalize_to_binary_with_level, llm_fallback_interpret
 
 # Qwen3-Omni (requires transformers from GitHub)
 try:
@@ -42,6 +42,11 @@ def parse_args():
     parser.add_argument("--device", type=str, default="cuda", help="Device")
     parser.add_argument("--model_type", type=str, default="qwen2", choices=["qwen2", "qwen3_omni"],
                         help="Model type: qwen2 (Qwen2-Audio-7B) or qwen3_omni (Qwen3-Omni-30B)")
+    parser.add_argument("--log_raw_text", action="store_true",
+                        help="Save raw model output text and normalization level in predictions CSV")
+    parser.add_argument("--quantization", type=str, default="4bit",
+                        choices=["4bit", "8bit", "none"],
+                        help="Quantization: 4bit (NF4), 8bit (LLM.int8), none (native bf16)")
     return parser.parse_args()
 
 
@@ -67,10 +72,10 @@ def get_condition_key(row):
         return "unknown"
 
 
-def evaluate_samples(model, samples_df, prompt, batch_size=50):
+def evaluate_samples(model, samples_df, prompt, batch_size=50, log_raw_text=False):
     """
     Evaluate all samples in batches.
-    Returns list of (prediction, ground_truth, condition_key) tuples.
+    Returns list of result dicts. If log_raw_text=True, includes raw_text and normalization_level.
     """
     results = []
 
@@ -104,26 +109,43 @@ def evaluate_samples(model, samples_df, prompt, batch_size=50):
                     )
                 elif isinstance(getattr(result, "probs", None), dict):
                     p_first_token = result.probs.get("p_first_token", float("nan"))
-                prediction, _ = normalize_to_binary(response)
+
+                if log_raw_text:
+                    prediction, _, norm_level = normalize_to_binary_with_level(response)
+                else:
+                    prediction, _ = normalize_to_binary(response)
+                    norm_level = None
 
                 # LLM fallback for ambiguous responses
                 if prediction is None:
                     fallback_label, _ = llm_fallback_interpret(response)
-                    prediction = fallback_label if fallback_label is not None else "UNKNOWN"
+                    if fallback_label is not None:
+                        prediction = fallback_label
+                        if log_raw_text:
+                            norm_level = "L6_LLM_FALLBACK"
+                    else:
+                        prediction = "UNKNOWN"
+                        # norm_level stays as L6_UNKNOWN from normalize_to_binary_with_level
 
             except Exception as e:
                 print(f"  Error processing {audio_path}: {e}")
                 prediction = "ERROR"
+                response = ""
+                norm_level = "ERROR" if log_raw_text else None
                 p_first_token = float("nan")
 
-            results.append({
+            entry = {
                 "audio_path": audio_path,
                 "ground_truth": ground_truth,
                 "prediction": prediction,
                 "condition": condition_key,
                 "variant_type": row.get("variant_type", "unknown"),
                 "p_first_token": p_first_token,
-            })
+            }
+            if log_raw_text:
+                entry["raw_text"] = response
+                entry["normalization_level"] = norm_level
+            results.append(entry)
 
         # Clear CUDA cache periodically
         if torch.cuda.is_available():
@@ -275,11 +297,13 @@ def main():
             print("  WARNING: LoRA not supported for Qwen3-Omni, ignoring checkpoint")
     else:
         print("  Model type: Qwen2-Audio")
+        quant = getattr(args, "quantization", "4bit")
         model = Qwen2AudioClassifier(
             model_name="Qwen/Qwen2-Audio-7B-Instruct",
             device=args.device,
             torch_dtype="auto",
-            load_in_4bit=True
+            load_in_4bit=(quant == "4bit"),
+            load_in_8bit=(quant == "8bit"),
         )
         if args.checkpoint:
             print(f"  Loading LoRA checkpoint: {args.checkpoint}")
@@ -289,7 +313,7 @@ def main():
 
     # Evaluate
     print(f"\nEvaluating {len(df)} samples...")
-    results = evaluate_samples(model, df, prompt, args.batch_size)
+    results = evaluate_samples(model, df, prompt, args.batch_size, log_raw_text=args.log_raw_text)
 
     # Compute metrics
     print("\nComputing metrics...")
@@ -318,6 +342,7 @@ def main():
     metrics["prompt"] = args.prompt
     metrics["checkpoint"] = args.checkpoint
     metrics["manifest"] = args.manifest
+    metrics["quantization"] = getattr(args, "quantization", "4bit")
 
     # Save metrics JSON
     metrics_path = os.path.join(args.output_dir, "metrics.json")

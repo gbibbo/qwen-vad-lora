@@ -1,0 +1,129 @@
+#!/bin/bash
+#SBATCH --job-name=opro3_r2_b2
+#SBATCH --partition=a100
+#SBATCH --gpus=1
+#SBATCH --cpus-per-task=12
+#SBATCH --mem=64G
+#SBATCH --time=48:00:00
+#SBATCH --output=/mnt/fast/nobackup/users/gb0048/opro3_final/logs/r2_b2_%j.out
+#SBATCH --error=/mnt/fast/nobackup/users/gb0048/opro3_final/logs/r2_b2_%j.err
+
+# =============================================================================
+# B.2 — Re-evaluate 3 configs with --log_raw_text
+# =============================================================================
+# Runs eval.py with raw text logging for normalization level breakdown.
+# Configs: 02 (Base+OPRO-LLM), 06 (LoRA+OPRO-Tmpl), 07 (Qwen3+Hand)
+#
+# Usage:
+#   ./slurm/tools/on_submit.sh sbatch slurm/jobs/round2_b2_normalization.job
+# =============================================================================
+
+set -euo pipefail
+set -x
+
+REPO="/mnt/fast/nobackup/users/gb0048/opro3_final"
+REPO_PARENT="/mnt/fast/nobackup/users/gb0048"
+CONTAINER="$REPO_PARENT/opro2/pytorch_2.1_cuda12.sif"
+
+echo "[INFO] ========================================================================"
+echo "[INFO] B.2 — Normalization Level Breakdown Re-evaluation"
+echo "[INFO] START: $(date)"
+echo "[INFO] ========================================================================"
+nvidia-smi --query-gpu=name,memory.total --format=csv
+
+cd "$REPO"
+
+# Environment setup (matching matrix_job_template.job)
+export HF_HOME="$REPO_PARENT/.cache/huggingface"
+export TRANSFORMERS_CACHE="$HF_HOME/transformers"
+export HF_HUB_CACHE="$HF_HOME/hub"
+export PIP_CACHE_DIR="$REPO_PARENT/.cache/pip"
+export TMPDIR="$REPO_PARENT/tmp"
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+export PYTHONUSERBASE="$REPO_PARENT/.local"
+export USER_SITE="$PYTHONUSERBASE/lib/python3.10/site-packages"
+
+mkdir -p "$HF_HOME" "$TRANSFORMERS_CACHE" "$HF_HUB_CACHE" "$PIP_CACHE_DIR" "$TMPDIR" "$PYTHONUSERBASE"
+mkdir -p logs audits/round2/b2_normalization
+
+# Verify data symlink
+if [ ! -L "$REPO/data" ] && [ ! -d "$REPO/data" ]; then
+    echo "[SETUP] Creating data symlink..."
+    ln -s ../opro2_clean/data "$REPO/data"
+fi
+
+# Install torchaudio if needed
+echo "[SETUP] Installing torchaudio 2.5.1..."
+apptainer exec --nv \
+    --env PIP_CACHE_DIR="$PIP_CACHE_DIR" \
+    --env TMPDIR="$TMPDIR" \
+    --env PYTHONUSERBASE="$PYTHONUSERBASE" \
+    "$CONTAINER" pip install --user --no-cache-dir \
+    torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
+
+# Common paths
+BEST="$REPO/results/BEST_CONSOLIDATED"
+MANIFEST="$REPO/data/processed/variants_validated_1000/test_metadata.csv"
+OUT="$REPO/audits/round2/b2_normalization"
+LORA_CKPT="$REPO/results/20260204_201138_COMPARATIVE_RUN/00_lora_training/checkpoints/final"
+BASELINE_PROMPT="Does this audio contain human speech? Answer SPEECH or NONSPEECH."
+
+RUN_CMD="apptainer exec --nv --pwd $REPO \
+    --env HF_HOME=$HF_HOME \
+    --env TRANSFORMERS_CACHE=$TRANSFORMERS_CACHE \
+    --env HF_HUB_CACHE=$HF_HUB_CACHE \
+    --env PYTORCH_CUDA_ALLOC_CONF=$PYTORCH_CUDA_ALLOC_CONF \
+    --env PYTHONUSERBASE=$PYTHONUSERBASE \
+    --env PYTHONPATH=$USER_SITE:$REPO \
+    $CONTAINER"
+
+# ---- Config 02: Base+OPRO-LLM (320 UNKNOWN — most informative) ----
+echo ""
+echo "[RUN] Config 02: Base+OPRO-LLM"
+echo "[RUN] ==============================="
+$RUN_CMD python3 scripts/eval.py \
+    --manifest "$MANIFEST" \
+    --prompt_file "$BEST/02_qwen2_base_opro_llm/optimization/best_prompt.txt" \
+    --output_dir "$OUT/02_base_opro_llm" \
+    --model_type qwen2 \
+    --log_raw_text
+
+echo "[DONE] Config 02 complete: $(date)"
+
+# ---- Config 06: LoRA+OPRO-Tmpl (best system, needs checkpoint) ----
+echo ""
+echo "[RUN] Config 06: LoRA+OPRO-Tmpl"
+echo "[RUN] ==============================="
+$RUN_CMD python3 scripts/eval.py \
+    --manifest "$MANIFEST" \
+    --prompt_file "$BEST/06_qwen2_lora_opro_template/optimization/best_prompt.txt" \
+    --output_dir "$OUT/06_lora_opro_template" \
+    --model_type qwen2 \
+    --checkpoint "$LORA_CKPT" \
+    --log_raw_text
+
+echo "[DONE] Config 06 complete: $(date)"
+
+# ---- Config 07: Qwen3+Hand (baseline prompt, no checkpoint) ----
+echo ""
+echo "[RUN] Config 07: Qwen3+Hand"
+echo "[RUN] ==============================="
+$RUN_CMD python3 scripts/eval.py \
+    --manifest "$MANIFEST" \
+    --prompt "$BASELINE_PROMPT" \
+    --output_dir "$OUT/07_qwen3_baseline" \
+    --model_type qwen3_omni \
+    --log_raw_text
+
+echo "[DONE] Config 07 complete: $(date)"
+
+# ---- Post-processing ----
+echo ""
+echo "[POST] Running normalization level analysis..."
+$RUN_CMD python3 scripts/analyze_normalization_levels.py
+
+echo ""
+echo "[INFO] ========================================================================"
+echo "[INFO] B.2 RE-EVALUATION COMPLETE"
+echo "[INFO] END: $(date)"
+echo "[INFO] ========================================================================"

@@ -1,0 +1,239 @@
+{
+  "ba_clip": 0.8447516401124648,
+  "ba_conditions": 0.8398947594501718,
+  "speech_acc": 0.7831302717900656,
+  "nonspeech_acc": 0.9063730084348641,
+  "n_samples": 21340,
+  "n_speech": 10670,
+  "n_nonspeech": 10670,
+  "dimension_metrics": {
+    "duration": {
+      "ba": 0.8501288659793814,
+      "n_conditions": 8,
+      "conditions": [
+        "dur_20ms",
+        "dur_40ms",
+        "dur_60ms",
+        "dur_80ms",
+        "dur_100ms",
+        "dur_200ms",
+        "dur_500ms",
+        "dur_1000ms"
+      ]
+    },
+    "snr": {
+      "ba": 0.8728522336769761,
+      "n_conditions": 6,
+      "conditions": [
+        "snr_-10dB",
+        "snr_-5dB",
+        "snr_0dB",
+        "snr_5dB",
+        "snr_10dB",
+        "snr_20dB"
+      ]
+    },
+    "reverb": {
+      "ba": 0.8242268041237113,
+      "n_conditions": 4,
+      "conditions": [
+        "reverb_none",
+        "reverb_0.3s",
+        "reverb_1.0s",
+        "reverb_2.5s"
+      ]
+    },
+    "filter": {
+      "ba": 0.8123711340206186,
+      "n_conditions": 4,
+      "conditions": [
+        "filter_none",
+        "filter_bandpass",
+        "filter_lowpass",
+        "filter_highpass"
+      ]
+    }
+  },
+  "condition_metrics": {
+    "dur_20ms": {
+      "ba": 0.756701030927835,
+      "speech_acc": 0.5525773195876289,
+      "nonspeech_acc": 0.9608247422680413,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_40ms": {
+      "ba": 0.8350515463917525,
+      "speech_acc": 0.7298969072164948,
+      "nonspeech_acc": 0.9402061855670103,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_60ms": {
+      "ba": 0.8515463917525773,
+      "speech_acc": 0.7896907216494845,
+      "nonspeech_acc": 0.9134020618556701,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_80ms": {
+      "ba": 0.8628865979381444,
+      "speech_acc": 0.8164948453608247,
+      "nonspeech_acc": 0.9092783505154639,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_100ms": {
+      "ba": 0.8855670103092783,
+      "speech_acc": 0.8639175257731959,
+      "nonspeech_acc": 0.9072164948453608,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_200ms": {
+      "ba": 0.9,
+      "speech_acc": 0.9072164948453608,
+      "nonspeech_acc": 0.8927835051546392,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_500ms": {
+      "ba": 0.8876288659793814,
+      "speech_acc": 0.8701030927835052,
+      "nonspeech_acc": 0.9051546391752577,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "dur_1000ms": {
+      "ba": 0.8216494845360824,
+      "speech_acc": 0.7505154639175258,
+      "nonspeech_acc": 0.8927835051546392,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "snr_-10dB": {
+      "ba": 0.8948453608247423,
+      "speech_acc": 0.8948453608247423,
+      "nonspeech_acc": 0.8948453608247423,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "snr_-5dB": {
+      "ba": 0.877319587628866,
+      "speech_acc": 0.8845360824742268,
+      "nonspeech_acc": 0.8701030927835052,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "snr_0dB": {
+      "ba": 0.8793814432989691,
+      "speech_acc": 0.8371134020618557,
+      "nonspeech_acc": 0.9216494845360824,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "snr_5dB": {
+      "ba": 0.8577319587628867,
+      "speech_acc": 0.7917525773195876,
+      "nonspeech_acc": 0.9237113402061856,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "snr_10dB": {
+      "ba": 0.8649484536082475,
+      "speech_acc": 0.8020618556701031,
+      "nonspeech_acc": 0.9278350515463918,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "snr_20dB": {
+      "ba": 0.8628865979381444,
+      "speech_acc": 0.7876288659793814,
+      "nonspeech_acc": 0.9381443298969072,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "reverb_none": {
+      "ba": 0.8206185567010309,
+      "speech_acc": 0.7505154639175258,
+      "nonspeech_acc": 0.8907216494845361,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "reverb_0.3s": {
+      "ba": 0.8154639175257732,
+      "speech_acc": 0.7484536082474227,
+      "nonspeech_acc": 0.8824742268041237,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "reverb_1.0s": {
+      "ba": 0.8309278350515463,
+      "speech_acc": 0.7793814432989691,
+      "nonspeech_acc": 0.8824742268041237,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "reverb_2.5s": {
+      "ba": 0.8298969072164948,
+      "speech_acc": 0.7587628865979381,
+      "nonspeech_acc": 0.9010309278350516,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "filter_none": {
+      "ba": 0.8319587628865979,
+      "speech_acc": 0.7628865979381443,
+      "nonspeech_acc": 0.9010309278350516,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "filter_bandpass": {
+      "ba": 0.8020618556701031,
+      "speech_acc": 0.7051546391752578,
+      "nonspeech_acc": 0.8989690721649485,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "filter_lowpass": {
+      "ba": 0.7711340206185567,
+      "speech_acc": 0.643298969072165,
+      "nonspeech_acc": 0.8989690721649485,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    },
+    "filter_highpass": {
+      "ba": 0.8443298969072165,
+      "speech_acc": 0.8020618556701031,
+      "nonspeech_acc": 0.8865979381443299,
+      "n_samples": 970,
+      "n_speech": 485,
+      "n_nonspeech": 485
+    }
+  },
+  "prompt": "Does this audio contain human speech? Answer SPEECH or NONSPEECH.",
+  "checkpoint": "/mnt/fast/nobackup/users/gb0048/opro3_final/audits/round3/data_curve/n1024/train/checkpoints/final",
+  "manifest": "/mnt/fast/nobackup/users/gb0048/opro3_final/data/processed/variants_validated_1000/test_metadata.csv",
+  "quantization": "4bit"
+}

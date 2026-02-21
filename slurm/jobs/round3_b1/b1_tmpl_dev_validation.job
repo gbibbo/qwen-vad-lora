@@ -1,0 +1,201 @@
+#!/bin/bash
+#SBATCH --partition=a100
+#SBATCH --gpus=1
+#SBATCH --cpus-per-task=12
+#SBATCH --mem=64G
+#SBATCH --time=04:00:00
+
+# =============================================================================
+# Dev Set Validation — OPRO-Template Winning Templates on Full Dev (660 samples)
+# =============================================================================
+# Evaluates the unique winning templates from multi-seed OPRO-Template runs
+# on the full dev set to verify mini-dev selection is not seed-biased.
+#
+# Arguments:
+#   $1  MODEL_CONFIG: base | lora | qwen3
+#
+# Usage:
+#   ./slurm/tools/on_submit.sh sbatch \
+#       --job-name=devval_base \
+#       --output=logs/devval_base_%j.out \
+#       --error=logs/devval_base_%j.err \
+#       slurm/jobs/round3_b1/b1_tmpl_dev_validation.job base
+# =============================================================================
+
+set -euo pipefail
+set -x
+
+# ---- Parse arguments ----
+MODEL_CONFIG="${1:?ERROR: MODEL_CONFIG required (base|lora|qwen3)}"
+
+# ---- Validate ----
+case "$MODEL_CONFIG" in
+    base|lora|qwen3) ;;
+    *) echo "ERROR: Invalid MODEL_CONFIG '$MODEL_CONFIG'. Must be: base, lora, qwen3"; exit 1 ;;
+esac
+
+# ---- Paths ----
+REPO="/mnt/fast/nobackup/users/gb0048/opro3_final"
+REPO_PARENT="/mnt/fast/nobackup/users/gb0048"
+CONTAINER="$REPO_PARENT/opro2/pytorch_2.1_cuda12.sif"
+
+DEV_CSV="$REPO/data/processed/variants_validated_1000/dev_metadata.csv"
+LORA_CKPT="$REPO/results/20260204_201138_COMPARATIVE_RUN/00_lora_training/checkpoints/final"
+MULTISEED_DIR="$REPO/audits/round3/b1_multiseed"
+
+OUT_ROOT="$REPO/results/ablation_opro_tmpl_dev"
+PROMPT_DIR="$OUT_ROOT/prompts"
+
+echo "[INFO] ========================================================================"
+echo "[INFO] Dev Set Validation — OPRO-Template Winners"
+echo "[INFO] Model: $MODEL_CONFIG"
+echo "[INFO] Dev manifest: $DEV_CSV"
+echo "[INFO] Output root: $OUT_ROOT"
+echo "[INFO] START: $(date)"
+echo "[INFO] ========================================================================"
+nvidia-smi --query-gpu=name,memory.total --format=csv
+
+cd "$REPO"
+
+# ---- Environment ----
+export HF_HOME="$REPO_PARENT/.cache/huggingface"
+export TRANSFORMERS_CACHE="$HF_HOME/transformers"
+export HF_HUB_CACHE="$HF_HOME/hub"
+export PIP_CACHE_DIR="$REPO_PARENT/.cache/pip"
+export TMPDIR="$REPO_PARENT/tmp"
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+export PYTHONUSERBASE="$REPO_PARENT/.local"
+export USER_SITE="$PYTHONUSERBASE/lib/python3.10/site-packages"
+
+mkdir -p "$HF_HOME" "$TRANSFORMERS_CACHE" "$HF_HUB_CACHE" "$PIP_CACHE_DIR" "$TMPDIR" "$PYTHONUSERBASE"
+mkdir -p logs "$OUT_ROOT" "$PROMPT_DIR"
+
+# ---- Pre-flight checks ----
+if [ ! -L "$REPO/data" ] && [ ! -d "$REPO/data" ]; then
+    echo "ERROR: data/ symlink missing"; exit 1
+fi
+if [ ! -f "$DEV_CSV" ]; then
+    echo "ERROR: Dev CSV not found: $DEV_CSV"; exit 1
+fi
+if [ ! -f "$CONTAINER" ]; then
+    echo "ERROR: Container not found: $CONTAINER"; exit 1
+fi
+
+# Install torchaudio if needed (for Silero dependency in some imports)
+apptainer exec --nv \
+    --env PIP_CACHE_DIR="$PIP_CACHE_DIR" \
+    --env TMPDIR="$TMPDIR" \
+    --env PYTHONUSERBASE="$PYTHONUSERBASE" \
+    "$CONTAINER" pip install --user --no-cache-dir \
+    torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
+
+# ---- Build Apptainer run command ----
+RUN_CMD="apptainer exec --nv --pwd $REPO \
+    --env HF_HOME=$HF_HOME \
+    --env TRANSFORMERS_CACHE=$TRANSFORMERS_CACHE \
+    --env HF_HUB_CACHE=$HF_HUB_CACHE \
+    --env PYTORCH_CUDA_ALLOC_CONF=$PYTORCH_CUDA_ALLOC_CONF \
+    --env PYTHONUSERBASE=$PYTHONUSERBASE \
+    --env PYTHONPATH=$USER_SITE:$REPO \
+    $CONTAINER"
+
+# ---- Build model-specific flags and template mapping ----
+# Each TEMPLATES entry: "output_subdir source_seed_dir"
+# source_seed_dir is the multiseed audit subdirectory containing best_prompt.txt
+
+case "$MODEL_CONFIG" in
+    base)
+        EVAL_MODEL_FLAGS="--model_type qwen2"
+        TEMPLATES=(
+            "base_T06_forced base_seed42"
+            "base_T15_simplified base_seed789"
+        )
+        ;;
+    lora)
+        if [ ! -d "$LORA_CKPT" ]; then
+            echo "ERROR: LoRA checkpoint not found: $LORA_CKPT"; exit 1
+        fi
+        EVAL_MODEL_FLAGS="--model_type qwen2 --checkpoint $LORA_CKPT"
+        TEMPLATES=(
+            "lora_T04_contrastive lora_seed42"
+            "lora_T11_calibration lora_seed456"
+            "lora_T12_delimiters lora_seed123"
+        )
+        ;;
+    qwen3)
+        EVAL_MODEL_FLAGS="--model_type qwen3_omni"
+        TEMPLATES=(
+            "qwen3_T01_minimal qwen3_seed789"
+            "qwen3_T03_verbalizer qwen3_seed42"
+            "qwen3_T12_delimiters qwen3_seed123"
+        )
+        ;;
+esac
+
+# ---- Copy prompt files from multiseed audit results ----
+echo ""
+echo "[SETUP] Copying prompt files for $MODEL_CONFIG..."
+for entry in "${TEMPLATES[@]}"; do
+    read -r SUBDIR SOURCE_SEED <<< "$entry"
+    SRC="$MULTISEED_DIR/$SOURCE_SEED/optimization/best_prompt.txt"
+    DST="$PROMPT_DIR/${SUBDIR}.txt"
+    if [ ! -f "$SRC" ]; then
+        echo "ERROR: Source prompt not found: $SRC"; exit 1
+    fi
+    cp "$SRC" "$DST"
+    echo "  Copied: $DST"
+    echo "  Content: $(cat "$DST")"
+done
+
+# ---- Run evaluations ----
+echo ""
+echo "[EVAL] Starting ${#TEMPLATES[@]} evaluations for $MODEL_CONFIG on dev set (660 samples)"
+echo ""
+
+EVAL_COUNT=0
+for entry in "${TEMPLATES[@]}"; do
+    read -r SUBDIR SOURCE_SEED <<< "$entry"
+    PROMPT_FILE="$PROMPT_DIR/${SUBDIR}.txt"
+    EVAL_OUT="$OUT_ROOT/$SUBDIR"
+
+    EVAL_COUNT=$((EVAL_COUNT + 1))
+    echo "================================================================"
+    echo "[EVAL $EVAL_COUNT/${#TEMPLATES[@]}] Template: $SUBDIR"
+    echo "[EVAL] Prompt file: $PROMPT_FILE"
+    echo "[EVAL] Output: $EVAL_OUT"
+    echo "[EVAL] Start: $(date)"
+    echo "================================================================"
+
+    mkdir -p "$EVAL_OUT"
+
+    $RUN_CMD python3 scripts/eval.py \
+        --manifest "$DEV_CSV" \
+        --prompt_file "$PROMPT_FILE" \
+        --output_dir "$EVAL_OUT" \
+        $EVAL_MODEL_FLAGS \
+        --log_raw_text
+
+    echo "[EVAL] Complete: $SUBDIR ($(date))"
+
+    # Print quick summary
+    if [ -f "$EVAL_OUT/metrics.json" ]; then
+        $RUN_CMD python3 -c "
+import json
+with open('$EVAL_OUT/metrics.json') as f:
+    m = json.load(f)
+print(f'  BA_clip:       {m[\"ba_clip\"]:.4f} ({m[\"ba_clip\"]*100:.2f}%)')
+print(f'  n_samples:     {m[\"n_samples\"]}')
+print(f'  speech_acc:    {m.get(\"speech_acc\", \"N/A\")}')
+print(f'  nonspeech_acc: {m.get(\"nonspeech_acc\", \"N/A\")}')
+"
+    fi
+    echo ""
+done
+
+# ---- Final summary ----
+echo "================================================================"
+echo "[INFO] All $MODEL_CONFIG evaluations complete ($EVAL_COUNT templates)"
+echo "[INFO] Results in: $OUT_ROOT/"
+echo "[INFO] Run post-processing: python3 scripts/analyze_tmpl_dev_validation.py"
+echo "[INFO] END: $(date)"
+echo "================================================================"
