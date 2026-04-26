@@ -1,6 +1,6 @@
 # Audio-Language Models under Psychometric Degradations: Optimization for Voice Activity Detection
 
-**Authors:** Gabriel Bibbó, Mark D. Plumbley
+**Authors:** Gabriel Bibbó, Mark D. Plumbley, Simone Spagnol
 
 Can Large Audio-Language Models (LALMs) reliably detect speech in degraded audio? We evaluate how model architecture interacts with optimization strategies for Voice Activity Detection (VAD) under controlled psychometric degradations — and find that **a fine-tuned 7B model outperforms a frozen 30B model**.
 
