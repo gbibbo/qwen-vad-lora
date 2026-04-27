@@ -1,4 +1,4 @@
-# Qwen VAD LoRA
+# Audio-Language Models under Psychometric Degradations: Optimization for Voice Activity Detection
 
 Robust Voice Activity Detection with audio-language models under short, noisy, reverberant, and filtered audio.
 
